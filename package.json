@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev --host 127.0.0.1",
-    "start": "ASTRO_TELEMETRY_DISABLED=1 astro dev --host 127.0.0.1",
+    "start": "npm run serve",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "build:github": "SITE_URL=https://k1taru.github.io/IAM-K1taru ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "build:linux": "SITE_URL=https://portfolio.k1taru.space ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview --host 127.0.0.1",
+    "serve": "node scripts/serve.mjs",
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
-    "sync:projects": "node scripts/sync-github.mjs",
     "verify": "npm run check && npm run build"
   },
   "engines": {

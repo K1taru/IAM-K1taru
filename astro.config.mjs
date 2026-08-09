@@ -5,7 +5,7 @@ import { loadEnv } from 'vite';
 
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 const env = loadEnv(mode, process.cwd(), '');
-const productionUrl = new URL(env.SITE_URL || 'https://k1taru.github.io/IAM-K1taru');
+const productionUrl = new URL(process.env.SITE_URL || env.SITE_URL || 'https://k1taru.github.io/IAM-K1taru');
 const productionBase = productionUrl.pathname === '/' ? undefined : productionUrl.pathname.replace(/\/$/, '');
 
 export default defineConfig({

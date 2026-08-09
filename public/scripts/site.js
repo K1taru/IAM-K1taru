@@ -1,7 +1,5 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const scriptSource = document.currentScript?.src || window.location.href;
-  const statusUrl = new URL('../data/project-status.json', scriptSource);
 
   const scrollProgress = document.querySelector('[data-scroll-progress]');
   let scrollFrame = 0;
@@ -159,14 +157,12 @@
     });
   }));
 
-  const applyProjectStatus = (entry) => {
-    projectStatusByRepo.set(entry.repo, entry);
-    document.querySelectorAll(`[data-repo="${CSS.escape(entry.repo)}"]`).forEach((container) => {
-      if (!entry.demo) return;
+  const applyProjectStatus = (repo, state) => {
+    projectStatusByRepo.set(repo, { demo: { state } });
+    document.querySelectorAll(`[data-repo="${CSS.escape(repo)}"]`).forEach((container) => {
       const chip = container.querySelector('[data-status-chip]');
       const label = container.querySelector('[data-status-label]');
       const link = container.querySelector('[data-demo-link]');
-      const state = entry.demo.state;
 
       chip?.setAttribute('data-state', state);
       if (label) {
@@ -190,8 +186,34 @@
     });
   };
 
-  fetch(statusUrl, { headers: { Accept: 'application/json' } })
-    .then((response) => response.ok ? response.json() : null)
-    .then((payload) => payload?.projects?.forEach(applyProjectStatus))
-    .catch(() => {});
+  const projectsToCheck = new Map();
+  document.querySelectorAll('[data-repo]').forEach((container) => {
+    const repo = container.dataset.repo;
+    if (!repo || projectsToCheck.has(repo)) return;
+    projectsToCheck.set(repo, container.dataset.demoUrl || '');
+  });
+
+  const checkDemo = async (repo, url) => {
+    if (!url) {
+      applyProjectStatus(repo, 'planned');
+      return;
+    }
+
+    try {
+      // Cross-origin status bodies are intentionally unreadable. A resolved
+      // opaque response still proves that the target answered this browser.
+      await fetch(url, {
+        method: 'HEAD',
+        mode: 'no-cors',
+        cache: 'no-store',
+        redirect: 'follow',
+        signal: AbortSignal.timeout(8000)
+      });
+      applyProjectStatus(repo, 'online');
+    } catch {
+      applyProjectStatus(repo, 'offline');
+    }
+  };
+
+  projectsToCheck.forEach((url, repo) => checkDemo(repo, url));
 })();

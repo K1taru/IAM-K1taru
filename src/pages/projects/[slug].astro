@@ -29,7 +29,7 @@ const projectSchema = {
 
 <BaseLayout title={`${data.title} — John Michael Garcia`} description={data.summary} type="article">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(projectSchema)} />
-  <article data-repo={repoId}>
+  <article data-repo={repoId} data-demo-url={data.demo}>
     <header class="case-hero shell">
       <p class="case-breadcrumb"><a href={withBasePath('/projects/')}>Projects</a> / {data.slug}</p>
       <div class="grid items-end gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(280px,.75fr)] lg:gap-24">

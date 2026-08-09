@@ -98,6 +98,7 @@ const links: Array<[keyof typeof positions, keyof typeof positions]> = [
             href={withBasePath(`/projects/${project.data.slug}/`)}
             data-node
             data-repo={repo}
+            data-demo-url={project.data.demo}
             data-cluster={cluster}
             data-title={project.data.title}
             data-summary={project.data.summary}
@@ -119,7 +120,13 @@ const links: Array<[keyof typeof positions, keyof typeof positions]> = [
     </div>
 
     {initial && (
-      <aside class="constellation-inspector" data-map-inspector data-repo={initial.repo} aria-live="polite">
+      <aside
+        class="constellation-inspector"
+        data-map-inspector
+        data-repo={initial.repo}
+        data-demo-url={initial.project.data.demo}
+        aria-live="polite"
+      >
         <div class="inspector-topline">
           <span class="mono" data-inspector-index>PROJECT / 01</span>
           <span class="status-chip" data-status-chip data-state="pending"><span class="status-dot" aria-hidden="true"></span><span data-status-label>Status pending</span></span>
@@ -139,7 +146,7 @@ const links: Array<[keyof typeof positions, keyof typeof positions]> = [
 
   <ul class="constellation-list" aria-label="Project constellation list">
     {visible.map(({ project, repo, cluster }, index) => (
-      <li data-list-node data-repo={repo} data-cluster={cluster}>
+      <li data-list-node data-repo={repo} data-demo-url={project.data.demo} data-cluster={cluster}>
         <a href={withBasePath(`/projects/${project.data.slug}/`)}>
           <div class="constellation-list-topline">
             <span class="mono">{String(index + 1).padStart(2, '0')} / {clusterLabels[cluster]}</span>

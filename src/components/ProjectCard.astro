@@ -12,7 +12,11 @@ const { data } = project;
 const repoId = new URL(data.repository).pathname.replace(/^\//, '');
 ---
 
-<article class:list={['project-card', compact && 'project-card-compact']} data-repo={repoId}>
+<article
+  class:list={['project-card', compact && 'project-card-compact']}
+  data-repo={repoId}
+  data-demo-url={data.demo}
+>
   <div class="project-card-topline">
     <span class="mono project-year">{data.year}</span>
     {data.demo && (
