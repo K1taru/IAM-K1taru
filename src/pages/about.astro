@@ -1,0 +1,72 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import CertificationCollection from '@/components/CertificationCollection.astro';
+import { site } from '@/data/site';
+---
+
+<BaseLayout title="About — John Michael Garcia" description="The engineering approach and education behind John Michael Garcia's applied ML and full-stack systems work.">
+  <header class="page-hero shell">
+    <p class="eyebrow">About John</p>
+    <h1>Curious about models. Accountable for systems.</h1>
+    <p>I’m building an engineering practice that connects data science with the less glamorous work that makes technology useful: interfaces, persistence, deployment, monitoring, documentation, and security boundaries.</p>
+  </header>
+
+  <section class="page-section-tight section-tint">
+    <div class="shell profile-grid grid gap-12 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] lg:gap-24">
+      <div>
+        <p class="eyebrow">Current study</p>
+        <h2>Computer Engineering, specialized through Data Science.</h2>
+      </div>
+      <div class="stack-lg">
+        <div class="education-card">
+          <h3>{site.school}</h3>
+          <p>{site.degree}</p>
+          <span class="mono">Philippines</span>
+        </div>
+        <div class="profile-copy">
+          <p>Computer Engineering provides the systems foundation: computing hardware, networks, software, and the constraints at their boundaries.</p>
+          <p>Data Science sharpens the focus on evidence: how data is collected, how models are evaluated, and whether an automated result is useful outside a controlled notebook.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="shell">
+      <SectionHeading eyebrow="Working principles" title="How I want the work to hold up." />
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <article class="skill-card"><span class="skill-index">01</span><h3>Evidence before adjectives</h3><p>Show the repository, architecture, model context, deployment, and measurable result. Avoid inflated claims that the project cannot support.</p></article>
+        <article class="skill-card"><span class="skill-index">02</span><h3>Security is architecture</h3><p>Reduce exposed surfaces, separate public and operational systems, validate boundaries, and keep secrets out of clients and repositories.</p></article>
+        <article class="skill-card"><span class="skill-index">03</span><h3>Operate what you build</h3><p>Self-hosting on Linux and Raspberry Pi turns deployment, observability, reliability, and resource constraints into direct engineering feedback.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="shell">
+      <CertificationCollection />
+    </div>
+  </section>
+
+  <section class="page-section section-tint">
+    <div class="shell profile-grid grid gap-12 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] lg:gap-24">
+      <div>
+        <p class="eyebrow">Target opportunities</p>
+        <h2>Early-career work where models become dependable products.</h2>
+      </div>
+      <div class="stack-lg">
+        <ul class="tag-list" aria-label="Target roles">
+          {site.roleTargets.map((role) => <li>{role}</li>)}
+        </ul>
+        <div class="profile-copy">
+          <p>I’m especially interested in teams where applied ML engineers collaborate closely with software, data, product, and infrastructure disciplines.</p>
+        </div>
+        <div class="hero-actions">
+          <a class="button" href={`mailto:${site.email}`}>Start a conversation</a>
+          <a class="button button-secondary" href="/projects/">Review projects</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

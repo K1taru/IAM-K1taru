@@ -1,0 +1,127 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { site } from '@/data/site';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
+  return projects.map((project) => ({ params: { slug: project.data.slug }, props: { project } }));
+}
+
+interface Props { project: CollectionEntry<'projects'> }
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+const repoId = new URL(data.repository).pathname.replace(/^\//, '');
+const projectSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: data.title,
+  description: data.summary,
+  codeRepository: data.repository,
+  url: new URL(`/projects/${data.slug}/`, site.url).toString(),
+  dateCreated: String(data.year),
+  author: { '@type': 'Person', name: site.name, url: site.url },
+  programmingLanguage: data.skills
+};
+---
+
+<BaseLayout title={`${data.title} — John Michael Garcia`} description={data.summary} type="article">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(projectSchema)} />
+  <article data-repo={repoId}>
+    <header class="case-hero shell">
+      <p class="case-breadcrumb"><a href="/projects/">Projects</a> / {data.slug}</p>
+      <div class="grid items-end gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(280px,.75fr)] lg:gap-24">
+        <div>
+          <p class="eyebrow">{data.role}</p>
+          <h1>{data.title}</h1>
+        </div>
+        <p class="case-summary">{data.summary}</p>
+      </div>
+      <dl class="case-meta">
+        <div><dt>Year</dt><dd>{data.year}</dd></div>
+        <div><dt>Team</dt><dd>{data.team}</dd></div>
+        <div>
+          <dt>Deployment</dt>
+          <dd>
+            {data.demo ? (
+              <span class="status-chip" data-status-chip>
+                <span class="status-dot" aria-hidden="true"></span><span data-status-label>Status pending</span>
+              </span>
+            ) : 'Source only'}
+          </dd>
+        </div>
+      </dl>
+    </header>
+
+    <div class="page-section-tight section-tint">
+      <div class="shell grid items-start gap-12 lg:grid-cols-[minmax(240px,.34fr)_minmax(0,.66fr)] lg:gap-24">
+        <aside class="case-sidebar" aria-label="Project details">
+          <div class="case-sidebar-card">
+            <h2>Technology</h2>
+            <ul>{data.skills.map((skill) => <li>{skill}</li>)}</ul>
+          </div>
+          <div class="case-sidebar-card">
+            <h2>Project links</h2>
+            <ul>
+              <li><a class="text-link" href={data.repository} target="_blank" rel="noopener noreferrer">Source repository <span class="sr-only">(opens in new tab)</span><span aria-hidden="true">↗</span></a></li>
+              {data.demo && (
+                <li>
+                  <a class="text-link demo-link is-disabled" data-demo-link data-demo-url={data.demo} aria-disabled="true">Live deployment <span class="sr-only">(opens in new tab)</span><span aria-hidden="true">↗</span></a>
+                </li>
+              )}
+            </ul>
+          </div>
+        </aside>
+
+        <div class="prose">
+          <section>
+            <p class="eyebrow">Problem</p>
+            <h2>Why this needed to exist</h2>
+            <p>{data.problem}</p>
+          </section>
+
+          <Content />
+
+          <section>
+            <h2>My contribution</h2>
+            <ul>{data.contributions.map((contribution) => <li>{contribution}</li>)}</ul>
+          </section>
+
+          <section>
+            <h2>System architecture</h2>
+            <div class="architecture-flow" aria-label={`${data.title} architecture flow`}>
+              {data.architecture.map((node) => <div class="architecture-node">{node}</div>)}
+            </div>
+          </section>
+
+          {(data.evidence.length > 0 || data.metrics.length > 0) && (
+            <section>
+              <h2>Evidence</h2>
+              <div class="metric-grid">
+                {data.metrics.map((metric) => (
+                  <div class="metric"><strong>{metric.value}</strong><span>{metric.label}</span>{metric.qualifier && <small>{metric.qualifier}</small>}</div>
+                ))}
+                {data.evidence.map((item) => (
+                  <div class="metric"><strong class="!text-xl">{item.label}</strong><span>{item.value}</span></div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {data.security.length > 0 && (
+            <section><h2>Security boundaries</h2><ul>{data.security.map((item) => <li>{item}</li>)}</ul></section>
+          )}
+
+          <section><h2>Outcomes</h2><ul>{data.outcomes.map((item) => <li>{item}</li>)}</ul></section>
+          <section><h2>Lessons</h2><ul>{data.lessons.map((item) => <li>{item}</li>)}</ul></section>
+
+          <div class="hero-actions !mt-12">
+            <a class="button" href={data.repository} target="_blank" rel="noopener noreferrer">Review source <span class="sr-only">(opens in new tab)</span><span aria-hidden="true">↗</span></a>
+            <a class="button button-secondary" href="/projects/">Back to projects</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,175 @@
+{
+  "version": 1,
+  "checkedAt": "2026-08-06T15:47:47.834Z",
+  "projects": [
+    {
+      "repo": "Cyber-Six/MDSystem",
+      "github": {
+        "state": "ok",
+        "primaryLanguage": "JavaScript",
+        "stars": 5,
+        "forks": 0,
+        "topics": [
+          "emr",
+          "expo",
+          "graphql",
+          "healthcare",
+          "nodejs",
+          "postgresql",
+          "react-native",
+          "reactjs",
+          "redis",
+          "socket-io"
+        ],
+        "pushedAt": "2026-07-20T12:25:30Z",
+        "updatedAt": "2026-04-25T00:37:05Z",
+        "archived": false
+      },
+      "demo": {
+        "url": "https://www.mdsystemtip.space/",
+        "state": "offline",
+        "statusCode": 530
+      }
+    },
+    {
+      "repo": "K1taru/MosKita",
+      "github": {
+        "state": "ok",
+        "primaryLanguage": "Jupyter Notebook",
+        "stars": 0,
+        "forks": 0,
+        "topics": [],
+        "pushedAt": "2026-04-27T10:19:58Z",
+        "updatedAt": "2026-06-07T10:11:54Z",
+        "archived": false
+      },
+      "demo": {
+        "url": "https://moskita.k1taru.space/",
+        "state": "online",
+        "statusCode": 200
+      }
+    },
+    {
+      "repo": "K1taru/GyMMS",
+      "github": {
+        "state": "ok",
+        "primaryLanguage": "JavaScript",
+        "stars": 0,
+        "forks": 0,
+        "topics": [
+          "gym-management",
+          "gym-website",
+          "management-system"
+        ],
+        "pushedAt": "2026-01-27T15:42:32Z",
+        "updatedAt": "2026-07-06T02:29:32Z",
+        "archived": false
+      },
+      "demo": {
+        "url": "https://gymms.k1taru.space/",
+        "state": "offline",
+        "statusCode": 502
+      }
+    },
+    {
+      "repo": "K1taru/Traffic-Sign-Classifier",
+      "github": {
+        "state": "ok",
+        "primaryLanguage": "Jupyter Notebook",
+        "stars": 0,
+        "forks": 0,
+        "topics": [],
+        "pushedAt": "2025-11-21T06:03:34Z",
+        "updatedAt": "2025-11-21T06:03:38Z",
+        "archived": false
+      },
+      "demo": {
+        "state": "planned"
+      }
+    },
+    {
+      "repo": "Halemamaw/AyuDirect",
+      "github": {
+        "state": "ok",
+        "primaryLanguage": "JavaScript",
+        "stars": 0,
+        "forks": 0,
+        "topics": [],
+        "pushedAt": "2026-07-21T23:10:50Z",
+        "updatedAt": "2026-07-21T23:10:56Z",
+        "archived": false
+      },
+      "demo": {
+        "url": "https://ayudirect.k1taru.space/",
+        "state": "online",
+        "statusCode": 200
+      }
+    },
+    {
+      "repo": "K1taru/pi-monitor",
+      "github": {
+        "state": "ok",
+        "primaryLanguage": "JavaScript",
+        "stars": 0,
+        "forks": 1,
+        "topics": [],
+        "pushedAt": "2026-03-07T09:23:36Z",
+        "updatedAt": "2026-03-07T09:23:38Z",
+        "archived": false
+      },
+      "demo": {
+        "url": "https://raspy.k1taru.space/",
+        "state": "online",
+        "statusCode": 200
+      }
+    },
+    {
+      "repo": "K1taru/CookEat",
+      "github": {
+        "state": "ok",
+        "primaryLanguage": "JavaScript",
+        "stars": 0,
+        "forks": 0,
+        "topics": [],
+        "pushedAt": "2025-06-16T13:24:10Z",
+        "updatedAt": "2025-06-16T13:24:15Z",
+        "archived": false
+      },
+      "demo": {
+        "state": "planned"
+      }
+    },
+    {
+      "repo": "K1taru/GrowQuest",
+      "github": {
+        "state": "ok",
+        "primaryLanguage": "Solidity",
+        "stars": 0,
+        "forks": 0,
+        "topics": [],
+        "pushedAt": "2025-09-11T08:04:23Z",
+        "updatedAt": "2025-06-17T14:37:38Z",
+        "archived": false
+      },
+      "demo": {
+        "state": "planned"
+      }
+    },
+    {
+      "repo": "Cyber-Six/MDS-Chatbot",
+      "github": {
+        "state": "ok",
+        "primaryLanguage": "JavaScript",
+        "stars": 0,
+        "forks": 0,
+        "topics": [],
+        "pushedAt": "2026-03-23T18:33:05Z",
+        "updatedAt": "2026-03-23T18:33:09Z",
+        "archived": false
+      },
+      "demo": {
+        "state": "planned"
+      }
+    }
+  ]
+}

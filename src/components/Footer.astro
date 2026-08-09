@@ -1,0 +1,23 @@
+---
+import { site } from '@/data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <div>
+      <p class="eyebrow">System note</p>
+      <p class="footer-statement">Designed for clarity. Built with Astro. Deployed as a static site on GitHub Pages.</p>
+    </div>
+    <div class="footer-links" aria-label="Footer links">
+      <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+      <a href={`mailto:${site.email}`}>Email</a>
+      <a href="/.well-known/security.txt">Security</a>
+    </div>
+  </div>
+  <div class="shell footer-base">
+    <span>© {year} {site.name}</span>
+    <span class="mono">IAM-K1taru / static-v1</span>
+  </div>
+</footer>

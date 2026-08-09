@@ -1,0 +1,6 @@
+Contact: mailto:jmgarcia.main@gmail.com
+Canonical: https://portfolio.k1taru.space/.well-known/security.txt
+Preferred-Languages: en
+Policy: https://github.com/K1taru/IAM-K1taru/security/policy
+Expires: 2027-08-06T00:00:00.000Z
+

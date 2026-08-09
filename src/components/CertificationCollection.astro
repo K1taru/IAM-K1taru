@@ -1,0 +1,73 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+import { certifications, certificationTemplate } from '@/data/site';
+
+const isTemplate = certifications.length === 0;
+const entries = isTemplate ? certificationTemplate : certifications;
+---
+
+<div class="relative" data-certifications data-template={isTemplate ? 'true' : undefined}>
+  <SectionHeading
+    eyebrow={isTemplate ? 'Certification template' : 'Certifications'}
+    title="Verified learning, presented with evidence."
+    description={isTemplate
+      ? 'This preview shows how certification details will appear once the verified titles, issuers, dates, and credential links are added.'
+      : 'Professional credentials that support the technical capabilities demonstrated throughout this portfolio.'}
+  />
+
+  {isTemplate && (
+    <p class="-mt-8 mb-6 flex w-fit items-center gap-3 rounded-[9px] border border-dashed border-[rgba(43,156,255,.26)] bg-[rgba(43,156,255,.055)] px-3 py-2.5 text-xs text-[var(--text-soft)] max-[680px]:w-full max-[680px]:flex-col max-[680px]:items-start" role="note">
+      <span class="whitespace-nowrap font-mono text-[.58rem] tracking-[.1em] text-[var(--accent-cyan)]" aria-hidden="true">PREVIEW MODE</span>
+      These entries are layout placeholders and are not published certification claims.
+    </p>
+  )}
+
+  <div class="grid grid-cols-1 gap-4 min-[681px]:grid-cols-2 min-[881px]:grid-cols-3">
+    {entries.map((certification, index) => (
+      <article class:list={[
+        'certification-card relative grid min-w-0 grid-rows-[auto_auto_minmax(0,1fr)_auto_auto] gap-[1.35rem] overflow-hidden rounded-[var(--radius-md)] border border-[var(--border)] bg-[linear-gradient(145deg,rgba(13,36,45,.86),rgba(7,23,30,.78))] p-6 shadow-[0_14px_45px_rgba(0,0,0,.1)] transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:border-[var(--border-strong)] hover:shadow-[0_22px_65px_rgba(0,0,0,.22)]',
+        isTemplate && 'is-template border-dashed hover:border-[rgba(43,156,255,.38)]'
+      ]}>
+        <div class="flex items-center justify-between gap-3 text-[.58rem] uppercase tracking-[.08em] text-[var(--text-faint)]">
+          <span class="mono">CERT / {String(index + 1).padStart(2, '0')}</span>
+          <span class:list={['flex items-center gap-1.5 font-mono text-[.55rem] tracking-[.08em]', isTemplate ? 'text-[var(--accent-cyan)]' : 'text-[var(--accent-green)]']}>
+            <i class:list={['h-[5px] w-[5px] rounded-full', isTemplate ? 'bg-[var(--accent-cyan)] shadow-[0_0_9px_rgba(32,213,229,.7)]' : 'bg-[var(--accent-green)] shadow-[0_0_9px_var(--accent-green)]']} aria-hidden="true"></i>
+            {isTemplate ? 'Preview slot' : 'Verified'}
+          </span>
+        </div>
+        <div class:list={[
+          'certification-emblem relative grid h-[62px] w-[62px] place-items-center rounded-full border shadow-[inset_0_0_22px_rgba(35,232,138,.07),0_0_24px_rgba(35,232,138,.08)]',
+          isTemplate ? 'border-[rgba(32,213,229,.32)] text-[var(--accent-cyan)] shadow-[inset_0_0_22px_rgba(32,213,229,.06)]' : 'border-[rgba(35,232,138,.34)] text-[var(--accent-green)]'
+        ]} aria-hidden="true">
+          <span class="font-mono text-base">{isTemplate ? '—' : '✓'}</span>
+        </div>
+        <div class="self-start">
+          <p class="project-role">{certification.issuer}</p>
+          <h3 class="text-[clamp(1.25rem,2vw,1.55rem)]">{certification.title}</h3>
+          <dl class="mt-4 grid gap-2 border-t border-[var(--border)] pt-4">
+            <div class="grid grid-cols-[72px_minmax(0,1fr)] gap-3">
+              <dt class="font-mono text-[.58rem] uppercase tracking-[.08em] text-[var(--text-faint)]">Issued</dt>
+              <dd class="m-0 min-w-0 truncate text-xs text-[var(--text-soft)]">{certification.issued}</dd>
+            </div>
+            {certification.credentialId && (
+              <div class="grid grid-cols-[72px_minmax(0,1fr)] gap-3">
+                <dt class="font-mono text-[.58rem] uppercase tracking-[.08em] text-[var(--text-faint)]">Credential</dt>
+                <dd class="m-0 min-w-0 truncate text-xs text-[var(--text-soft)]">{certification.credentialId}</dd>
+              </div>
+            )}
+          </dl>
+        </div>
+        <ul class="tag-list" aria-label={`${certification.title} skills`}>
+          {certification.skills.map((skill) => <li>{skill}</li>)}
+        </ul>
+        <div class="border-t border-[var(--border)] pt-4">
+          {certification.credentialUrl ? (
+            <a class="text-link" href={certification.credentialUrl} target="_blank" rel="noopener noreferrer">View credential <span class="sr-only">(opens in new tab)</span><span aria-hidden="true">↗</span></a>
+          ) : (
+            <span class="text-link is-disabled cursor-default">Credential link <span aria-hidden="true">↗</span></span>
+          )}
+        </div>
+      </article>
+    ))}
+  </div>
+</div>

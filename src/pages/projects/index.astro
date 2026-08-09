@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import ProjectConstellation from '@/components/ProjectConstellation.astro';
+
+const projects = (await getCollection('projects'))
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured) || b.data.year - a.data.year);
+---
+
+<BaseLayout title="Projects — John Michael Garcia" description="Applied ML, computer vision, full-stack, data, and Raspberry Pi projects by John Michael Garcia.">
+  <header class="page-hero shell">
+    <p class="eyebrow">Project archive</p>
+    <h1>Built, tested, and taken beyond the idea.</h1>
+    <p>Case studies across applied machine learning, product engineering, data, and self-hosted infrastructure. Team work is attributed conservatively and repository evidence is linked directly.</p>
+  </header>
+
+  <section class="page-section-tight section-tint">
+    <div class="shell">
+      <ProjectConstellation projects={projects} />
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="shell">
+      <h2 class="sr-only">Project catalog</h2>
+      <div class="filter-bar" aria-label="Filter projects by discipline">
+        <button type="button" class="is-active" data-project-filter="all" aria-pressed="true">All projects</button>
+        <button type="button" data-project-filter="ml" aria-pressed="false">ML & vision</button>
+        <button type="button" data-project-filter="product" aria-pressed="false">Product</button>
+        <button type="button" data-project-filter="infrastructure" aria-pressed="false">Infrastructure</button>
+      </div>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2" data-project-grid>
+        {projects.map((project) => {
+          const skills = project.data.skills.join(' ').toLowerCase();
+          const categories = [
+            /(python|pytorch|yolo|onnx|vision|learning|jupyter)/.test(skills) && 'ml',
+            /(react|django|node|javascript|graphql|web3|solidity)/.test(skills) && 'product',
+            /(linux|raspberry|docker|cloudflare|monitoring)/.test(skills) && 'infrastructure'
+          ].filter(Boolean).join(' ');
+          return <div class="project-entry" data-project-entry data-categories={categories}><ProjectCard project={project} compact /></div>;
+        })}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

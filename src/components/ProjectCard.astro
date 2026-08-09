@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  compact?: boolean;
+}
+
+const { project, compact = false } = Astro.props;
+const { data } = project;
+const repoId = new URL(data.repository).pathname.replace(/^\//, '');
+---
+
+<article class:list={['project-card', compact && 'project-card-compact']} data-repo={repoId}>
+  <div class="project-card-topline">
+    <span class="mono project-year">{data.year}</span>
+    {data.demo && (
+      <span class="status-chip" data-status-chip>
+        <span class="status-dot" aria-hidden="true"></span>
+        <span data-status-label>Status pending</span>
+      </span>
+    )}
+  </div>
+  <div class="project-card-content">
+    <p class="project-role">{data.role}</p>
+    <h3><a href={`/projects/${data.slug}/`}>{data.title}</a></h3>
+    <p>{data.summary}</p>
+  </div>
+  <ul class="tag-list project-card-tags" aria-label={`${data.title} technologies`}>
+    {data.skills.slice(0, compact ? 4 : 6).map((skill) => <li>{skill}</li>)}
+  </ul>
+  <div class="project-actions">
+    <a class="text-link" href={`/projects/${data.slug}/`}>Case study <span aria-hidden="true">→</span></a>
+    <a class="text-link" href={data.repository} target="_blank" rel="noopener noreferrer">Source <span class="sr-only">(opens in new tab)</span><span aria-hidden="true">↗</span></a>
+    {data.demo && (
+      <a
+        class="text-link demo-link is-disabled"
+        data-demo-link
+        data-demo-url={data.demo}
+        aria-disabled="true"
+        title="Deployment status is being checked"
+      >Live demo <span class="sr-only">(opens in new tab)</span><span aria-hidden="true">↗</span></a>
+    )}
+  </div>
+</article>

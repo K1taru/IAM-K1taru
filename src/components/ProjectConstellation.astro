@@ -1,0 +1,154 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { projects: CollectionEntry<'projects'>[] }
+const { projects } = Astro.props;
+
+const positions: Record<string, { x: number; y: number; cluster: string }> = {
+  mdsystem: { x: 438, y: 238, cluster: 'product' },
+  moskita: { x: 205, y: 125, cluster: 'ml' },
+  gymms: { x: 678, y: 145, cluster: 'product' },
+  'traffic-sign-classifier': { x: 128, y: 330, cluster: 'ml' },
+  ayudirect: { x: 480, y: 410, cluster: 'data' },
+  'pi-monitor': { x: 742, y: 350, cluster: 'infra' },
+  cookeat: { x: 620, y: 455, cluster: 'product' },
+  growquest: { x: 300, y: 450, cluster: 'data' }
+};
+
+const visible = projects
+  .filter((project) => positions[project.data.slug])
+  .map((project) => ({
+    project,
+    repo: new URL(project.data.repository).pathname.replace(/^\//, ''),
+    ...positions[project.data.slug]!
+  }));
+
+const clusterLabels: Record<string, string> = {
+  ml: 'ML / Vision',
+  product: 'Product system',
+  data: 'Data system',
+  infra: 'Edge / Infra'
+};
+
+const initial = visible[0];
+
+const links: Array<[keyof typeof positions, keyof typeof positions]> = [
+  ['mdsystem', 'moskita'], ['mdsystem', 'gymms'], ['mdsystem', 'ayudirect'],
+  ['moskita', 'traffic-sign-classifier'], ['moskita', 'pi-monitor'],
+  ['gymms', 'pi-monitor'], ['ayudirect', 'cookeat'], ['ayudirect', 'growquest'],
+  ['pi-monitor', 'cookeat']
+];
+---
+
+<div class="constellation" data-constellation>
+  <div class="constellation-toolbar" aria-label="Filter project constellation">
+    <span class="mono constellation-label">Map by domain</span>
+    <div class="filter-buttons">
+      <button type="button" class="is-active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="ml" aria-pressed="false">ML</button>
+      <button type="button" data-filter="product" aria-pressed="false">Product</button>
+      <button type="button" data-filter="data" aria-pressed="false">Data</button>
+      <button type="button" data-filter="infra" aria-pressed="false">Infra</button>
+    </div>
+  </div>
+
+  <div class="constellation-stage">
+    <div class="constellation-canvas">
+    <svg viewBox="0 0 880 540" role="group" aria-labelledby="constellation-title constellation-desc">
+      <title id="constellation-title">Project constellation</title>
+      <desc id="constellation-desc">An interactive map connecting John Garcia's machine learning, product, data, and infrastructure projects.</desc>
+      <defs>
+        <radialGradient id="nodeGlow">
+          <stop offset="0" stop-color="var(--accent-cyan)" stop-opacity=".38"></stop>
+          <stop offset="1" stop-color="var(--accent-cyan)" stop-opacity="0"></stop>
+        </radialGradient>
+        <linearGradient id="mapSweep" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="var(--accent-blue)" stop-opacity="0"></stop>
+          <stop offset=".5" stop-color="var(--accent-cyan)" stop-opacity=".65"></stop>
+          <stop offset="1" stop-color="var(--accent-green)" stop-opacity="0"></stop>
+        </linearGradient>
+      </defs>
+      <rect class="map-frame" x="1" y="1" width="878" height="538" rx="18"></rect>
+      <g class="map-radar" aria-hidden="true">
+        <circle cx="438" cy="238" r="76"></circle>
+        <circle cx="438" cy="238" r="142"></circle>
+        <circle cx="438" cy="238" r="210"></circle>
+        <path d="M438 18V458M218 238H658"></path>
+      </g>
+      <g class="constellation-grid" aria-hidden="true">
+        <path d="M0 90H880M0 180H880M0 270H880M0 360H880M0 450H880"></path>
+        <path d="M110 0V540M220 0V540M330 0V540M440 0V540M550 0V540M660 0V540M770 0V540"></path>
+      </g>
+      <g class="constellation-regions" aria-hidden="true">
+        <text x="48" y="58">ML / VISION</text>
+        <text x="604" y="58">PRODUCT SYSTEMS</text>
+        <text x="660" y="520">EDGE / INFRA</text>
+      </g>
+      <g class="constellation-links" aria-hidden="true">
+        {links.map(([from, to]) => {
+          const a = positions[from]; const b = positions[to];
+          return a && b ? <line x1={a.x} y1={a.y} x2={b.x} y2={b.y}></line> : null;
+        })}
+      </g>
+      <path class="map-sweep" d="M44 496L836 44"></path>
+      <g class="constellation-nodes">
+        {visible.map(({ project, repo, x, y, cluster }, index) => (
+          <a
+            href={`/projects/${project.data.slug}/`}
+            data-node
+            data-repo={repo}
+            data-cluster={cluster}
+            data-title={project.data.title}
+            data-summary={project.data.summary}
+            data-role={project.data.role}
+            data-year={String(project.data.year)}
+            data-index={String(index + 1).padStart(2, '0')}
+            aria-label={`${project.data.title} case study`}
+          >
+            <circle class="node-glow" cx={x} cy={y} r="50"></circle>
+            <circle class="node-pulse" cx={x} cy={y} r={project.data.featured ? 18 : 15}></circle>
+            <circle class="node-orbit" cx={x} cy={y} r={project.data.featured ? 14 : 12}></circle>
+            <circle class="node-core" cx={x} cy={y} r={project.data.featured ? 10 : 7}></circle>
+            <text class="node-index" x={x + 16} y={y - 15}>{String(index + 1).padStart(2, '0')}</text>
+            <text x={x} y={y + 28} text-anchor="middle">{project.data.title}</text>
+          </a>
+        ))}
+      </g>
+    </svg>
+    </div>
+
+    {initial && (
+      <aside class="constellation-inspector" data-map-inspector data-repo={initial.repo} aria-live="polite">
+        <div class="inspector-topline">
+          <span class="mono" data-inspector-index>PROJECT / 01</span>
+          <span class="status-chip" data-status-chip data-state="pending"><span class="status-dot" aria-hidden="true"></span><span data-status-label>Status pending</span></span>
+        </div>
+        <div class="inspector-signal" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p class="project-role" data-inspector-cluster>{clusterLabels[initial.cluster]}</p>
+        <h2 data-inspector-title>{initial.project.data.title}</h2>
+        <p class="inspector-role" data-inspector-role>{initial.project.data.role}</p>
+        <p class="inspector-summary" data-inspector-summary>{initial.project.data.summary}</p>
+        <div class="inspector-footer">
+          <span class="mono" data-inspector-year>{initial.project.data.year}</span>
+          <a class="text-link" data-inspector-link href={`/projects/${initial.project.data.slug}/`}>Open case study <span aria-hidden="true">→</span></a>
+        </div>
+      </aside>
+    )}
+  </div>
+
+  <ul class="constellation-list" aria-label="Project constellation list">
+    {visible.map(({ project, repo, cluster }, index) => (
+      <li data-list-node data-repo={repo} data-cluster={cluster}>
+        <a href={`/projects/${project.data.slug}/`}>
+          <div class="constellation-list-topline">
+            <span class="mono">{String(index + 1).padStart(2, '0')} / {clusterLabels[cluster]}</span>
+            <span class="status-chip" data-status-chip data-state="pending"><span class="status-dot" aria-hidden="true"></span><span data-status-label>Status pending</span></span>
+          </div>
+          <strong>{project.data.title}</strong>
+          <span class="constellation-list-summary">{project.data.summary}</span>
+          <span class="constellation-list-action">Open case study <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>

@@ -1,0 +1,100 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { site } from '@/data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  type?: 'website' | 'article';
+}
+
+const {
+  title = `${site.name} — ${site.primaryRole}`,
+  description = site.positioning,
+  canonical = new URL(Astro.url.pathname, site.url).toString(),
+  image = new URL('/og-card.png', site.url).toString(),
+  type = 'website'
+} = Astro.props;
+
+const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN;
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  alternateName: site.handle,
+  url: site.url,
+  email: `mailto:${site.email}`,
+  homeLocation: { '@type': 'Country', name: site.location },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: site.school },
+  sameAs: [site.github, site.linkedin],
+  knowsAbout: ['Applied machine learning', 'Computer vision', 'Full-stack engineering', 'Raspberry Pi', 'Data science']
+};
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; connect-src 'self' https://cloudflareinsights.com; style-src 'self'; img-src 'self' data: https:; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'; upgrade-insecure-requests"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="theme-color" content="#071318" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="IAM-K1taru" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="John Michael Garcia — Applied ML Engineer" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content="John Michael Garcia — Applied ML Engineer" />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    {analyticsToken && (
+      <script
+        is:inline
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({ token: analyticsToken, spa: false })}
+      ></script>
+    )}
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="ambient-interface" aria-hidden="true">
+      <span class="interface-rail interface-rail-left"></span>
+      <span class="interface-rail interface-rail-right">
+        <span class="scroll-track"><span data-scroll-progress></span></span>
+      </span>
+      <span class="interface-corner interface-corner-top"></span>
+      <span class="interface-corner interface-corner-bottom"></span>
+    </div>
+    <Header currentPath={Astro.url.pathname} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline defer src="/scripts/site.js"></script>
+  </body>
+</html>
