@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { withBasePath } from '@/utils/urls';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -23,14 +24,14 @@ const repoId = new URL(data.repository).pathname.replace(/^\//, '');
   </div>
   <div class="project-card-content">
     <p class="project-role">{data.role}</p>
-    <h3><a href={`/projects/${data.slug}/`}>{data.title}</a></h3>
+    <h3><a href={withBasePath(`/projects/${data.slug}/`)}>{data.title}</a></h3>
     <p>{data.summary}</p>
   </div>
   <ul class="tag-list project-card-tags" aria-label={`${data.title} technologies`}>
     {data.skills.slice(0, compact ? 4 : 6).map((skill) => <li>{skill}</li>)}
   </ul>
   <div class="project-actions">
-    <a class="text-link" href={`/projects/${data.slug}/`}>Case study <span aria-hidden="true">→</span></a>
+    <a class="text-link" href={withBasePath(`/projects/${data.slug}/`)}>Case study <span aria-hidden="true">→</span></a>
     <a class="text-link" href={data.repository} target="_blank" rel="noopener noreferrer">Source <span class="sr-only">(opens in new tab)</span><span aria-hidden="true">↗</span></a>
     {data.demo && (
       <a

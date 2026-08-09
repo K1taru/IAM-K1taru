@@ -33,7 +33,7 @@ jobs:
           build-cmd: npm run sync:projects && npm run build
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          SITE_URL: https://portfolio.k1taru.space
+          SITE_URL: https://k1taru.github.io/IAM-K1taru
 
   deploy:
     needs: build

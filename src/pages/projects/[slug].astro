@@ -2,6 +2,7 @@
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { site } from '@/data/site';
+import { absoluteUrl, withBasePath } from '@/utils/urls';
 
 export async function getStaticPaths() {
   const projects = (await getCollection('projects')).filter((project) => !project.data.draft);
@@ -19,7 +20,7 @@ const projectSchema = {
   name: data.title,
   description: data.summary,
   codeRepository: data.repository,
-  url: new URL(`/projects/${data.slug}/`, site.url).toString(),
+  url: absoluteUrl(`/projects/${data.slug}/`, site.url),
   dateCreated: String(data.year),
   author: { '@type': 'Person', name: site.name, url: site.url },
   programmingLanguage: data.skills
@@ -30,7 +31,7 @@ const projectSchema = {
   <script is:inline type="application/ld+json" set:html={JSON.stringify(projectSchema)} />
   <article data-repo={repoId}>
     <header class="case-hero shell">
-      <p class="case-breadcrumb"><a href="/projects/">Projects</a> / {data.slug}</p>
+      <p class="case-breadcrumb"><a href={withBasePath('/projects/')}>Projects</a> / {data.slug}</p>
       <div class="grid items-end gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(280px,.75fr)] lg:gap-24">
         <div>
           <p class="eyebrow">{data.role}</p>
@@ -118,7 +119,7 @@ const projectSchema = {
 
           <div class="hero-actions !mt-12">
             <a class="button" href={data.repository} target="_blank" rel="noopener noreferrer">Review source <span class="sr-only">(opens in new tab)</span><span aria-hidden="true">↗</span></a>
-            <a class="button button-secondary" href="/projects/">Back to projects</a>
+            <a class="button button-secondary" href={withBasePath('/projects/')}>Back to projects</a>
           </div>
         </div>
       </div>

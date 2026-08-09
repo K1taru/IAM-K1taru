@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { site, skillGroups } from '@/data/site';
+import { absoluteUrl } from '@/utils/urls';
 
 export const prerender = true;
 
@@ -17,7 +18,7 @@ export async function GET() {
       skills: data.skills,
       repository: data.repository,
       demo: data.demo,
-      caseStudy: new URL(`/projects/${data.slug}/`, site.url).toString(),
+      caseStudy: absoluteUrl(`/projects/${data.slug}/`, site.url),
       evidence: data.evidence,
       metrics: data.metrics
     }));
@@ -45,4 +46,3 @@ export async function GET() {
     }
   });
 }
-

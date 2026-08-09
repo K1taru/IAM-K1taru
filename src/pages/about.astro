@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import CertificationCollection from '@/components/CertificationCollection.astro';
 import { site } from '@/data/site';
+import { withBasePath } from '@/utils/urls';
 ---
 
 <BaseLayout title="About — John Michael Garcia" description="The engineering approach and education behind John Michael Garcia's applied ML and full-stack systems work.">
@@ -64,7 +65,7 @@ import { site } from '@/data/site';
         </div>
         <div class="hero-actions">
           <a class="button" href={`mailto:${site.email}`}>Start a conversation</a>
-          <a class="button button-secondary" href="/projects/">Review projects</a>
+          <a class="button button-secondary" href={withBasePath('/projects/')}>Review projects</a>
         </div>
       </div>
     </div>

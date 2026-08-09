@@ -1,6 +1,6 @@
 # IAM-K1taru
 
-The source for [portfolio.k1taru.space](https://portfolio.k1taru.space), John Michael Garcia's applied machine learning and systems portfolio.
+The source for [k1taru.github.io/IAM-K1taru](https://k1taru.github.io/IAM-K1taru/), John Michael Garcia's applied machine learning and systems portfolio.
 
 The site is static by design. It has no public application backend, database, authentication, uploads, or contact form. GitHub Actions refreshes allowlisted GitHub metadata and deployment health before each deployment and every 6 minutes.
 
@@ -48,19 +48,17 @@ Set `draft: true` until those claims are approved. Team projects intentionally u
 
 The repository allowlist and demo health targets are in `config/projects.json`. Visitor input can never add a health-check destination.
 
-## Environment and domain
+## Environment and GitHub Pages URL
 
 `.env.example` documents the local build contract. GitHub Actions supplies the production site URL and its short-lived workflow token directly to the build. Do not commit a populated `.env` file.
 
-`SITE_URL` is compiled into canonical URLs, the sitemap, structured data, and machine-readable endpoints. The current production value is `https://portfolio.k1taru.space`.
+`SITE_URL` is compiled into canonical URLs, the sitemap, structured data, and machine-readable endpoints. The current production value is `https://k1taru.github.io/IAM-K1taru`.
 
-To change the production domain:
+To change the production URL:
 
 1. Update `SITE_URL` in `.github/workflows/deploy-pages.yml` and `.env.example`.
-2. Update `site.url`'s fallback in `src/data/site.ts` and the `site` fallback in `astro.config.mjs`.
-3. Update `public/CNAME`.
-4. Configure the custom domain under **Repository Settings → Pages** and update its DNS records.
-5. Deploy again.
+2. Update `site.url`'s fallback in `src/data/site.ts` and the `site` and `base` fallbacks in `astro.config.mjs`.
+3. Deploy again.
 
 ## GitHub Pages deployment
 
@@ -75,9 +73,8 @@ Each run checks out the latest `main` branch, refreshes `public/data/project-sta
 Before the first deployment:
 
 1. Open **Repository Settings → Pages** and select **GitHub Actions** as the source.
-2. Set the custom domain to `portfolio.k1taru.space`.
-3. Point the subdomain's DNS `CNAME` record to `K1taru.github.io`.
-4. Enable **Enforce HTTPS** after GitHub provisions the certificate.
+2. Leave **Custom domain** empty.
+3. Visit `https://k1taru.github.io/IAM-K1taru/` after the first successful workflow run.
 
 Local verification remains:
 
@@ -103,9 +100,9 @@ Review `SECURITY.md` before reporting or handling a vulnerability.
 
 ## Machine-readable portfolio
 
-- `/portfolio.json` — public structured evidence
-- `/llms.txt` — a concise, human-equivalent project index
-- `/robots.txt` and `/sitemap-index.xml`
+- `/IAM-K1taru/portfolio.json` — public structured evidence
+- `/IAM-K1taru/llms.txt` — a concise, human-equivalent project index
+- `/IAM-K1taru/robots.txt` and `/IAM-K1taru/sitemap-index.xml`
 - JSON-LD `Person` and `SoftwareSourceCode` records
 
 These endpoints repeat visible claims only. The project intentionally contains no hidden prompt injections, keyword stuffing, or instructions intended to manipulate automated evaluation.

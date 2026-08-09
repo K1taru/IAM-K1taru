@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { withBasePath } from '@/utils/urls';
 ---
 
 <BaseLayout title="Page not found — IAM-K1taru" description="The requested page could not be found.">
@@ -9,10 +10,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
       <h1>404</h1>
       <p>This path is outside the current project map. Return to the portfolio or browse the case studies.</p>
       <div class="hero-actions justify-center">
-        <a class="button" href="/">Return home</a>
-        <a class="button button-secondary" href="/projects/">View projects</a>
+        <a class="button" href={withBasePath('/')}>Return home</a>
+        <a class="button button-secondary" href={withBasePath('/projects/')}>View projects</a>
       </div>
     </div>
   </section>
 </BaseLayout>
-

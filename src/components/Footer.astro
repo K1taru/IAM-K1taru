@@ -1,5 +1,6 @@
 ---
 import { site } from '@/data/site';
+import { withBasePath } from '@/utils/urls';
 const year = new Date().getFullYear();
 ---
 
@@ -13,7 +14,7 @@ const year = new Date().getFullYear();
       <a href={site.github} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       <a href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
       <a href={`mailto:${site.email}`}>Email</a>
-      <a href="/.well-known/security.txt">Security</a>
+      <a href={withBasePath('/.well-known/security.txt')}>Security</a>
     </div>
   </div>
   <div class="shell footer-base">

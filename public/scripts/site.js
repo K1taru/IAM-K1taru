@@ -1,5 +1,7 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scriptSource = document.currentScript?.src || window.location.href;
+  const statusUrl = new URL('../data/project-status.json', scriptSource);
 
   const scrollProgress = document.querySelector('[data-scroll-progress]');
   let scrollFrame = 0;
@@ -188,7 +190,7 @@
     });
   };
 
-  fetch('/data/project-status.json', { headers: { Accept: 'application/json' } })
+  fetch(statusUrl, { headers: { Accept: 'application/json' } })
     .then((response) => response.ok ? response.json() : null)
     .then((payload) => payload?.projects?.forEach(applyProjectStatus))
     .catch(() => {});

@@ -1,12 +1,13 @@
 import { getCollection } from 'astro:content';
 import { site } from '@/data/site';
+import { absoluteUrl } from '@/utils/urls';
 
 export const prerender = true;
 
 export async function GET() {
   const projects = (await getCollection('projects'))
     .filter((project) => !project.data.draft)
-    .map(({ data }) => `- ${data.title}: ${data.summary} (${new URL(`/projects/${data.slug}/`, site.url)})`)
+    .map(({ data }) => `- ${data.title}: ${data.summary} (${absoluteUrl(`/projects/${data.slug}/`, site.url)})`)
     .join('\n');
 
   const body = `# ${site.name} / IAM-K1taru
@@ -18,7 +19,7 @@ John Michael Garcia is a Computer Engineering student specializing in Data Scien
 ## Canonical sources
 
 - Portfolio: ${site.url}
-- Structured portfolio data: ${new URL('/portfolio.json', site.url)}
+- Structured portfolio data: ${absoluteUrl('/portfolio.json', site.url)}
 - GitHub: ${site.github}
 - LinkedIn: ${site.linkedin}
 
@@ -38,4 +39,3 @@ This file contains only information also presented to human visitors. It contain
     }
   });
 }
-

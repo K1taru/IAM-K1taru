@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { withBasePath } from '@/utils/urls';
 
 interface Props { projects: CollectionEntry<'projects'>[] }
 const { projects } = Astro.props;
@@ -94,7 +95,7 @@ const links: Array<[keyof typeof positions, keyof typeof positions]> = [
       <g class="constellation-nodes">
         {visible.map(({ project, repo, x, y, cluster }, index) => (
           <a
-            href={`/projects/${project.data.slug}/`}
+            href={withBasePath(`/projects/${project.data.slug}/`)}
             data-node
             data-repo={repo}
             data-cluster={cluster}
@@ -130,7 +131,7 @@ const links: Array<[keyof typeof positions, keyof typeof positions]> = [
         <p class="inspector-summary" data-inspector-summary>{initial.project.data.summary}</p>
         <div class="inspector-footer">
           <span class="mono" data-inspector-year>{initial.project.data.year}</span>
-          <a class="text-link" data-inspector-link href={`/projects/${initial.project.data.slug}/`}>Open case study <span aria-hidden="true">→</span></a>
+          <a class="text-link" data-inspector-link href={withBasePath(`/projects/${initial.project.data.slug}/`)}>Open case study <span aria-hidden="true">→</span></a>
         </div>
       </aside>
     )}
@@ -139,7 +140,7 @@ const links: Array<[keyof typeof positions, keyof typeof positions]> = [
   <ul class="constellation-list" aria-label="Project constellation list">
     {visible.map(({ project, repo, cluster }, index) => (
       <li data-list-node data-repo={repo} data-cluster={cluster}>
-        <a href={`/projects/${project.data.slug}/`}>
+        <a href={withBasePath(`/projects/${project.data.slug}/`)}>
           <div class="constellation-list-topline">
             <span class="mono">{String(index + 1).padStart(2, '0')} / {clusterLabels[cluster]}</span>
             <span class="status-chip" data-status-chip data-state="pending"><span class="status-dot" aria-hidden="true"></span><span data-status-label>Status pending</span></span>
