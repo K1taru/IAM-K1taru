@@ -10,7 +10,6 @@ contributions:
   - "Helped develop an integrated workflow rather than presenting the chatbot or portals as isolated demonstrations."
 skills: ["React", "React Native", "Node.js", "GraphQL", "PostgreSQL", "Redis", "Socket.IO"]
 repository: "https://github.com/Cyber-Six/MDSystem"
-demo: "https://www.mdsystemtip.space/"
 featured: true
 draft: false
 year: 2026
@@ -40,4 +39,3 @@ The case study deliberately describes the shared system and John’s team partic
 ## MDS-Chatbot as a subsystem
 
 The related chatbot repository is shown here because its value comes from its connection to MDSystem. Its documented design uses a separate Node.js service and local LLaMA runtime, with patient and staff routes separated behind backend-validated identity context.
-

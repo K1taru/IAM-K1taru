@@ -8,10 +8,9 @@ team: "Independently maintained K1taru project"
 contributions:
   - "Built a real-time system-monitoring dashboard for Raspberry Pi."
   - "Designed a protected interface around authentication, live metrics, and remote operational visibility."
-  - "Deployed and maintained the dashboard behind Cloudflare-managed ingress."
+  - "Deployed and maintained the dashboard behind managed remote ingress."
 skills: ["JavaScript", "Linux", "System monitoring", "Raspberry Pi", "Cloudflare", "Authentication"]
 repository: "https://github.com/K1taru/pi-monitor"
-demo: "https://raspy.k1taru.space/"
 featured: true
 draft: false
 year: 2026
@@ -35,4 +34,3 @@ lessons:
 ## Infrastructure as a project
 
 Pi Monitor makes the hosting environment visible as engineering work. Its visual system also inspired this portfolio’s navy, cyan, green, and grid-based design language.
-

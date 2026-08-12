@@ -10,7 +10,6 @@ contributions:
   - "Helped bring the project to a publicly hosted demonstration suitable for portfolio review."
 skills: ["JavaScript", "Web application", "Data validation", "Workflow design"]
 repository: "https://github.com/Halemamaw/AyuDirect"
-demo: "https://ayudirect.k1taru.space/"
 featured: true
 draft: false
 year: 2026
@@ -33,4 +32,3 @@ lessons:
 ## Designing for trust
 
 AyuDirect explores the product tension between preventing abuse and keeping public assistance usable. This portfolio describes John’s participation as a team contribution and does not assign unconfirmed ownership of specific modules.
-

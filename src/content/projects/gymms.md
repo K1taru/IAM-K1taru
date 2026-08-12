@@ -7,11 +7,10 @@ role: "Repository maintainer and full-stack developer"
 team: "K1taru-maintained project"
 contributions:
   - "Built membership, payment, check-in, reporting, and role-aware operational workflows with Django."
-  - "Containerized the application and documented a Raspberry Pi 5 deployment through Cloudflare Tunnel."
+  - "Containerized the application and documented a small self-hosted deployment model."
   - "Structured the system around PostgreSQL-backed records and operational analytics."
 skills: ["Django", "PostgreSQL", "JavaScript", "Docker", "Cloudflare Tunnel", "Raspberry Pi"]
 repository: "https://github.com/K1taru/GyMMS"
-demo: "https://gymms.k1taru.space/"
 featured: true
 draft: false
 year: 2026
@@ -25,7 +24,7 @@ gallery: []
 architecture: ["Django application", "PostgreSQL database", "Docker Compose services", "Cloudflare Tunnel ingress"]
 security:
   - "Role-based owner and staff access is documented in the project."
-  - "The origin is published through an outbound Cloudflare Tunnel rather than a directly exposed Pi port."
+  - "The deployment avoids directly exposing a local service port."
 outcomes:
   - "Combined core gym operations into a self-hosted management workflow designed for a small deployment footprint."
 lessons:
@@ -35,4 +34,3 @@ lessons:
 ## A practical self-hosted operations system
 
 GyMMS demonstrates the product and infrastructure sides of John’s work. The application models real membership operations while the deployment uses hardware he can own, observe, and maintain directly.
-

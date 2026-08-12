@@ -1,9 +1,9 @@
 # IAM-K1taru
 
-The source for John Michael Garcia's applied machine learning and systems portfolio. The same Astro project is deployed independently at:
+The source for John Michael Garcia's applied machine learning and systems portfolio. The same Astro project can be deployed independently at:
 
-- `https://portfolio.k1taru.space/` from a Linux host
-- `https://k1taru.github.io/IAM-K1taru/` from GitHub Pages
+- a custom-domain Linux host
+- a GitHub Pages project site
 
 The site is static by design. It has no public application backend, database, authentication, uploads, contact form, cron job, or scheduled GitHub Actions workflow.
 
@@ -27,6 +27,8 @@ npm install
 npm run dev
 ```
 
+Set local and production-facing values in `.env`. Keep real hostnames, bind addresses, ports, contact addresses, and analytics tokens out of public documentation.
+
 Useful checks:
 
 ```bash
@@ -38,8 +40,8 @@ npm run build:linux
 
 The host-specific builds deliberately use different public paths:
 
-- `npm run build:github` builds for `https://k1taru.github.io/IAM-K1taru/` with the `/IAM-K1taru` base path.
-- `npm run build:linux` builds for `https://portfolio.k1taru.space/` at the domain root.
+- `npm run build:github` builds for a GitHub Pages project URL with the repository-name base path.
+- `npm run build:linux` builds for a custom domain served at the domain root.
 
 Do not serve a GitHub build on the Linux domain or a Linux build on GitHub Pages; their asset and navigation base paths are different.
 
@@ -53,7 +55,7 @@ Demo URLs remain controlled by project frontmatter in `src/content/projects`; vi
 
 ## Linux deployment with one systemd service
 
-The provided unit builds the root-path variant and serves `dist/` on `127.0.0.1:4321`. Your existing reverse proxy or tunnel can target that address.
+The provided unit builds the root-path variant and serves `dist/` using `HOST` and `PORT` from `.env`. Point your reverse proxy or tunnel at the configured local bind address.
 
 Install dependencies once, then install and start the unit:
 
@@ -64,7 +66,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now iam-k1taru.service
 ```
 
-The checked-in unit already uses this machine's current user, absolute repository path, and NVM Node 25 path. If the repository or active Node installation moves, update `User`, `Group`, `WorkingDirectory`, `ReadWritePaths`, and `Environment=PATH=...` in the unit before installing it.
+Before installing the unit, update `User`, `Group`, `WorkingDirectory`, `ReadWritePaths`, `EnvironmentFile`, and `Environment=PATH=...` for the target machine.
 
 Common operations:
 
@@ -80,11 +82,11 @@ Each service start runs `npm run build:linux` before starting the static server.
 
 `.github/workflows/deploy-pages.yml` runs only on pushes to `main` or manual dispatch. It builds with `npm run build:github`; there is no cron schedule.
 
-For the `github.io` address to remain independently accessible, open **Repository Settings → Pages** and remove any value from **Custom domain**. Also keep the repository free of a `CNAME` file. GitHub performs this redirect at the Pages hosting layer, so Astro or client-side JavaScript cannot disable it.
+For the GitHub Pages address to remain independently accessible, open **Repository Settings → Pages** and remove any value from **Custom domain**. Also keep the repository free of a `CNAME` file. GitHub performs this redirect at the Pages hosting layer, so Astro or client-side JavaScript cannot disable it.
 
-If the setting is already empty here, check the Pages settings for the `K1taru.github.io` user-site repository. GitHub applies a user site's custom domain to project sites owned by the same account by default. Remove `portfolio.k1taru.space` from that user-site Pages configuration as well if it is the source of the redirect.
+If the setting is already empty here, check the Pages settings for the account's user-site repository. GitHub can apply a user site's custom domain to project sites owned by the same account by default. Remove any custom domain from that user-site Pages configuration as well if it is the source of the redirect.
 
-The Linux deployment can continue using `portfolio.k1taru.space` through your separately managed DNS/proxy configuration. Do not attach that hostname as the GitHub Pages custom domain when both URLs must work independently.
+The Linux deployment can continue using its custom domain through separately managed DNS or proxy configuration. Do not attach that hostname as the GitHub Pages custom domain when both URLs must work independently.
 
 Before the first GitHub Pages deployment:
 
@@ -117,4 +119,4 @@ Review `SECURITY.md` before reporting or handling a vulnerability.
 
 ## Machine-readable portfolio
 
-Both host variants publish `portfolio.json`, `llms.txt`, `robots.txt`, and the generated sitemap at their respective base paths. Canonical and structured-data URLs are compiled for the host selected by the build command.
+Both host variants publish `portfolio.json`, `llms.txt`, `robots.txt`, and the generated sitemap at their respective base paths. Canonical and structured-data URLs are compiled for the host selected by the build command or environment.

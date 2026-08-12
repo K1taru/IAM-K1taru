@@ -11,7 +11,6 @@ contributions:
   - "Targeted the deployment for Raspberry Pi 5 and camera-assisted edge use."
 skills: ["Python", "YOLO", "ONNX", "Computer vision", "React", "Raspberry Pi"]
 repository: "https://github.com/K1taru/MosKita"
-demo: "https://moskita.k1taru.space/"
 featured: true
 draft: false
 year: 2026
@@ -39,4 +38,3 @@ lessons:
 MosKita connects the full applied-ML loop: gathering and organizing local examples, training an object detector, exporting it, and designing an inference surface that can run close to the camera.
 
 The project’s focus is not a claim that automation replaces public-health professionals. It is an exploration of how low-cost edge systems could help prioritize inspection work.
-
