@@ -9,10 +9,12 @@ User=k1taru
 Group=k1taru
 WorkingDirectory=/home/k1taru/IAM-K1taru
 Environment=NODE_ENV=production
-EnvironmentFile=/home/k1taru/IAM-K1taru/.env
+Environment=ASTRO_TELEMETRY_DISABLED=1
+EnvironmentFile=-/home/k1taru/IAM-K1taru/.env
 Environment=PATH=/home/k1taru/.nvm/versions/node/v25.8.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin
+ExecStartPre=/usr/bin/env npm run preflight:deploy
 ExecStartPre=/usr/bin/env npm run build:linux
-ExecStart=/usr/bin/env npm run server
+ExecStart=/usr/bin/env npm run serve
 Restart=on-failure
 RestartSec=5s
 TimeoutStopSec=15s

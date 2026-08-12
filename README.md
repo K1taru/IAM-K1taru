@@ -68,6 +68,8 @@ sudo systemctl enable --now iam-k1taru.service
 
 Before installing the unit, update `User`, `Group`, `WorkingDirectory`, `ReadWritePaths`, `EnvironmentFile`, and `Environment=PATH=...` for the target machine.
 
+If the service log says `astro: not found` or reports a missing Astro dependency, run `npm ci` from the project directory and restart the unit.
+
 Common operations:
 
 ```bash
