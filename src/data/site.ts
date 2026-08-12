@@ -16,7 +16,7 @@ export const site = {
   email: import.meta.env.CONTACT_EMAIL || 'jmgarcia.main@gmail.com',
   github: 'https://github.com/K1taru',
   linkedin: 'https://ph.linkedin.com/in/jmgarcia-main',
-  url: import.meta.env.SITE_URL || 'https://portfolio.k1taru.space',
+  url: import.meta.env.SITE_URL || 'https://example.com',
   repository: 'https://github.com/K1taru/IAM-K1taru'
 } as const;
 

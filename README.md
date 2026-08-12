@@ -55,20 +55,21 @@ Demo URLs remain controlled by project frontmatter in `src/content/projects`; vi
 
 ## Linux deployment with one systemd service
 
-The provided unit builds the root-path variant and serves `dist/` using `HOST` and `PORT` from `.env`. Point your reverse proxy or tunnel at the configured local bind address.
+Build the root-path variant before starting the provided unit. The unit serves `dist/` using `HOST` and `PORT` from `.env`. Point your reverse proxy or tunnel at the configured local bind address.
 
-Install dependencies once, then install and start the unit:
+Install dependencies, build the site, then install the unit in `/etc/systemd/system`:
 
 ```bash
 npm ci
-sudo cp deploy/iam-k1taru.service /etc/systemd/system/iam-k1taru.service
+npm run build:linux
+sudo install -m 0644 deploy/iam-k1taru.service /etc/systemd/system/iam-k1taru.service
 sudo systemctl daemon-reload
 sudo systemctl enable --now iam-k1taru.service
 ```
 
-Before installing the unit, update `User`, `Group`, `WorkingDirectory`, `ReadWritePaths`, `EnvironmentFile`, and `Environment=PATH=...` for the target machine.
+Before installing the unit, update `User`, `Group`, `WorkingDirectory`, `EnvironmentFile`, `Environment=PATH=...`, and the `dist/index.html` path for the target machine.
 
-If the service log says `astro: not found` or reports a missing Astro dependency, run `npm ci` from the project directory and restart the unit.
+The service intentionally does not install dependencies or build the project. If `npm ci` or `npm run build:linux` fails, resolve that command directly before starting the service. If `dist/index.html` is missing, systemd stops immediately instead of serving an incomplete deployment.
 
 Common operations:
 
@@ -78,7 +79,7 @@ sudo journalctl -u iam-k1taru.service -f
 sudo systemctl restart iam-k1taru.service
 ```
 
-Each service start runs `npm run build:linux` before starting the static server. After pulling changes, restart the same service to rebuild and publish them. No timer or second service is required.
+After pulling changes, run `npm ci`, run `npm run build:linux`, and restart the service to publish the new static files. No timer or second service is required.
 
 ## Independent GitHub Pages deployment
 

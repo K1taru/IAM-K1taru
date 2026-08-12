@@ -8,11 +8,10 @@
     "start": "npm run serve",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "build:github": "SITE_URL=https://k1taru.github.io/IAM-K1taru ASTRO_TELEMETRY_DISABLED=1 astro build",
-    "build:linux": "SITE_URL=https://portfolio.k1taru.space ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "build:linux": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
     "serve": "node scripts/serve.mjs",
     "server": "npm run serve",
-    "preflight:deploy": "node scripts/check-deploy-deps.mjs",
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
     "verify": "npm run check && npm run build"
   },
