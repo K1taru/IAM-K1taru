@@ -12,14 +12,19 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: Client
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version-file: .nvmrc
+          node-version-file: Client/.nvmrc
           cache: npm
+          cache-dependency-path: Client/package-lock.json
       - run: npm ci
       - run: npm run lint
       - run: npm run typecheck
-      - run: node --test services/demo-status/server.test.mjs
+      - run: node --test
+        working-directory: .
       - run: npm run build

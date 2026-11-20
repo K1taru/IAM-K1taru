@@ -1,0 +1,70 @@
+.project-catalog { padding-block-end: var(--section-space); }
+
+.catalog-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-block-end: 1.25rem;
+}
+
+.catalog-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.catalog-filters .button { padding-inline: 0.875rem; }
+.catalog-filters button[aria-pressed="true"] {
+  border-color: var(--palette-accent);
+  background: var(--palette-accent);
+  color: var(--palette-on-accent);
+}
+.catalog-count { color: var(--palette-muted); font-size: 0.9375rem; }
+
+.catalog-rows { border-block-start: 1px solid var(--palette-divider); }
+.catalog-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem 1.25rem;
+  align-items: start;
+  padding: 1rem 0.75rem;
+  border-block-end: 1px solid var(--palette-divider);
+}
+
+.catalog-row:is(:target, [data-catalog-target]) {
+  border-radius: 0.35rem;
+  background: var(--palette-surface);
+  box-shadow: inset 3px 0 var(--palette-accent);
+}
+
+.catalog-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  align-items: baseline;
+  color: var(--palette-muted);
+  font-size: 0.875rem;
+}
+.catalog-meta time { color: var(--palette-ink); font-variant-numeric: tabular-nums; font-weight: 650; }
+.catalog-title { font-size: clamp(2.15rem, 4vw, 3.15rem); line-height: 1; letter-spacing: -0.022em; }
+.catalog-title a { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; max-width: 100%; }
+.catalog-title a:hover { color: var(--palette-accent); }
+.catalog-title .direction-icon { color: var(--palette-accent); }
+.catalog-role { margin-block-start: 0.25rem; color: var(--palette-muted); font-size: 0.875rem; }
+.catalog-summary { color: var(--palette-muted); line-height: 1.58; }
+.catalog-source { justify-self: start; }
+
+@media (min-width: 45rem) {
+  .catalog-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) auto;
+    padding: 1.25rem 1rem;
+  }
+  .catalog-meta { grid-column: 1 / -1; }
+  .catalog-summary { align-self: center; }
+}
+
+@media (min-width: 64rem) {
+  .catalog-row {
+    grid-template-columns: minmax(7rem, 0.6fr) minmax(0, 1.2fr) minmax(0, 1.55fr) auto;
+    gap: 0.75rem 1.5rem;
+    padding-block: 1.5rem;
+  }
+  .catalog-meta { grid-column: auto; display: grid; align-self: center; }
+}

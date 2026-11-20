@@ -1,0 +1,29 @@
+---
+title: "CookEat"
+slug: "cookeat"
+summary: "A recipe-sharing app I helped build with React, Node.js, and PostgreSQL."
+problem: "Recipe posts are easier to use when the ingredients and instructions are easy to find. A general social feed doesn’t give that information much structure."
+role: "Co-developer"
+team: "Collaborative project credited to jaygarciaaa and K1taru"
+contributions:
+  - "Co-developed the React and Node.js app with PostgreSQL behind it."
+  - "Worked on a way to host it on a Raspberry Pi with Cloudflare Tunnel."
+skills: ["React", "Node.js", "Express", "PostgreSQL", "REST APIs", "Raspberry Pi"]
+repository: "https://github.com/K1taru/CookEat"
+draft: false
+year: 2025
+evidence:
+  - label: "Product type"
+    value: "Culinary social network"
+  - label: "Deployment target"
+    value: "Raspberry Pi 4"
+metrics: []
+gallery: []
+architecture: ["React client", "Express REST API", "PostgreSQL data", "Raspberry Pi deployment"]
+security:
+  - "Administrative operations are documented as server-side tasks rather than a public web-admin surface."
+outcomes:
+  - "We built the recipe-sharing app from the interface through the API and database, with a plan for hosting it on a Pi."
+lessons:
+  - "Decide early who can change or remove a post and which admin tasks should stay on the server."
+---
