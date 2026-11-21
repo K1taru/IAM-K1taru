@@ -26,6 +26,7 @@ function subscribeToHash(onChange: () => void) {
 export function SiteNav() {
   const header = useRef<HTMLElement>(null)
   const path = usePathname().replace(/\/?$/, '/')
+  const onHome = path === '/'
   const hash = useSyncExternalStore(subscribeToHash, () => window.location.hash, () => '')
   const onAbout = path === '/about/'
   const onSkills = onAbout && hash === '#tools'
@@ -33,23 +34,42 @@ export function SiteNav() {
   useEffect(() => {
     const bar = header.current
     if (!bar) return
+    const heroTitle = onHome ? document.getElementById('home-title') : null
+    let observer: IntersectionObserver | undefined
+
     const measure = () => {
       document.documentElement.style.setProperty('--header-height', `calc(${bar.offsetHeight}px + var(--header-offset))`)
+      if (!heroTitle) return
+
+      const headerBottom = bar.offsetHeight + Number.parseFloat(getComputedStyle(bar).insetBlockStart)
+      const updateWordmark = (titleBottom: number) => {
+        bar.toggleAttribute('data-hero-name-passed', titleBottom <= headerBottom)
+      }
+
+      updateWordmark(heroTitle.getBoundingClientRect().bottom)
+      observer?.disconnect()
+      observer = new IntersectionObserver(([entry]) => {
+        updateWordmark(entry.boundingClientRect.bottom)
+      }, { rootMargin: `-${headerBottom}px 0px 100% 0px` })
+      observer.observe(heroTitle)
     }
     measure()
     const resize = new ResizeObserver(measure)
     resize.observe(bar)
     return () => {
+      observer?.disconnect()
       resize.disconnect()
+      bar.removeAttribute('data-hero-name-passed')
       document.documentElement.style.removeProperty('--header-height')
     }
-  }, [])
+  }, [onHome])
 
   return (
-    <header className="site-header" ref={header}>
-      <nav className="site-header-inner" aria-label="Main navigation">
+    <header className="site-header" ref={header} data-home={onHome || undefined}>
+      <nav className="site-shell site-header-inner" aria-label="Main navigation">
         <Link href="/" className="site-brand site-wordmark" aria-label={`${profile.wordmark} Portfolio home`}>
-          <span>{profile.wordmark}</span>{' '}<span className="site-wordmark-accent">Portfolio</span>
+          <span className="site-wordmark-full" aria-hidden="true">{profile.wordmark}{' '}<span className="site-wordmark-accent">Portfolio</span></span>
+          <span className="site-wordmark-short site-wordmark-accent" aria-hidden="true">Portfolio</span>
         </Link>
         <ul className="site-nav-links">
           {links.map(({ href, label }) => {

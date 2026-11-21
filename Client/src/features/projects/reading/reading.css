@@ -1,5 +1,5 @@
 .reader-page { padding-block: clamp(1.25rem, 4vw, 3rem) var(--section-space); }
-.reader-header { margin-block-start: 0.75rem; padding-block: clamp(1.25rem, 4vw, 2.75rem); }
+.reader-header { margin-block-start: 0.75rem; padding-block: var(--section-gap) var(--intro-space-end); }
 .reader-header .page-title { max-width: 18ch; overflow-wrap: anywhere; text-wrap: wrap; }
 
 .reader-actions { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-block-start: 1.25rem; }
@@ -18,7 +18,7 @@
 
 .reader-body {
   min-width: 0;
-  max-width: 65ch;
+  max-width: var(--prose-width);
   display: grid;
   gap: clamp(1.75rem, 4vw, 3rem);
 }
@@ -27,7 +27,7 @@
   padding-block-start: 1.25rem;
   border-block-start: 1px solid var(--panel-edge);
 }
-.reader-section .section-title { font-size: clamp(min(2.5rem, 15vw), 5vw, 3.75rem); margin-block-end: 1rem; }
+.reader-section .section-title { margin-block-end: 1rem; }
 
 .evidence-grid { display: grid; gap: 0.75rem; margin-block-start: 1.25rem; }
 .evidence-grid > div {

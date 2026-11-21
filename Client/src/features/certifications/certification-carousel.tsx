@@ -1,11 +1,12 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { DirectionIcon } from '@/components/direction-icon'
 import { CertificateCard, type CertificateCardProps } from './certificate-card'
 
 export function CertificationCarousel({ credentials }: { credentials: Omit<CertificateCardProps, 'compact'>[] }) {
   const track = useRef<HTMLUListElement>(null)
+  const drag = useRef<{ id: number; x: number; scrollLeft: number } | null>(null)
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(false)
 
@@ -16,16 +17,6 @@ export function CertificationCarousel({ credentials }: { credentials: Omit<Certi
     setAtEnd(rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 1)
   }, [])
 
-  const handleWheel = useCallback((event: globalThis.WheelEvent) => {
-    const rail = track.current
-    if (!rail || (event.target as Element).closest('dialog[open]')) return
-    // Let trackpads handle their native horizontal gesture. A vertical mouse
-    // wheel gently advances the rail while the page keeps scrolling normally.
-    if (Math.abs(event.deltaX) > Math.abs(event.deltaY) || !event.deltaY) return
-    const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE ? 24 : event.deltaMode === WheelEvent.DOM_DELTA_PAGE ? rail.clientWidth : 1
-    rail.scrollLeft += event.deltaY * unit * 0.55
-  }, [])
-
   useEffect(() => {
     const rail = track.current
     if (!rail) return
@@ -33,13 +24,36 @@ export function CertificationCarousel({ credentials }: { credentials: Omit<Certi
     const resize = new ResizeObserver(updatePosition)
     resize.observe(rail)
     rail.addEventListener('scroll', updatePosition, { passive: true })
-    rail.addEventListener('wheel', handleWheel, { passive: true })
     return () => {
       resize.disconnect()
       rail.removeEventListener('scroll', updatePosition)
-      rail.removeEventListener('wheel', handleWheel)
     }
-  }, [handleWheel, updatePosition])
+  }, [updatePosition])
+
+  function startDrag(event: PointerEvent<HTMLUListElement>) {
+    if (event.pointerType !== 'mouse' || event.button !== 0 || (atStart && atEnd) ||
+      (event.target as Element).closest('dialog')) return
+    drag.current = { id: event.pointerId, x: event.clientX, scrollLeft: event.currentTarget.scrollLeft }
+  }
+
+  function dragTrack(event: PointerEvent<HTMLUListElement>) {
+    const start = drag.current
+    if (start?.id !== event.pointerId) return
+    const rail = event.currentTarget
+    const distance = start.x - event.clientX
+    if (!rail.hasPointerCapture(event.pointerId)) {
+      if (Math.abs(distance) < 6) return
+      rail.setPointerCapture(event.pointerId)
+      rail.dataset.dragging = ''
+    }
+    rail.scrollLeft = start.scrollLeft + distance
+  }
+
+  function endDrag(event: PointerEvent<HTMLUListElement>) {
+    if (drag.current?.id !== event.pointerId) return
+    drag.current = null
+    delete event.currentTarget.dataset.dragging
+  }
 
   function move(direction: -1 | 1) {
     const rail = track.current
@@ -58,31 +72,38 @@ export function CertificationCarousel({ credentials }: { credentials: Omit<Certi
 
   return (
     <div className="certification-carousel">
-      <div className="certification-carousel-toolbar">
-        <p id="certification-carousel-help">Scroll past, swipe, or use the arrows to browse all {credentials.length} certifications.</p>
-        <div className="certification-carousel-controls" aria-label="Certification carousel controls">
-          <button type="button" onClick={() => move(-1)} disabled={atStart} aria-label="Show previous certification">
-            <DirectionIcon direction="left" />
-          </button>
-          <button type="button" onClick={() => move(1)} disabled={atEnd} aria-label="Show next certification">
-            <DirectionIcon />
-          </button>
-        </div>
+      <p id="certification-carousel-help">Drag, swipe, or use the arrows to browse all {credentials.length} certifications.</p>
+      <div className="certification-carousel-rail">
+        <button className="certification-carousel-arrow" type="button" onClick={() => move(-1)} disabled={atStart} aria-label="Show previous certification">
+          <DirectionIcon direction="left" />
+        </button>
+        <ul
+          ref={track}
+          className="certification-carousel-track"
+          aria-label="Certifications carousel"
+          aria-describedby="certification-carousel-help"
+          tabIndex={0}
+          onKeyDown={handleKeyDown}
+          onPointerDown={startDrag}
+          onPointerMove={dragTrack}
+          onPointerUp={endDrag}
+          onPointerCancel={endDrag}
+          onLostPointerCapture={endDrag}
+          onPointerLeave={endDrag}
+          onDragStart={(event) => {
+            if (!(event.target as Element).closest('dialog')) event.preventDefault()
+          }}
+        >
+          {credentials.map((credential) => (
+            <li key={credential.slug} className="certification-carousel-item">
+              <CertificateCard {...credential} compact />
+            </li>
+          ))}
+        </ul>
+        <button className="certification-carousel-arrow" type="button" onClick={() => move(1)} disabled={atEnd} aria-label="Show next certification">
+          <DirectionIcon />
+        </button>
       </div>
-      <ul
-        ref={track}
-        className="certification-carousel-track"
-        aria-label="Certifications carousel"
-        aria-describedby="certification-carousel-help"
-        tabIndex={0}
-        onKeyDown={handleKeyDown}
-      >
-        {credentials.map((credential) => (
-          <li key={credential.slug} className="certification-carousel-item">
-            <CertificateCard {...credential} compact />
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }

@@ -47,7 +47,7 @@ export function AboutPage() {
               <span id="certifications" aria-hidden="true" className="block" />
               <h2 id="experience-title" className="section-title">Experience</h2>
             </div>
-            <div className="max-w-[65ch]">
+            <div className="max-w-[var(--prose-width)]">
               <h3 className="text-xl font-semibold">Education</h3>
               <p className="mt-2 leading-relaxed text-muted">
                 {person.education}
@@ -76,7 +76,7 @@ export function AboutPage() {
 
           <section id="leadership" className="panel-frame panel-pad grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10" aria-labelledby="leadership-title" data-reveal="">
             <h2 id="leadership-title" className="section-title">Leadership</h2>
-            <ul className="max-w-[65ch] space-y-4">
+            <ul className="max-w-[var(--prose-width)] space-y-4">
               {leadership.map(({ title, details }) => (
                 <li key={title}>
                   <h3 className="font-semibold">{title}</h3>
@@ -101,7 +101,7 @@ export function AboutPage() {
 
           <section id="roadmap" className="panel-frame panel-pad grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10" aria-labelledby="interests-title" data-reveal="">
             <h2 id="interests-title" className="section-title">What I’m interested in</h2>
-            <p className="max-w-[65ch] self-center leading-relaxed text-muted">
+            <p className="max-w-[var(--prose-width)] self-center leading-relaxed text-muted">
               {about.interests}
             </p>
           </section>

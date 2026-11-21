@@ -123,16 +123,18 @@ html:has(.certificate-dialog[open]) { overflow: hidden; }
 }
 
 .certification-carousel { min-width: 0; }
-.certification-carousel-toolbar {
-  display: flex;
+.certification-carousel-rail {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-block-end: 0.75rem;
+  gap: clamp(0.25rem, 1vw, 0.85rem);
 }
-.certification-carousel-toolbar > p { color: var(--palette-muted); font-size: 0.9rem; }
-.certification-carousel-controls { display: flex; flex: none; gap: 0.5rem; }
-.certification-carousel-controls button {
+.certification-carousel > p {
+  margin-block-end: 0.75rem;
+  color: var(--palette-muted);
+  font-size: 0.95rem;
+}
+.certification-carousel-arrow {
   display: grid;
   width: 2.75rem;
   height: 2.75rem;
@@ -142,8 +144,8 @@ html:has(.certificate-dialog[open]) { overflow: hidden; }
   color: var(--palette-accent);
   background: var(--palette-surface);
 }
-.certification-carousel-controls button:hover:not(:disabled) { border-color: var(--palette-accent); background: #173237; }
-.certification-carousel-controls button:disabled { cursor: not-allowed; opacity: 0.4; }
+.certification-carousel-arrow:hover:not(:disabled) { border-color: var(--palette-accent); background: #173237; }
+.certification-carousel-arrow:disabled { cursor: not-allowed; opacity: 0.4; }
 .certification-carousel-track {
   display: flex;
   gap: 1rem;
@@ -151,13 +153,20 @@ html:has(.certificate-dialog[open]) { overflow: hidden; }
   overflow-x: auto;
   overscroll-behavior-inline: contain;
   padding: 0.25rem 0.25rem 1rem;
-  margin-inline: -0.25rem;
+  scroll-padding-inline-start: 0.25rem;
   scrollbar-color: var(--palette-control) transparent;
   scrollbar-width: thin;
   scroll-snap-type: x proximity;
 }
+.certification-carousel-track[data-dragging] { scroll-snap-type: none; }
+@media (any-pointer: fine) {
+  .certification-carousel-track { cursor: grab; user-select: none; }
+  .certification-carousel-track dialog { cursor: auto; user-select: text; }
+  .certification-carousel-track[data-dragging],
+  .certification-carousel-track[data-dragging] * { cursor: grabbing; }
+}
 .certification-carousel-item {
-  flex: 0 0 min(78vw, 19rem);
+  flex: 0 0 min(85%, 19rem);
   min-width: 0;
   scroll-snap-align: start;
 }
@@ -187,18 +196,18 @@ html:has(.certificate-dialog[open]) { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .certification-carousel-controls button {
+  .certification-carousel-arrow {
     transition: transform 160ms var(--archive-ease), border-color 180ms ease, background-color 180ms ease;
   }
   .certificate-card-compact .certificate-thumbnail img { transition: transform 220ms var(--archive-ease); }
-  .certification-carousel-controls button:active:not(:disabled) { transform: scale(0.96); }
+  .certification-carousel-arrow:active:not(:disabled) { transform: scale(0.96); }
   @media (hover: hover) and (pointer: fine) {
-    .certification-carousel-controls button:hover:not(:disabled) { transform: translateY(-1px); }
+    .certification-carousel-arrow:hover:not(:disabled) { transform: translateY(-1px); }
     .certificate-card-compact:hover .certificate-thumbnail img { transform: scale(1.025); }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .certification-carousel-controls button,
+  .certification-carousel-arrow,
   .certificate-card-compact .certificate-thumbnail img { transition: none; }
 }

@@ -75,7 +75,7 @@
     color-scheme: dark;
     background-color: var(--palette-canvas);
     --header-offset: 0.7rem;
-    --header-height: calc(3.875rem + var(--header-offset));
+    --header-height: calc(4.25rem + var(--header-offset));
     scroll-padding-block-start: var(--header-height);
     overflow-wrap: anywhere;
     --palette-canvas: #061116;
@@ -99,8 +99,12 @@
     --hover-glow: 0 0 0 1px #5de0cb14, 0 10px 32px #0a131b80, 0 0 26px #5de0cb25;
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
     --archive-ease: cubic-bezier(0.2, 0.75, 0.25, 1);
-    --page-gutter: clamp(1.125rem, 4vw, 3rem);
-    --section-space: clamp(3.75rem, 8vw, 7rem);
+    --page-width: 82rem;
+    --page-gutter: clamp(0.75rem, 3.5vw, 2.5rem);
+    --section-space: clamp(3rem, 6vw, 5.5rem);
+    --section-gap: clamp(1.25rem, 3vw, 2rem);
+    --intro-space-end: clamp(2rem, 5vw, 3.75rem);
+    --prose-width: 70ch;
     --radius-card: 1rem;
     --radius-control: 0.5rem;
   }
@@ -123,22 +127,22 @@
 @utility page-title {
   font-family: var(--font-display);
   font-size: clamp(2.75rem, 6vw, 5.5rem);
-  font-weight: 600;
-  line-height: 1.15;
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 
 @utility section-title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 3.5vw, 3.5rem);
-  font-weight: 600;
+  font-weight: 750;
   line-height: 1.15;
   text-wrap: balance;
 }
 
 .site-shell {
-  width: min(100%, 100rem);
-  padding-inline: var(--page-gutter);
+  width: min(calc(100% - 2 * var(--page-gutter)), var(--page-width));
   margin-inline: auto;
 }
 
@@ -163,7 +167,7 @@
   position: fixed;
   z-index: 5;
   inset-block-start: 1rem;
-  inset-inline-start: var(--page-gutter);
+  inset-inline-start: max(var(--page-gutter), calc((100% - var(--page-width)) / 2));
   padding: 0.75rem 1rem;
   border-radius: var(--radius-control);
   background: var(--palette-surface);
@@ -182,10 +186,8 @@
 .site-header-inner {
   position: relative;
   display: flex;
-  min-height: 3.875rem;
-  width: min(calc(100% - 2 * var(--page-gutter)), 73.75rem);
-  margin-inline: auto;
-  padding: 0.5rem 0.55rem 0.5rem 0.8rem;
+  min-height: 4.25rem;
+  padding: 0.5rem 0.75rem 0.5rem 1rem;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem 1.25rem;
@@ -223,12 +225,16 @@
   min-width: 2.75rem;
   min-height: 2.75rem;
   align-items: center;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 650;
 }
 
-.site-wordmark { gap: 0.22em; white-space: nowrap; font: 600 clamp(1.25rem, 2vw, 1.5rem)/1.15 var(--font-display); }
+.site-wordmark { display: inline-grid; flex-shrink: 0; white-space: nowrap; font: 600 clamp(1.25rem, 2vw, 1.5rem)/1.15 var(--font-display); }
+.site-wordmark > span { grid-area: 1 / 1; }
 .site-wordmark-accent { color: var(--palette-accent); }
+.site-wordmark-short,
+.site-header[data-home]:not([data-hero-name-passed]) .site-wordmark-full { opacity: 0; }
+.site-header[data-home]:not([data-hero-name-passed]) .site-wordmark-short { opacity: 1; }
 .site-brand:hover { color: var(--palette-ink); }
 
 .contact-links {
@@ -258,12 +264,12 @@
 
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
+  .site-wordmark > span { transition: opacity 160ms var(--ease-out); }
 }
 
-@media (max-width: 42rem) {
-  :root { --header-height: calc(6.75rem + var(--header-offset)); }
+@media (max-width: 46rem) {
+  :root { --header-height: calc(6.375rem + var(--header-offset)); }
   .site-header-inner {
-    width: calc(100% - 1.4rem);
     align-items: flex-start;
     flex-direction: column;
     gap: 0;
@@ -360,7 +366,7 @@
 .text-link { color: var(--palette-accent); text-underline-offset: 0.24em; }
 .text-link:hover, .text-link:focus-visible { text-decoration: underline; }
 
-.page-intro { padding-block: var(--section-space) clamp(2rem, 5vw, 3.75rem); }
+.page-intro { padding-block: var(--section-space) var(--intro-space-end); }
 .page-lede { max-width: 58ch; margin-block-start: 1.25rem; color: var(--palette-muted); font-size: clamp(1rem, 2.35vw, 1.25rem); line-height: 1.55; }
 .page-intro > :first-child:not(.panel-frame)::before,
 .reader-header > .page-title::before {
@@ -439,7 +445,7 @@
     transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
   }
 
-  :is(.page-intro, .reader-header, .home-intro) {
+  :is(.page-intro, .reader-header) {
     animation: archive-hero-enter 800ms var(--archive-ease) both;
   }
 

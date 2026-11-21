@@ -29,10 +29,18 @@ export function HomePage() {
     <PageMotion>
       <section id="home" className="home-hero" aria-labelledby="home-title">
         <div className="home-intro">
-          <h1 id="home-title" className="home-title font-display">
+          <h1 id="home-title" className="page-title home-title">
             <span className="home-greeting">Hello, I’m</span>{' '}
-            {nameParts.map((part, index) => <Fragment key={index}><span>{part}</span>{' '}</Fragment>)}
-            <span className="home-name-accent">{lastName}.</span>
+            {nameParts.map((part, index) => (
+              <Fragment key={index}>
+                <span className="home-name-line">
+                  <span className="home-name-word" style={{ animationDelay: `${90 + index * 85}ms` }}>{part}</span>
+                </span>{' '}
+              </Fragment>
+            ))}
+            <span className="home-name-line">
+              <span className="home-name-word home-name-accent" style={{ animationDelay: `${90 + nameParts.length * 85}ms` }}>{lastName}.</span>
+            </span>
           </h1>
           <p className="page-lede">{person.positioning}</p>
           <div className="home-actions">
@@ -89,7 +97,10 @@ export function HomePage() {
         </section>
 
         <section id="projects" className="home-section" aria-labelledby="home-projects-title" data-reveal="0">
-          <h2 className="section-title" id="home-projects-title"><Link href={projectsPath} id="project-map">Projects</Link></h2>
+          <header className="home-work-intro">
+            <p className="panel-label">Selected work</p>
+            <h2 className="section-title" id="home-projects-title"><Link href={projectsPath} id="project-map">Projects</Link></h2>
+          </header>
           <ProjectExplorer projects={projects.map(({ slug, title, year, summary, role, preview, model }) => ({
             slug, title, year, summary, role, preview, model,
           }))} />
@@ -105,11 +116,14 @@ export function HomePage() {
           <Link className="text-link" href="/certifications/">View all certifications <DirectionIcon /></Link>
         </section>
 
-        <section id="contact" className="home-section overview-split home-contact" aria-labelledby="home-contact-title" data-reveal="0">
-          <h2 className="section-title" id="home-contact-title">Contact</h2>
-          <div className="overview-copy">
-            <p>If you’d like to talk about a project or a role in software engineering, applied machine learning, or data science, you can reach me on LinkedIn. My code is on GitHub.</p>
-            <ContactLinks />
+        <section id="contact" className="home-section" aria-labelledby="home-contact-title" data-reveal="0">
+          <div className="home-contact">
+            <div>
+              <p className="panel-label">Contact</p>
+              <h2 className="section-title" id="home-contact-title">Let’s talk.</h2>
+              <p className="home-contact-copy">Get in touch about projects or roles in software engineering, applied machine learning, or data science.</p>
+            </div>
+            <ContactLinks includeEmail />
           </div>
         </section>
       </div>
