@@ -1,13 +1,15 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { ContactLinks } from '@/components/contact-links'
 import { capabilities, person } from '@/lib/portfolio'
 import { getProjects } from '@/lib/projects'
 import { pageMetadata } from '@/lib/site'
 
-export const metadata = pageMetadata('/about/', 'About', 'Education, project experience, and contact information for John Michael Garcia.')
+export const metadata = pageMetadata('/about/', 'About', 'John Michael Garcia’s education, project experience, and student leadership at T.I.P. Manila.')
 
 const sections = [
   { id: 'experience', label: 'Experience' },
+  { id: 'leadership', label: 'Leadership' },
   { id: 'tools', label: 'Tools' },
   { id: 'roadmap', label: 'Interests' },
   { id: 'contact', label: 'Contact' },
@@ -23,12 +25,22 @@ export default function AboutPage() {
 
   return (
     <>
-      <header className="page-intro">
-        <h1 className="page-title">About me</h1>
-        <p className="page-lede">
-          I’m John Michael Garcia, a software developer based in the {person.location}.
-          I like working on the whole system, from the app people use to the machine it runs on.
-        </p>
+      <header className="page-intro grid items-center gap-6 sm:grid-cols-[minmax(0,1fr)_10rem] sm:gap-10 lg:grid-cols-[minmax(0,1fr)_13rem]">
+        <div>
+          <h1 className="page-title">About me</h1>
+          <p className="page-lede">
+            I’m John Michael Garcia, a computer engineering student in the {person.location}.
+            I’ve led frontend work on team projects and built full-stack apps, AI assistants, and computer vision tools.
+          </p>
+        </div>
+        <Image
+          src="/media/profile.webp"
+          alt="John Michael Garcia in formal business attire"
+          width={480}
+          height={480}
+          unoptimized
+          className="h-auto w-32 max-w-full rounded-2xl border border-divider bg-surface sm:w-full"
+        />
       </header>
 
       <nav aria-label="On this page" className="border-y border-divider py-2">
@@ -48,24 +60,42 @@ export default function AboutPage() {
           <div className="max-w-[65ch]">
             <h3 className="text-xl font-semibold">Education</h3>
             <p className="mt-2 leading-relaxed text-muted">
-              I studied computer engineering with a specialization in data science at the Technological Institute of the Philippines.
+              I’m pursuing a B.S. in Computer Engineering with a specialization in Data Science at the Technological Institute of the Philippines in Manila. I started in 2023.
             </p>
             <h3 className="mt-8 text-xl font-semibold">Project milestones</h3>
             <ol className="mt-4 divide-y divide-divider border-y border-divider">
               <li className="grid gap-2 py-4 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-4">
                 <time dateTime="2026" className="font-semibold text-ink">2026</time>
                 <p className="leading-relaxed text-muted">
-                  Built {projectLink('gymms', 'GyMMS')} and {projectLink('pi-monitor', 'Pi Monitor')} for Raspberry Pi, worked on computer vision for {projectLink('moskita', 'MosKita')}, and contributed to the {projectLink('mdsystem', 'MDSystem')} team.
+                  Led frontend work on {projectLink('mdsystem', 'MDSystem')}, researched and developed {projectLink('moskita', 'MosKita')}, and built {projectLink('pi-monitor', 'Pi Monitor')}. I also worked on the frontend and document retrieval for MARIO at the Grundfos Data & AI Inclusion Hackathon.
                 </p>
               </li>
               <li className="grid gap-2 py-4 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-4">
                 <time dateTime="2025" className="font-semibold text-ink">2025</time>
                 <p className="leading-relaxed text-muted">
-                  Built a repeatable PyTorch training and evaluation workflow for the {projectLink('traffic-sign-classifier', 'Traffic Sign Classifier')}.
+                  Built {projectLink('gymms', 'GyMMS')} for a gym client, led frontend work on {projectLink('cookeat', 'CookEat')}, and wrote smart contracts for {projectLink('growquest', 'GrowQuest')}.
                 </p>
               </li>
             </ol>
           </div>
+        </section>
+
+        <section id="leadership" className="grid gap-6 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10 md:py-14" aria-labelledby="leadership-title">
+          <h2 id="leadership-title" className="section-title">Leadership</h2>
+          <ul className="max-w-[65ch] space-y-4">
+            <li>
+              <h3 className="font-semibold">Treasurer, UGNAY</h3>
+              <p className="mt-1 text-muted">T.I.P. Manila Career Center, 2026–present</p>
+            </li>
+            <li>
+              <h3 className="font-semibold">Event host, Co-Work, Co-Exist</h3>
+              <p className="mt-1 text-muted">T.I.P. Manila Career Center with Alliance Software, October 2026</p>
+            </li>
+            <li>
+              <h3 className="font-semibold">Treasurer, Computer Engineering Department Student Council</h3>
+              <p className="mt-1 text-muted">T.I.P. Manila, academic year 2024–2025</p>
+            </li>
+          </ul>
         </section>
 
         <section id="tools" className="py-10 md:py-14" aria-labelledby="tools-title">
@@ -88,7 +118,7 @@ export default function AboutPage() {
         <section id="roadmap" className="grid gap-4 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10 md:py-14" aria-labelledby="interests-title">
           <h2 id="interests-title" className="section-title">What I’m interested in</h2>
           <p className="max-w-[65ch] self-center leading-relaxed text-muted">
-            I’m interested in full-stack work and the engineering around machine learning. I’d like to get better at evaluating models, running them on small devices, and keeping those systems reliable once they’re deployed.
+            I’m interested in computer vision, edge AI, embedded systems, and competitive robotics. I like working on projects that bring software and hardware together.
           </p>
         </section>
 

@@ -1,13 +1,13 @@
 ---
 title: "MDSystem"
 slug: "mdsystem"
-summary: "A team project for medical and dental clinics, with web portals for staff and patients and a mobile app."
-problem: "When appointments, records, inventory, and messages live in separate tools, clinic staff have more places to check and more sets of permissions to manage."
-role: "Team contributor"
+summary: "A digital records system for the medical and dental clinics at T.I.P.’s Manila and Quezon City campuses."
+problem: "Students had to fill out forms and update their records as part of the clinic visit. The team wanted to move that paperwork online so clinic time could go toward the tests that needed to be done in person."
+role: "Frontend lead, version control, and DevOps"
 team: "Cyber-Six collaborative project"
 contributions:
-  - "Contributed to the shared codebase for staff and patient portals, the mobile app, and the services behind them."
-  - "Helped connect the portals and chatbot to the wider clinic workflow."
+  - "Led frontend work and handled version control and DevOps for the Cyber-Six team."
+  - "Worked on MDS-Chatbot as a full-stack and AI integration developer."
 skills: ["React", "React Native", "Node.js", "GraphQL", "PostgreSQL", "Redis", "Socket.IO"]
 repository: "https://github.com/Cyber-Six/MDSystem"
 draft: false
@@ -24,7 +24,7 @@ security:
   - "Repository-documented RBAC, OAuth, two-factor authentication, consent flows, and rate limiting."
   - "The chatbot is presented as a scoped subsystem rather than an authority for medical decisions."
 outcomes:
-  - "Our team brought records, communication, inventory, and reporting together in one platform."
+  - "Students can complete forms and update their records online. Clinic staff can review and validate them before the in-person tests."
 lessons:
   - "When several apps share the same services, it helps to make permissions and real-time updates explicit."
 ---

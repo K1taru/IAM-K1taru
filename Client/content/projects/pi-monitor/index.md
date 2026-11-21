@@ -1,9 +1,9 @@
 ---
 title: "Pi Monitor"
 slug: "pi-monitor"
-summary: "A live dashboard I use to check the Raspberry Pi that runs my self-hosted services."
+summary: "A live dashboard I built to monitor and manage the Raspberry Pi that runs my self-hosted services."
 problem: "I needed a quick way to check my Pi and its services remotely while keeping access to the dashboard private."
-role: "Developer and self-hosting operator"
+role: "Full-stack developer"
 team: "Independently maintained K1taru project"
 contributions:
   - "Built a web dashboard that shows live system metrics from the Pi."

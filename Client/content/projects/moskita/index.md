@@ -3,12 +3,14 @@ title: "MosKita"
 slug: "moskita"
 summary: "A computer vision project that flags containers where dengue mosquitoes could breed, using photos and live camera feeds."
 problem: "Checking containers one by one takes time. I wanted to see whether a low-cost camera could help people decide where to look first."
-role: "Developer and ML engineer"
+role: "Researcher, full-stack developer, and ML developer"
 team: "Independently maintained K1taru project"
 contributions:
   - "Collected and organized local images of containers for the training dataset."
   - "Set up YOLO training, exported the model to ONNX, and built a browser interface that runs it."
   - "Designed the setup for a Raspberry Pi 5 with a camera module."
+  - "Wrote chapters of the research paper and the guide for collecting and labeling training images."
+  - "Reviewed more than 30 existing patents as part of the research."
 skills: ["Python", "YOLO", "ONNX", "Computer vision", "React", "Raspberry Pi"]
 repository: "https://github.com/K1taru/MosKita"
 draft: false

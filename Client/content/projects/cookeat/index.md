@@ -1,12 +1,13 @@
 ---
 title: "CookEat"
 slug: "cookeat"
-summary: "A recipe-sharing app I helped build with React, Node.js, and PostgreSQL."
+summary: "A recipe-sharing app I helped build for people to document and share culinary traditions."
 problem: "Recipe posts are easier to use when the ingredients and instructions are easy to find. A general social feed doesn’t give that information much structure."
-role: "Co-developer"
+role: "Frontend lead, version control, and DevOps"
 team: "Collaborative project credited to jaygarciaaa and K1taru"
 contributions:
-  - "Co-developed the React and Node.js app with PostgreSQL behind it."
+  - "Led frontend work and handled version control and DevOps for our recipe-sharing app."
+  - "Worked on a React frontend backed by a Node.js API and PostgreSQL."
   - "Worked on a way to host it on a Raspberry Pi with Cloudflare Tunnel."
 skills: ["React", "Node.js", "Express", "PostgreSQL", "REST APIs", "Raspberry Pi"]
 repository: "https://github.com/K1taru/CookEat"

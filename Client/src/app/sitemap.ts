@@ -6,7 +6,7 @@ export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!siteOrigin) return []
-  const paths = ['/', '/about/', '/projects/']
+  const paths = ['/', '/about/', '/projects/', '/certifications/']
 
   for (const project of getProjects()) {
     const base = `/projects/${project.slug}/`
