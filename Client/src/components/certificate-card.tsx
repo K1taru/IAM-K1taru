@@ -10,9 +10,10 @@ type CertificateCardProps = {
   title: string
   issuer: string
   date: string
+  compact?: boolean
 }
 
-export function CertificateCard({ file, slug, title, issuer, date }: CertificateCardProps) {
+export function CertificateCard({ file, slug, title, issuer, date, compact = false }: CertificateCardProps) {
   const dialog = useRef<HTMLDialogElement>(null)
   const trigger = useRef<HTMLAnchorElement>(null)
 
@@ -33,7 +34,7 @@ export function CertificateCard({ file, slug, title, issuer, date }: Certificate
   }
 
   return (
-    <article className="panel-frame certificate-card">
+    <article className={`panel-frame certificate-card${compact ? ' certificate-card-compact' : ''}`}>
       {file ? (
         <a href={file} className="certificate-thumbnail" onClick={open} aria-haspopup="dialog" aria-label={`Enlarge certificate for ${title}`}>
           <Image src={file} alt="" fill unoptimized loading="lazy" />
@@ -46,8 +47,8 @@ export function CertificateCard({ file, slug, title, issuer, date }: Certificate
         </div>
       )}
       <header className="certificate-card-heading">
-        <p className="panel-label">{issuer}</p>
-        <h3>{title}</h3>
+        <p className="panel-label" title={compact ? issuer : undefined}>{issuer}</p>
+        <h3 title={compact ? title : undefined}>{title}</h3>
       </header>
       <dl className="certificate-details">
         <div><dt>Issued</dt><dd>{date}</dd></div>

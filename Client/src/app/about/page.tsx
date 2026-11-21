@@ -8,7 +8,7 @@ import { capabilities, person } from '@/lib/portfolio'
 import { getProjects } from '@/lib/projects'
 import { pageMetadata } from '@/lib/site'
 
-export const metadata = pageMetadata('/about/', 'About', 'John Michael Garcia’s education, project experience, and student leadership at T.I.P. Manila.')
+export const metadata = pageMetadata('/about/', 'About', 'John Michael Garcia’s engineering projects, technical background, and leadership experience.')
 
 const sections = [
   { id: 'experience', label: 'Experience' },
@@ -32,7 +32,7 @@ export default function AboutPage() {
         <div>
           <h1 className="page-title">About me</h1>
           <p className="page-lede">
-            I’m John Michael Garcia, a computer engineering student in the {person.location}.
+            I’m John Michael Garcia, based in the {person.location}.
             I’ve led frontend work on team projects and built full-stack apps, AI assistants, and computer vision tools.
           </p>
         </div>
@@ -56,7 +56,7 @@ export default function AboutPage() {
             <div className="max-w-[65ch]">
               <h3 className="text-xl font-semibold">Education</h3>
               <p className="mt-2 leading-relaxed text-muted">
-                I’m pursuing a B.S. in Computer Engineering with a specialization in Data Science at the Technological Institute of the Philippines in Manila. I started in 2023.
+                {person.education}
               </p>
               <h3 className="mt-8 text-xl font-semibold">Project milestones</h3>
               <ol className="mt-4 divide-y divide-divider border-y border-divider">

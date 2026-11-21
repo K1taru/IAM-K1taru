@@ -46,7 +46,9 @@ export function SiteNav() {
   return (
     <header className="site-header" ref={header}>
       <nav className="site-header-inner" aria-label="Main navigation">
-        <Link href="/" className="site-brand site-wordmark">K1taru Portfolio</Link>
+        <Link href="/" className="site-brand site-wordmark" aria-label="JM Garcia Portfolio home">
+          <span>JM Garcia</span>{' '}<span className="site-wordmark-accent">Portfolio</span>
+        </Link>
         <ul className="site-nav-links">
           {links.map(({ href, label }) => {
             const exact = href === '/'

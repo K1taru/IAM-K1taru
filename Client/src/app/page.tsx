@@ -1,4 +1,4 @@
-import { CertificateCard } from '@/components/certificate-card'
+import { CertificationCarousel } from '@/components/certification-carousel'
 import { ProjectExplorer } from '@/components/project-explorer'
 import { SkillList } from '@/components/skill-list'
 import Image from 'next/image'
@@ -14,28 +14,29 @@ import './home.css'
 
 export const metadata = pageMetadata('/')
 
-const credentialPreviews = [
-  'ccna-switching-routing-wireless',
-  'ef-set',
-]
-
 export default function HomePage() {
   const projects = getProjects()
-  const credentials = credentialGroups.flatMap((group) => group.credentials)
-  const featuredCredentials = credentialPreviews.flatMap((slug) => credentials.filter((credential) => credential.slug === slug))
+  const credentials = credentialGroups.flatMap((group) => group.credentials).map((credential) => ({
+    ...credential,
+    file: getCertificateImage(credential.slug),
+  }))
 
   return (
     <PageMotion>
       <section id="home" className="home-hero" aria-labelledby="home-title">
         <div className="home-intro">
-          <p className="home-role panel-label">Computer engineering student</p>
-          <h1 id="home-title" className="home-title font-display">John Michael Garcia</h1>
+          <h1 id="home-title" className="home-title font-display">
+            <span className="home-greeting">Hello, I’m</span>{' '}
+            <span>John</span>{' '}
+            <span>Michael</span>{' '}
+            <span className="home-name-accent">Garcia.</span>
+          </h1>
           <p className="page-lede">{person.positioning}</p>
           <div className="home-actions">
-            <Link href="#about" className="button button-primary">
-              Explore portfolio <DirectionIcon direction="down" />
+            <Link href="#projects" className="button button-primary">
+              View my work <DirectionIcon direction="down" />
             </Link>
-            <Link href="#contact" className="button">Contact</Link>
+            <Link href="#contact" className="button">Contact me</Link>
           </div>
         </div>
 
@@ -98,13 +99,7 @@ export default function HomePage() {
             <h2 className="section-title" id="home-certifications-title"><Link href="/certifications/">Certifications</Link></h2>
             <p className="overview-note">My collection includes networking coursework, language proficiency, and recognition for academics and student leadership.</p>
           </div>
-          <ul className="credential-grid credential-grid-featured">
-            {featuredCredentials.map((credential, index) => (
-              <li key={credential.slug} className="min-w-0" data-reveal={index}>
-                <CertificateCard {...credential} file={getCertificateImage(credential.slug)} />
-              </li>
-            ))}
-          </ul>
+          <CertificationCarousel credentials={credentials} />
           <Link className="text-link" href="/certifications/">View all certifications <DirectionIcon /></Link>
         </section>
 

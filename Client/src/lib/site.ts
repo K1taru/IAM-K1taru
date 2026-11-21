@@ -3,7 +3,7 @@ import { person } from './portfolio'
 
 const configuredUrl = process.env.SITE_URL?.trim()
 
-export const siteDescription = 'John Michael Garcia studies computer engineering and builds web apps, AI assistants, and computer vision projects.'
+export const siteDescription = 'John Michael Garcia builds and self-hosts full-stack and machine-learning systems, from edge computer vision to secure operational platforms.'
 export const siteOrigin = configuredUrl ? new URL(configuredUrl) : undefined
 export const siteIndexable = Boolean(siteOrigin && process.env.SITE_INDEXABLE === 'true')
 
@@ -19,7 +19,7 @@ export function siteUrl(path: string) {
 export function pageMetadata(path: string, title?: string, description = siteDescription): Metadata {
   const url = siteUrl(path)
   const image = siteUrl('/og-card.png')
-  const alt = `${person.name}, computer engineering student`
+  const alt = `${person.name} | Full-stack and machine-learning systems`
   const socialTitle = title ? `${title} | ${person.name}` : person.name
 
   return {
