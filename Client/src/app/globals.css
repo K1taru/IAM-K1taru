@@ -393,8 +393,7 @@
 
 .panel-pad { padding: var(--panel-padding); }
 
-.panel-label,
-.certificate-details dt {
+.panel-label {
   color: var(--palette-accent);
   font: 500 0.75rem/1.5 var(--meta-font);
   letter-spacing: 0.025em;
@@ -404,126 +403,6 @@
   margin-block-start: auto;
   padding-block-start: 0.6rem;
   border-block-start: 1px solid var(--panel-edge);
-}
-
-.credential-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
-  gap: 1rem;
-}
-
-@media (min-width: 75rem) {
-  .credential-grid:not(.credential-grid-featured) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-.certificate-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 1.05rem;
-  padding: var(--panel-padding);
-}
-
-.certificate-thumbnail {
-  position: relative;
-  display: block;
-  cursor: zoom-in;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  border: 1px solid var(--panel-edge);
-  border-radius: 0.7rem;
-  background: radial-gradient(ellipse at center, #16363d, #091820 78%);
-}
-.certificate-thumbnail img {
-  padding: 0.65rem;
-  object-fit: contain;
-}
-
-.certificate-emblem {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 3.65rem;
-  aspect-ratio: 1;
-  border: 1px solid #24767d;
-  border-radius: 50%;
-  color: #61e9dd;
-  background: radial-gradient(circle, #36daca15, transparent 70%);
-}
-
-.certificate-emblem::before {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border: 1px dashed #52ddd470;
-  border-radius: inherit;
-}
-
-.certificate-emblem svg { width: 1.35rem; }
-.certificate-card-heading h3 {
-  margin-block-start: 0.4rem;
-  font-size: clamp(1.35rem, 1.75vw, 1.75rem);
-  font-weight: 650;
-  line-height: 1.18;
-}
-
-.certificate-details { padding-block-start: 0.85rem; border-block-start: 1px solid var(--panel-edge); }
-.certificate-details > div { display: grid; grid-template-columns: 4.5rem 1fr; align-items: baseline; gap: 0.4rem; }
-.certificate-details dt { color: var(--palette-muted); }
-.certificate-details dd { font-size: 0.95rem; }
-html:has(.certificate-dialog[open]) { overflow: hidden; }
-
-.certificate-dialog {
-  position: fixed;
-  inset: 0;
-  margin: auto;
-  width: min(94vw, 76rem);
-  max-width: none;
-  height: min(92dvh, 58rem);
-  max-height: none;
-  padding: 0;
-  border: 1px solid var(--palette-divider);
-  border-radius: var(--radius-card);
-  background: var(--palette-surface);
-  color: var(--palette-ink);
-  box-shadow: 0 1.5rem 6rem #000c;
-}
-.certificate-dialog::backdrop { background: #05090ccc; backdrop-filter: blur(4px); }
-.certificate-dialog-panel { display: grid; grid-template-rows: auto minmax(5rem, 1fr) auto; min-height: 100%; height: 100%; }
-.certificate-dialog-header,
-.certificate-dialog-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.85rem 1rem; }
-.certificate-dialog-header { border-block-end: 1px solid var(--palette-divider); }
-.certificate-dialog-header h2 { font-size: clamp(1rem, 2vw, 1.25rem); font-weight: 650; line-height: 1.25; }
-.certificate-dialog-header p,
-.certificate-dialog-footer p { color: var(--palette-muted); font-size: 0.875rem; }
-.certificate-close {
-  display: grid;
-  flex: none;
-  width: 2.75rem;
-  height: 2.75rem;
-  place-items: center;
-  border: 1px solid var(--palette-control);
-  border-radius: 999px;
-}
-.certificate-close:hover { border-color: var(--palette-accent); color: var(--palette-accent); }
-.certificate-close svg { width: 1.25rem; height: 1.25rem; }
-.certificate-dialog-image { position: relative; min-height: 0; margin: clamp(0.5rem, 2vw, 1.25rem); }
-.certificate-dialog-footer { border-block-start: 1px solid var(--palette-divider); }
-
-@media (max-width: 36rem) {
-  .certificate-dialog { width: 100vw; height: 100dvh; border: 0; border-radius: 0; }
-  .certificate-dialog-footer p { display: none; }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .certificate-dialog[open] { animation: certificate-dialog-in 180ms var(--ease-out) both; }
-  .certificate-emblem::before { animation: credential-ring 18s linear infinite; }
-}
-
-@keyframes credential-ring { to { transform: rotate(1turn); } }
-
-@keyframes certificate-dialog-in {
-  from { opacity: 0; transform: translateY(0.5rem) scale(0.985); }
 }
 
 :is(.panel-frame, .portrait-board, .profile-image):has(:focus-visible) {

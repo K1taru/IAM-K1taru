@@ -1,6 +1,9 @@
 ---
 title: "AyuDirect"
-slug: "ayudirect"
+domain: data-systems
+map:
+  position: [480, 410]
+  connections: [cookeat, growquest]
 summary: "A team prototype for checking aid claims and tracking how government assistance is distributed."
 problem: "An aid program needs to spot duplicate or fraudulent claims and keep the process clear for the people applying."
 role: "Team contributor"

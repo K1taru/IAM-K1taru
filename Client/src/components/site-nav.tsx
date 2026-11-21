@@ -3,12 +3,14 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useSyncExternalStore } from 'react'
+import { profile } from '@content/profile'
+import { projectsPath } from '@/features/projects/project-paths'
 
 const links = [
   { href: '/', label: 'Home' },
   { href: '/about/', label: 'About' },
   { href: '/about/#tools', label: 'Skills' },
-  { href: '/projects/', label: 'Projects' },
+  { href: projectsPath, label: 'Projects' },
   { href: '/certifications/', label: 'Certifications' },
 ]
 
@@ -46,8 +48,8 @@ export function SiteNav() {
   return (
     <header className="site-header" ref={header}>
       <nav className="site-header-inner" aria-label="Main navigation">
-        <Link href="/" className="site-brand site-wordmark" aria-label="JM Garcia Portfolio home">
-          <span>JM Garcia</span>{' '}<span className="site-wordmark-accent">Portfolio</span>
+        <Link href="/" className="site-brand site-wordmark" aria-label={`${profile.wordmark} Portfolio home`}>
+          <span>{profile.wordmark}</span>{' '}<span className="site-wordmark-accent">Portfolio</span>
         </Link>
         <ul className="site-nav-links">
           {links.map(({ href, label }) => {

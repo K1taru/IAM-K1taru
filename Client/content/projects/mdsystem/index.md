@@ -1,6 +1,9 @@
 ---
 title: "MDSystem"
-slug: "mdsystem"
+domain: applications
+map:
+  position: [438, 238]
+  connections: [moskita, gymms, ayudirect]
 summary: "A digital records system for the medical and dental clinics at T.I.P.’s Manila and Quezon City campuses."
 problem: "Students had to fill out forms and update their records as part of the clinic visit. The team wanted to move that paperwork online so clinic time could go toward the tests that needed to be done in person."
 role: "Frontend lead, version control, and DevOps"

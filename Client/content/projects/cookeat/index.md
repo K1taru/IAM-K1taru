@@ -1,6 +1,8 @@
 ---
 title: "CookEat"
-slug: "cookeat"
+domain: applications
+map:
+  position: [620, 455]
 summary: "A recipe-sharing app I helped build for people to document and share culinary traditions."
 problem: "Recipe posts are easier to use when the ingredients and instructions are easy to find. A general social feed doesn’t give that information much structure."
 role: "Frontend lead, version control, and DevOps"

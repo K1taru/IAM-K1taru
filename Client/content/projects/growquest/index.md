@@ -1,6 +1,8 @@
 ---
 title: "GrowQuest"
-slug: "growquest"
+domain: data-systems
+map:
+  position: [300, 450]
 summary: "A web3 demo where players stake tokens, grow collectible plants, and earn rewards."
 problem: "I wanted to see how two token standards could work together in an interaction someone could try in a browser."
 role: "Smart contract developer"

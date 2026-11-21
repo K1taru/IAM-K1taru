@@ -1,6 +1,9 @@
 ---
 title: "Pi Monitor"
-slug: "pi-monitor"
+domain: infrastructure
+map:
+  position: [742, 350]
+  connections: [cookeat]
 summary: "A live dashboard I built to monitor and manage the Raspberry Pi that runs my self-hosted services."
 problem: "I needed a quick way to check my Pi and its services remotely while keeping access to the dashboard private."
 role: "Full-stack developer"

@@ -183,69 +183,7 @@
 .skill-previews { display: grid; gap: 1rem; }
 .skill-previews h3 { font-size: 1.2rem; font-weight: 600; line-height: 1.35; }
 .skill-previews h3 { margin-block-end: 0.5rem; }
-.certification-carousel { min-width: 0; }
-.certification-carousel-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-block-end: 0.75rem;
-}
-.certification-carousel-toolbar > p { color: var(--palette-muted); font-size: 0.9rem; }
-.certification-carousel-controls { display: flex; flex: none; gap: 0.5rem; }
-.certification-carousel-controls button {
-  display: grid;
-  width: 2.75rem;
-  height: 2.75rem;
-  place-items: center;
-  border: 1px solid var(--palette-control);
-  border-radius: 999px;
-  color: var(--palette-accent);
-  background: var(--palette-surface);
-}
-.certification-carousel-controls button:hover:not(:disabled) { border-color: var(--palette-accent); background: #173237; }
-.certification-carousel-controls button:disabled { cursor: not-allowed; opacity: 0.4; }
-.certification-carousel-track {
-  display: flex;
-  gap: 1rem;
-  min-width: 0;
-  overflow-x: auto;
-  overscroll-behavior-inline: contain;
-  padding: 0.25rem 0.25rem 1rem;
-  margin-inline: -0.25rem;
-  scrollbar-color: var(--palette-control) transparent;
-  scrollbar-width: thin;
-  scroll-snap-type: x proximity;
-}
-.certification-carousel-item {
-  flex: 0 0 min(78vw, 19rem);
-  min-width: 0;
-  scroll-snap-align: start;
-}
-.certification-carousel-item .certificate-card { height: 100%; }
-.certificate-card-compact { gap: 0.7rem; padding: 0.85rem; }
-.certificate-card-compact .certificate-thumbnail { aspect-ratio: 16 / 7; }
-.certificate-card-compact .certificate-thumbnail img { padding: 0.4rem; }
-.certificate-card-compact .panel-label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.certificate-card-compact .certificate-card-heading h3 {
-  display: -webkit-box;
-  overflow: hidden;
-  margin-block-start: 0.3rem;
-  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
-  line-height: 1.25;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-.certificate-card-compact .certificate-details { padding-block-start: 0.55rem; }
-.certificate-card-compact .certificate-details > div { grid-template-columns: 3.5rem 1fr; }
-.certificate-card-compact .panel-actions { padding-block-start: 0.4rem; }
-@media (min-width: 52rem) {
-  .certification-carousel-item { flex-basis: calc((100% - 2rem) / 3); }
-}
+
 @media (min-width: 44rem) {
   .home-hero {
     grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
@@ -260,15 +198,6 @@
   .overview-split { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start; }
 }
 @media (prefers-reduced-motion: no-preference) {
-  .certification-carousel-controls button {
-    transition: transform 160ms var(--archive-ease), border-color 180ms ease, background-color 180ms ease;
-  }
-  .certificate-card-compact .certificate-thumbnail img { transition: transform 220ms var(--archive-ease); }
-  .certification-carousel-controls button:active:not(:disabled) { transform: scale(0.96); }
-  @media (hover: hover) and (pointer: fine) {
-    .certification-carousel-controls button:hover:not(:disabled) { transform: translateY(-1px); }
-    .certificate-card-compact:hover .certificate-thumbnail img { transform: scale(1.025); }
-  }
   .home-portrait { animation: archive-hero-enter 900ms 120ms var(--archive-ease) both; }
   .portrait-reticle { animation: portrait-breathe 9s ease-in-out infinite; }
   .portrait-reticle::before { animation: portrait-reticle-spin 32s linear infinite; }
@@ -285,11 +214,6 @@
     }
     .portrait-board:hover .portrait-image { transform: scale(1.055); filter: saturate(1) contrast(1.04); }
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .certification-carousel-controls button,
-  .certificate-card-compact .certificate-thumbnail img { transition: none; }
 }
 
 @keyframes portrait-spin {

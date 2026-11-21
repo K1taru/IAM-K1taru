@@ -1,5 +1,7 @@
-import { capabilities, person } from '@/lib/portfolio'
-import { getProjects } from '@/lib/projects'
+import { person } from '@content/profile'
+import { capabilities } from '@content/skills'
+import { getProjects } from '@/features/projects/project-content'
+import { projectPath } from '@/features/projects/project-paths'
 import { siteUrl } from '@/lib/site'
 
 export const dynamic = 'force-static'
@@ -8,7 +10,7 @@ export function GET() {
   const projects = getProjects().map(({
     title, slug, summary, year, role, team, contributions, skills, repository, demo, evidence, metrics,
   }) => {
-    const path = `/projects/${slug}/`
+    const path = projectPath(slug)
     return {
       title, slug, summary, year, role, team, contributions, skills, repository, demo,
       caseStudy: siteUrl(path) ?? path,

@@ -1,6 +1,9 @@
 ---
 title: "MosKita"
-slug: "moskita"
+domain: machine-learning
+map:
+  position: [205, 125]
+  connections: [traffic-sign-classifier, pi-monitor]
 summary: "A computer vision project that flags containers where dengue mosquitoes could breed, using photos and live camera feeds."
 problem: "Checking containers one by one takes time. I wanted to see whether a low-cost camera could help people decide where to look first."
 role: "Researcher, full-stack developer, and ML developer"

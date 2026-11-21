@@ -1,6 +1,9 @@
 ---
 title: "GyMMS"
-slug: "gymms"
+domain: applications
+map:
+  position: [678, 145]
+  connections: [pi-monitor]
 summary: "A Django app I built for a gym client to manage renewals, payments, and member check-ins."
 problem: "A small gym needs to know who can check in, which payments have cleared, and which memberships are due for renewal. It’s easy to miss something when those records are kept apart."
 role: "Full-stack developer"

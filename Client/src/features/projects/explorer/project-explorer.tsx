@@ -3,9 +3,10 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { startTransition, useState, ViewTransition } from 'react'
-import type { Project } from '@/lib/projects'
+import { DirectionIcon } from '@/components/direction-icon'
+import type { Project } from '../project-content'
+import { projectPath } from '../project-paths'
 import { CoreViewer } from './core-viewer'
-import { DirectionIcon } from './direction-icon'
 import './project-explorer.css'
 
 type Preview = Pick<Project, 'slug' | 'title' | 'year' | 'summary' | 'role' | 'preview' | 'model'>
@@ -46,7 +47,7 @@ export function ProjectExplorer({ projects }: { projects: Preview[] }) {
             </dl>
           </header>
           <p className="project-summary">{selected.summary}</p>
-          <footer className="panel-actions"><Link className="text-link" href={`/projects/${selected.slug}/`}>Explore project <DirectionIcon /></Link></footer>
+          <footer className="panel-actions"><Link className="text-link" href={projectPath(selected.slug)}>Explore project <DirectionIcon /></Link></footer>
         </article>
       </ViewTransition>
       <ViewTransition update="project-preview">

@@ -1,5 +1,5 @@
 import { DirectionIcon } from '@/components/direction-icon'
-import { person } from '@/lib/portfolio'
+import { person } from '@content/profile'
 
 export function ContactLinks() {
   return (

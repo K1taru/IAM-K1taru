@@ -1,6 +1,8 @@
 ---
 title: "Traffic Sign Classifier"
-slug: "traffic-sign-classifier"
+domain: machine-learning
+map:
+  position: [128, 330]
 summary: "A PyTorch project that trains and evaluates models on the German Traffic Sign Recognition Benchmark (GTSRB)."
 problem: "Many traffic signs look alike, and some classes have fewer examples than others. I wanted a repeatable way to compare models under those conditions."
 role: "ML engineer and repository maintainer"

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import localFont from 'next/font/local'
 import { ContactLinks } from '@/components/contact-links'
 import { SiteNav } from '@/components/site-nav'
-import { person } from '@/lib/portfolio'
+import { person } from '@content/profile'
 import { siteDescription, siteIndexable, siteOrigin } from '@/lib/site'
 import './globals.css'
 

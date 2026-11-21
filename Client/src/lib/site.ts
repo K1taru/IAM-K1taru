@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { person } from './portfolio'
+import { person, profile } from '@content/profile'
 
 const configuredUrl = process.env.SITE_URL?.trim()
 
-export const siteDescription = 'John Michael Garcia builds and self-hosts full-stack and machine-learning systems, from edge computer vision to secure operational platforms.'
+export const siteDescription = profile.description
 export const siteOrigin = configuredUrl ? new URL(configuredUrl) : undefined
 export const siteIndexable = Boolean(siteOrigin && process.env.SITE_INDEXABLE === 'true')
 

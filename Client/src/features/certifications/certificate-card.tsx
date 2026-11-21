@@ -2,14 +2,12 @@
 
 import Image from 'next/image'
 import { useRef, type MouseEvent } from 'react'
-import { DirectionIcon } from './direction-icon'
+import type { Credential } from '@content/certifications'
+import { DirectionIcon } from '@/components/direction-icon'
+import './certifications.css'
 
-type CertificateCardProps = {
+export type CertificateCardProps = Credential & {
   file?: string
-  slug: string
-  title: string
-  issuer: string
-  date: string
   compact?: boolean
 }
 

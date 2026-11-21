@@ -3,22 +3,10 @@
 import Link from 'next/link'
 import { useEffect, useSyncExternalStore } from 'react'
 import { DirectionIcon } from '@/components/direction-icon'
-import type { Project } from '@/lib/projects'
+import type { CatalogProject } from '../project-content'
+import { projectDomainIds, projectDomains } from '../project-domains'
+import { projectPath } from '../project-paths'
 import { ProjectConstellation } from './project-constellation'
-
-const domains = [
-  { id: 'applications', label: 'Applications', slugs: ['gymms', 'mdsystem', 'cookeat'] },
-  { id: 'machine-learning', label: 'Machine learning', slugs: ['moskita', 'traffic-sign-classifier'] },
-  { id: 'infrastructure', label: 'Infrastructure', slugs: ['pi-monitor'] },
-  { id: 'data-systems', label: 'Data systems', slugs: ['ayudirect', 'growquest'] },
-  { id: 'other', label: 'Other', slugs: [] },
-]
-
-export type CatalogProject = Pick<Project, 'slug' | 'title' | 'year' | 'role' | 'summary' | 'repository'>
-
-function getDomain(slug: string) {
-  return domains.find(({ slugs }) => slugs.includes(slug)) ?? domains[domains.length - 1]
-}
 
 const filterChange = 'project-domain-change'
 
@@ -33,11 +21,11 @@ function subscribeToLocation(callback: () => void) {
 function CatalogRows({ projects, target }: { projects: CatalogProject[]; target?: string }) {
   return (
     <ul className="catalog-rows">
-      {projects.map(({ slug, title, year, role, summary, repository }, index) => (
+      {projects.map(({ slug, title, year, role, summary, repository, domain }, index) => (
         <li key={slug} id={slug} className="catalog-row panel-frame panel-pad" data-catalog-target={slug === target ? '' : undefined} data-reveal={index % 3}>
           <div className="catalog-meta">
             <time dateTime={String(year)}>{year}</time>
-            <span className="panel-label">{getDomain(slug).label}</span>
+            <span className="panel-label">{projectDomains[domain]}</span>
           </div>
           <div>
             <h2 className="catalog-title font-display">{title}</h2>
@@ -45,7 +33,7 @@ function CatalogRows({ projects, target }: { projects: CatalogProject[]; target?
           </div>
           <p className="catalog-summary">{summary}</p>
           <footer className="panel-actions catalog-actions">
-            <Link href={`/projects/${slug}/`} className="text-link">
+            <Link href={projectPath(slug)} className="text-link">
               Explore project<span className="sr-only"> {title}</span> <DirectionIcon />
             </Link>
             <a href={repository} className="text-link catalog-source">
@@ -64,9 +52,9 @@ export function ProjectMap({ projects }: { projects: CatalogProject[] }) {
   const requested = new URLSearchParams(search).get('domain')
   const hash = fragment ? `#${fragment}` : ''
   const target = projects.find(({ slug }) => hash === `#${slug}`)?.slug
-  const available = domains.filter(({ id }) => projects.some(({ slug }) => getDomain(slug).id === id))
-  const selected = !target && available.some(({ id }) => id === requested) ? requested : null
-  const visible = selected === null ? projects : projects.filter(({ slug }) => getDomain(slug).id === selected)
+  const available = projectDomainIds.filter((id) => projects.some(({ domain }) => domain === id))
+  const selected = target ? null : available.find((id) => id === requested) ?? null
+  const visible = selected === null ? projects : projects.filter(({ domain }) => domain === selected)
 
   useEffect(() => {
     if (!target) return
@@ -89,13 +77,13 @@ export function ProjectMap({ projects }: { projects: CatalogProject[] }) {
       <div className="catalog-toolbar">
         <div className="catalog-filters" role="group" aria-label="Filter by project domain">
           <button className="button" type="button" aria-pressed={selected === null} onClick={() => filterBy(null)}>All</button>
-          {available.map(({ id, label }) => (
-            <button className="button" key={id} type="button" aria-pressed={selected === id} onClick={() => filterBy(id)}>{label}</button>
+          {available.map((id) => (
+            <button className="button" key={id} type="button" aria-pressed={selected === id} onClick={() => filterBy(id)}>{projectDomains[id]}</button>
           ))}
         </div>
         <p className="catalog-count" role="status" aria-atomic="true">{visible.length} {visible.length === 1 ? 'project' : 'projects'}</p>
       </div>
-      <ProjectConstellation projects={projects} visible={visible} target={target} getDomain={getDomain} />
+      <ProjectConstellation projects={projects} visible={visible} target={target} />
       <CatalogRows projects={visible} target={target} />
     </>
   )

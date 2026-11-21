@@ -1,18 +1,10 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { CertificateCard } from './certificate-card'
-import { DirectionIcon } from './direction-icon'
+import { DirectionIcon } from '@/components/direction-icon'
+import { CertificateCard, type CertificateCardProps } from './certificate-card'
 
-type CarouselCredential = {
-  file?: string
-  slug: string
-  title: string
-  issuer: string
-  date: string
-}
-
-export function CertificationCarousel({ credentials }: { credentials: CarouselCredential[] }) {
+export function CertificationCarousel({ credentials }: { credentials: Omit<CertificateCardProps, 'compact'>[] }) {
   const track = useRef<HTMLUListElement>(null)
   const [atStart, setAtStart] = useState(true)
   const [atEnd, setAtEnd] = useState(false)

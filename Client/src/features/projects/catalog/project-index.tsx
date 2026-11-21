@@ -1,10 +1,10 @@
-import { ProjectMap } from '@/components/project-map'
-import type { Project } from '@/lib/projects'
+import type { Project } from '../project-content'
+import { ProjectMap } from './project-map'
 import './project-index.css'
 
 export function ProjectIndex({ projects }: { projects: Project[] }) {
-  const catalog = projects.map(({ slug, title, year, role, summary, repository }) => ({
-    slug, title, year, role, summary, repository,
+  const catalog = projects.map(({ slug, title, year, role, summary, repository, domain, map }) => ({
+    slug, title, year, role, summary, repository, domain, map,
   }))
 
   return (
