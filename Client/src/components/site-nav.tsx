@@ -2,31 +2,88 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { person } from '@/lib/portfolio'
+import { useEffect, useRef, useState } from 'react'
 
 const links = [
-  { href: '/projects/', label: 'Projects' },
-  { href: '/about/', label: 'About' },
+  { id: 'home', href: '/', label: 'Home' },
+  { id: 'about', href: '/about/', label: 'About' },
+  { id: 'skills', href: '/about/#tools', label: 'Skills' },
+  { id: 'projects', href: '/projects/', label: 'Projects' },
+  { id: 'certifications', href: '/certifications/', label: 'Certifications' },
+  { id: 'contact', href: '/about/#contact', label: 'Contact' },
 ]
 
 export function SiteNav() {
-  const pathname = usePathname().replace(/\/$/, '') || '/'
+  const path = usePathname().replace(/\/?$/, '/')
+  return <Navigation key={path} path={path} />
+}
+
+function Navigation({ path }: { path: string }) {
+  const header = useRef<HTMLElement>(null)
+  const onHome = path === '/'
+  const [current, setCurrent] = useState(onHome ? 'home' : path.split('/')[1])
+
+  useEffect(() => {
+    const bar = header.current
+    if (!bar) return
+    const sections = Array.from(document.querySelectorAll<HTMLElement>('main [data-nav-section]'))
+    let height = bar.offsetHeight
+    let frame = 0
+
+    function readSection() {
+      frame = 0
+      if (!sections.length) return
+      const line = height + Math.min(112, (window.innerHeight - height) * 0.25)
+      let section = sections[0]
+      for (const candidate of sections) {
+        if (candidate.getBoundingClientRect().top > line) break
+        section = candidate
+      }
+      if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
+        section = sections[sections.length - 1]
+      }
+      setCurrent(section.dataset.navSection!)
+    }
+
+    function schedule() {
+      if (!frame) frame = requestAnimationFrame(readSection)
+    }
+
+    function measure() {
+      height = bar!.offsetHeight
+      document.documentElement.style.setProperty('--header-height', height + 'px')
+      schedule()
+    }
+
+    measure()
+    const resize = new ResizeObserver(measure)
+    resize.observe(bar)
+    if (sections.length) {
+      resize.observe(document.querySelector('main')!)
+      window.addEventListener('scroll', schedule, { passive: true })
+    }
+    window.addEventListener('resize', measure)
+    return () => {
+      resize.disconnect()
+      cancelAnimationFrame(frame)
+      window.removeEventListener('resize', measure)
+      window.removeEventListener('scroll', schedule)
+    }
+  }, [])
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={header}>
       <nav className="site-shell site-header-inner" aria-label="Main navigation">
-        <Link href="/" className="site-brand" aria-current={pathname === '/' ? 'page' : undefined}>
-          <svg aria-hidden="true" viewBox="0 0 32 32" fill="none" className="site-mark">
-            <rect x="0.5" y="0.5" width="31" height="31" rx="8" />
-            <path d="M10 8v16m10-14-8 6 8 6m3-2h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          {person.handle}
-        </Link>
+        <Link href="/" className="site-brand site-wordmark">K1taru Portfolio</Link>
         <ul className="site-nav-links">
-          {links.map(({ href, label }) => {
-            const route = href.slice(0, -1)
-            const current = pathname === route ? 'page' : pathname.startsWith(href) ? 'location' : undefined
-            return <li key={href}><Link href={href} aria-current={current}>{label}</Link></li>
+          {links.map(({ id, href, label }) => {
+            const active = id === current ? (href === path ? 'page' : 'location') : undefined
+            const local = onHome ? '#' + id : path === '/about/' && href.startsWith(path) ? href.slice(path.length) || '#main-content' : null
+            return (
+              <li key={href}>
+                <Link href={local ?? href} aria-current={active}>{label}</Link>
+              </li>
+            )
           })}
         </ul>
       </nav>

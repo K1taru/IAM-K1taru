@@ -5,12 +5,13 @@ import { ArchitectureFlow } from '@/components/architecture-flow'
 import { DemoStatus } from '@/components/demo-status'
 import { DirectionIcon } from '@/components/direction-icon'
 import { ProjectMarkdown } from '@/components/project-markdown'
+import { SectionLayout } from '@/components/section-layout'
 import type { Project } from '@/lib/projects'
 import './reading.css'
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
-    <section id={id} className="reader-section">
+    <section id={id} className="reader-section" data-reveal="">
       <h2 className="section-title">{title}</h2>
       {children}
     </section>
@@ -53,14 +54,7 @@ export function CaseStudy({ project }: { project: Project }) {
         <div><dt>Tools</dt><dd>{project.skills.join(', ')}</dd></div>
       </dl>
 
-      <div className="reader-layout">
-        <nav aria-label="In this case study" className="reader-toc">
-          <ul>
-            {sections.map(([id, label]) => (
-              <li key={id}><a href={`#${id}`} className="text-link">{label}</a></li>
-            ))}
-          </ul>
-        </nav>
+      <SectionLayout label="In this case study" sections={sections.map(([id, label]) => ({ id, label }))}>
         <div className="reader-body">
           <Section title="The problem" id="problem">
             <p className="leading-relaxed text-muted">{project.problem}</p>
@@ -116,7 +110,7 @@ export function CaseStudy({ project }: { project: Project }) {
             </Section>
           )}
         </div>
-      </div>
+      </SectionLayout>
     </article>
   )
 }

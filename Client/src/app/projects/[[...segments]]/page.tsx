@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { PageMotion } from '@/components/page-motion'
 import { getProjects } from '@/lib/projects'
 import { pageMetadata } from '@/lib/site'
 import { CaseStudy } from '../_views/case-study'
@@ -50,8 +51,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ProjectsPage({ params }: PageProps) {
-  const page = findPage((await params).segments)
-  if (page.type === 'index') return <ProjectIndex projects={page.projects} />
-  if (page.type === 'note') return <TechnicalNote project={page.project} entry={page.note} />
-  return <CaseStudy project={page.project} />
+  const { segments = [] } = await params
+  const page = findPage(segments)
+  return (
+    <PageMotion key={segments.join('/')}>
+      {page.type === 'index' && <ProjectIndex projects={page.projects} />}
+      {page.type === 'note' && <TechnicalNote project={page.project} entry={page.note} />}
+      {page.type === 'case-study' && <CaseStudy project={page.project} />}
+    </PageMotion>
+  )
 }

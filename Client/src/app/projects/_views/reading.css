@@ -15,19 +15,9 @@
 .project-details dt { margin-block-end: 0.25rem; color: var(--palette-muted); font-size: 0.875rem; }
 .project-details dd { font-weight: 600; overflow-wrap: anywhere; }
 
-.reader-layout {
-  display: grid;
-  gap: 1.5rem;
-  align-items: start;
+.reader-page .section-layout {
   margin-block-start: clamp(1.5rem, 4vw, 3rem);
 }
-
-.reader-toc {
-  border-block: 1px solid var(--palette-divider);
-  padding-block: 0.5rem;
-}
-.reader-toc ul { display: flex; flex-wrap: wrap; gap: 0 1rem; }
-.reader-toc a { justify-content: flex-start; }
 
 .reader-body {
   min-width: 0;
@@ -98,11 +88,4 @@
 
 @media (min-width: 64rem) {
   .project-details { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto minmax(0, 1.5fr); }
-  .reader-layout { grid-template-columns: minmax(0, 13rem) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); }
-  .reader-toc { padding: 0.5rem 0 0.5rem 1rem; border-block: 0; border-inline-start: 1px solid var(--palette-divider); }
-  .reader-toc ul { display: block; }
-}
-
-@media (min-width: 64rem) and (min-height: 38rem) {
-  .reader-toc { position: sticky; inset-block-start: 1.5rem; }
 }
