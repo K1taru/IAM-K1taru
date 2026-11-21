@@ -19,6 +19,7 @@ evidence:
     value: "Safety-oriented MDS-Chatbot service"
 metrics: []
 gallery: []
+preview: {"src":"/media/projects/mdsystem/preview.webp","alt":"MDSystem role editor with permission toggles for patient search","caption":"Role permissions · application screenshot"}
 architecture: ["React and Expo clients", "GraphQL and Node.js services", "PostgreSQL and Redis", "Real-time communication and exports"]
 security:
   - "Repository-documented RBAC, OAuth, two-factor authentication, consent flows, and rate limiting."

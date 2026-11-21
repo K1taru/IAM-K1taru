@@ -30,6 +30,8 @@ const projectSchema = z.object({
   evidence: z.array(z.object({ label: text, value: text })).default([]),
   metrics: z.array(z.object({ label: text, value: text, qualifier: text.optional() })).default([]),
   gallery: z.array(z.object({ src: mediaPath(), alt: text, width: size, height: size })).default([]),
+  preview: z.object({ src: mediaPath(), alt: text, caption: text }).optional(),
+  model: mediaPath().regex(/\.glb$/).optional(),
   video: z.object({
     src: mediaPath(), poster: mediaPath(), captionTrack: mediaPath(),
     title: text, width: size, height: size,
@@ -82,6 +84,8 @@ export function getProjects() {
         throw new Error(`Project slug ${project.slug} must match its directory ${entry.name}`)
       }
       const media = project.gallery.map(({ src }) => src)
+      if (project.preview) media.push(project.preview.src)
+      if (project.model) media.push(project.model)
       if (project.video) media.push(project.video.src, project.video.poster, project.video.captionTrack)
       for (const src of media) {
         const file = path.join('public', src)

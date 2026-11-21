@@ -1,5 +1,4 @@
-import { Suspense } from 'react'
-import { CatalogRows, ProjectMap } from '@/components/project-map'
+import { ProjectMap } from '@/components/project-map'
 import type { Project } from '@/lib/projects'
 import './project-index.css'
 
@@ -18,9 +17,7 @@ export function ProjectIndex({ projects }: { projects: Project[] }) {
         {catalog.length === 0 ? (
           <p className="text-muted">No projects have been published yet.</p>
         ) : (
-          <Suspense fallback={<CatalogRows projects={catalog} />}>
-            <ProjectMap projects={catalog} />
-          </Suspense>
+          <ProjectMap projects={catalog} />
         )}
       </section>
     </>

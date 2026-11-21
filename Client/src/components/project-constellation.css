@@ -1,0 +1,119 @@
+.project-constellation { margin-block-end: 1.5rem; }
+
+.constellation-header {
+  padding: 1rem var(--panel-padding);
+  border-bottom: 1px solid var(--panel-edge);
+}
+
+.constellation-header h2 { font-size: 1.5rem; font-weight: 650; }
+.constellation-header p { color: var(--palette-muted); }
+
+.constellation-stage { display: grid; padding: 0.65rem; gap: 0.65rem; }
+.constellation-field {
+  position: relative;
+  min-width: 0;
+  margin: auto 0;
+  color: #50c9ce;
+  border: 1px solid var(--panel-edge);
+  border-radius: 0.75rem;
+  background: radial-gradient(ellipse at 50% 44%, #12343e, #08171f 76%);
+}
+
+.constellation-field svg { width: 100%; height: auto; display: block; }
+.map-reticle { fill: none; stroke: #44a8ba42; stroke-dasharray: 3 8; }
+.map-sweep { fill: none; stroke: #5debdb; opacity: 0.45; stroke-dasharray: 0.09 0.91; stroke-dashoffset: 0.35; }
+.map-connection { stroke: #53b1b981; stroke-dasharray: 5 8; }
+.map-connection[data-muted="true"] { opacity: 0.18; }
+
+.map-node {
+  --node-color: #70e6ac;
+  display: grid;
+  place-items: center;
+  position: absolute;
+  width: 2.75rem;
+  height: 2.75rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  color: var(--node-color);
+}
+
+.map-node[data-domain="machine-learning"] { --node-color: #53e5f2; }
+.map-node[data-domain="data-systems"] { --node-color: #72b9ff; }
+.map-node[data-domain="infrastructure"] { --node-color: #64f3d5; }
+.map-node:disabled { opacity: 0.25; }
+.map-node:is(:hover, :focus-visible, [aria-pressed="true"]):not(:disabled) { z-index: 1; }
+
+.map-node-point {
+  position: relative;
+  width: 0.58rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 12px currentColor;
+  pointer-events: none;
+}
+
+.map-node-point::before,
+.map-node-point::after {
+  content: "";
+  position: absolute;
+  inset: -0.32rem;
+  border: 1px dashed currentColor;
+  border-radius: inherit;
+  opacity: 0.6;
+}
+
+.map-node-point::after { inset: -0.58rem; border-style: solid; opacity: 0; }
+.map-node[aria-pressed="true"] .map-node-point::after { opacity: 0.65; }
+
+.map-node-title {
+  position: absolute;
+  top: calc(50% + 0.8rem);
+  color: var(--palette-ink);
+  font-size: clamp(0.75rem, 1.1vw, 0.95rem);
+  font-weight: 650;
+  white-space: nowrap;
+  text-shadow: 0 1px 6px #08171f, 0 0 8px #08171f;
+  pointer-events: none;
+}
+
+.map-inspector {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+  min-width: 0;
+  padding: var(--panel-padding);
+  background: #0b2029;
+  border: 1px solid var(--panel-edge);
+  border-radius: 0.75rem;
+}
+
+.map-inspector h3 { font-size: clamp(1.65rem, 2.7vw, 2.3rem); font-weight: 650; line-height: 1.1; }
+.map-inspector-role, .map-inspector-summary { color: var(--palette-muted); }
+.map-inspector-summary { max-width: 48ch; margin-block: 0.45rem 0.75rem; }
+.map-inspector .panel-actions { width: 100%; }
+.map-mobile-picker { display: none; }
+
+@media (min-width: 58rem) {
+  .constellation-stage { grid-template-columns: minmax(0, 2.65fr) minmax(16rem, 1fr); }
+}
+
+@media (max-width: 44rem) {
+  .map-node-title { display: none; }
+  .map-mobile-picker { display: grid; gap: 0.3rem; width: 100%; margin-block-end: 0.55rem; color: var(--palette-muted); }
+  .map-mobile-picker select { min-height: 2.75rem; padding-inline: 0.55rem; border: 1px solid var(--palette-control); border-radius: var(--radius-control); background: var(--palette-canvas); color: var(--palette-ink); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .map-sweep { animation: constellation-scan 8s linear infinite; }
+  .map-connection { animation: constellation-flow 18s linear infinite; }
+  .map-node:not(:disabled) .map-node-point::before { animation: constellation-orbit 12s linear infinite; }
+  .map-node { transition: opacity 220ms ease; }
+  .map-node-point { transition: transform 240ms var(--ease-out); }
+  .map-node[aria-pressed="true"] .map-node-point { transform: scale(1.2); }
+}
+
+@keyframes constellation-scan { to { stroke-dashoffset: -0.65; } }
+@keyframes constellation-flow { to { stroke-dashoffset: -130; } }
+@keyframes constellation-orbit { to { transform: rotate(1turn); } }

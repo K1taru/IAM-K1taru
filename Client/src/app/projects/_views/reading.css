@@ -7,12 +7,9 @@
   display: grid;
   gap: 1.25rem;
   padding: clamp(1rem, 3vw, 1.75rem);
-  border: 1px solid var(--palette-divider);
-  border-radius: var(--radius-card);
-  background: var(--palette-surface);
 }
 .project-details > div { min-width: 0; }
-.project-details dt { margin-block-end: 0.25rem; color: var(--palette-muted); font-size: 0.875rem; }
+.project-details dt { margin-block-end: 0.25rem; color: var(--palette-accent); font: 500 0.75rem/1.5 var(--meta-font); }
 .project-details dd { font-weight: 600; overflow-wrap: anywhere; }
 
 .reader-page .section-layout {
@@ -21,23 +18,20 @@
 
 .reader-body {
   min-width: 0;
-  max-width: 72ch;
+  max-width: 65ch;
   display: grid;
   gap: clamp(1.75rem, 4vw, 3rem);
 }
 .reader-section {
   min-width: 0;
   padding-block-start: 1.25rem;
-  border-block-start: 1px solid var(--palette-divider);
+  border-block-start: 1px solid var(--panel-edge);
 }
 .reader-section .section-title { font-size: clamp(min(2.5rem, 15vw), 5vw, 3.75rem); margin-block-end: 1rem; }
 
 .evidence-grid { display: grid; gap: 0.75rem; margin-block-start: 1.25rem; }
 .evidence-grid > div {
   min-width: 0;
-  border: 1px solid var(--palette-divider);
-  border-radius: var(--radius-card);
-  background: var(--palette-surface);
   padding: 1rem;
 }
 .evidence-grid dt, .evidence-qualifier { color: var(--palette-muted); font-size: 0.875rem; }
@@ -47,9 +41,6 @@
 
 .workflow-figure {
   padding: clamp(1rem, 3vw, 1.5rem);
-  border: 1px solid var(--palette-divider);
-  border-radius: var(--radius-card);
-  background-color: var(--palette-surface);
 }
 .workflow-figure figcaption { color: var(--palette-muted); margin-block-end: 0.875rem; font-size: 0.875rem; }
 .workflow-stages { display: grid; gap: 0.75rem; }

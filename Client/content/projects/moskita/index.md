@@ -25,6 +25,7 @@ metrics:
     label: "documented detection classes"
     qualifier: "Repository-defined V1 scope"
 gallery: []
+preview: {"src":"/media/projects/moskita/preview.webp","alt":"Validation images with prediction boxes around buckets and drums","caption":"Model predictions · validation set"}
 architecture: ["Curated and external datasets", "YOLO training pipeline", "ONNX model export", "Browser and Raspberry Pi inference"]
 security:
   - "Inference accepts sample or visitor-selected media in the browser without adding a public portfolio upload endpoint."

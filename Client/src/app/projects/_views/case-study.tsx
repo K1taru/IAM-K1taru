@@ -47,14 +47,14 @@ export function CaseStudy({ project }: { project: Project }) {
         {project.demoStatus && statusBase && <DemoStatus key={project.slug} slug={project.slug} baseUrl={statusBase} />}
       </header>
 
-      <dl className="project-details">
+      <dl className="project-details panel-frame">
         <div><dt>My role</dt><dd>{project.role}</dd></div>
         <div><dt>Team</dt><dd>{project.team}</dd></div>
         <div><dt>Year</dt><dd><time dateTime={String(project.year)}>{project.year}</time></dd></div>
         <div><dt>Tools</dt><dd>{project.skills.join(', ')}</dd></div>
       </dl>
 
-      <SectionLayout label="In this case study" sections={sections.map(([id, label]) => ({ id, label }))}>
+      <SectionLayout label="On this page" sections={sections.map(([id, label]) => ({ id, label }))}>
         <div className="reader-body">
           <Section title="The problem" id="problem">
             <p className="leading-relaxed text-muted">{project.problem}</p>
@@ -65,7 +65,7 @@ export function CaseStudy({ project }: { project: Project }) {
             {(project.metrics.length > 0 || project.evidence.length > 0) && (
               <dl className="evidence-grid">
                 {project.metrics.map(({ label, value, qualifier }) => (
-                  <div key={label}>
+                  <div className="panel-frame" key={label}>
                     <dt>{label}</dt>
                     <dd className="evidence-value is-metric">{value}</dd>
                     {qualifier && <dd className="evidence-qualifier">{qualifier}</dd>}
@@ -85,14 +85,14 @@ export function CaseStudy({ project }: { project: Project }) {
             {project.security.length > 0 && <div className="mt-5"><Points items={project.security} /></div>}
           </Section>
           {project.gallery.length > 0 && (
-            <div className="grid gap-5">
+            <div className="grid gap-5" data-reveal="">
               {project.gallery.map(({ src, alt, width, height }) => (
                 <Image key={src} src={src} alt={alt} width={width} height={height} unoptimized className="h-auto w-full rounded-2xl border border-divider" />
               ))}
             </div>
           )}
           {project.video && (
-            <video controls preload="none" src={project.video.src} poster={project.video.poster} width={project.video.width} height={project.video.height} aria-label={project.video.title} className="h-auto w-full rounded-2xl">
+            <video controls preload="none" src={project.video.src} poster={project.video.poster} width={project.video.width} height={project.video.height} aria-label={project.video.title} className="h-auto w-full rounded-2xl" data-reveal="">
               <track kind="captions" src={project.video.captionTrack} srcLang="en" label="English" default />
             </video>
           )}

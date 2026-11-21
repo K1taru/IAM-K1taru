@@ -20,6 +20,7 @@ evidence:
     value: "Raspberry Pi 4"
 metrics: []
 gallery: []
+preview: {"src":"/media/projects/cookeat/preview.webp","alt":"Design sketch of CookEat’s main navigation and profile options","caption":"Navigation wireframe · project documentation"}
 architecture: ["React client", "Express REST API", "PostgreSQL data", "Raspberry Pi deployment"]
 security:
   - "Administrative operations are documented as server-side tasks rather than a public web-admin surface."

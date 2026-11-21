@@ -1,9 +1,8 @@
-import Image from 'next/image'
-import { DirectionIcon } from '@/components/direction-icon'
+import { CertificateCard } from '@/components/certificate-card'
 import { PageMotion } from '@/components/page-motion'
 import { SectionLayout } from '@/components/section-layout'
 import { pageMetadata } from '@/lib/site'
-import { credentialGroups } from './credentials'
+import { credentialGroups, getCertificateImage } from './credentials'
 
 export const metadata = pageMetadata(
   '/certifications/',
@@ -22,26 +21,13 @@ export default function CertificationsPage() {
       <SectionLayout label="Certificate categories" sections={credentialGroups.map(({ id, title }) => ({ id, label: title }))}>
         <div className="divide-y divide-divider pb-[var(--section-space)]">
           {credentialGroups.map(({ id, title, credentials }, index) => (
-            <section key={id} id={id} aria-labelledby={`${id}-title`} className="py-10 md:py-14" data-reveal={index}>
-              <h2 id={`${id}-title`} className="section-title">{title}</h2>
-              <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {credentials.map(({ slug, title, issuer, date }) => {
-                  const file = `/media/certifications/${slug}.webp`
+            <section key={id} id={id} aria-labelledby={`${id}-title`} className="py-10 md:py-14">
+              <h2 id={`${id}-title`} className="section-title" data-reveal={index % 4}>{title}</h2>
+              <ul className="credential-grid mt-6">
+                {credentials.map(({ slug, title, issuer, date }, cardIndex) => {
                   return (
-                    <li key={slug} className="min-w-0">
-                      <article className="flex h-full flex-col rounded-2xl border border-divider bg-surface">
-                        <div className="relative aspect-[16/10] w-full rounded-t-2xl border-b border-divider bg-canvas">
-                          <Image src={file} alt="" fill unoptimized className="object-contain p-3" />
-                        </div>
-                        <div className="flex flex-1 flex-col items-start p-5">
-                          <h3 className="text-lg leading-snug font-semibold">{title}</h3>
-                          <p className="mt-2 text-sm leading-relaxed text-muted">{issuer}</p>
-                          <p className="mb-3 text-sm leading-relaxed text-muted">{date}</p>
-                          <a href={file} className="text-link mt-auto">
-                            View certificate<span className="sr-only"> for {title}</span> <DirectionIcon />
-                          </a>
-                        </div>
-                      </article>
+                    <li key={slug} className="min-w-0" data-reveal={cardIndex % 4}>
+                      <CertificateCard file={getCertificateImage(slug)} slug={slug} title={title} issuer={issuer} date={date} />
                     </li>
                   )
                 })}

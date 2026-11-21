@@ -13,7 +13,7 @@ export function TechnicalNote({ project, entry }: { project: Project; entry: Pro
       <header className="reader-header">
         <h1 className="page-title">{entry.title}</h1>
       </header>
-      <div className="reader-body border-t border-divider pt-6">
+      <div className="reader-body panel-frame panel-pad">
         <ProjectMarkdown body={entry.body} />
       </div>
     </article>

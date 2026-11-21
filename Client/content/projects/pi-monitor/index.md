@@ -20,6 +20,7 @@ evidence:
     value: "Real-time web dashboard"
 metrics: []
 gallery: []
+preview: {"src":"/media/projects/pi-monitor/hardware-illustration.webp","alt":"Illustration of the Raspberry Pi hardware","caption":"Hardware illustration"}
 architecture: ["Linux system metrics", "Monitoring service", "Authenticated dashboard", "Cloudflare-proxied access"]
 security:
   - "Dashboard access requires a login. Internal metrics and controls stay behind that boundary."

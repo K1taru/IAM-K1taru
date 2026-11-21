@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { segments } = await params
   const page = findPage(segments)
   if (page.type === 'index') {
-    return pageMetadata('/projects/', 'Projects', 'Case studies on web and mobile apps, computer vision, and self-hosted services.')
+    return pageMetadata('/projects/', 'Projects', 'Projects in web and mobile development, computer vision, and self-hosted services.')
   }
 
   const projectPath = `/projects/${page.project.slug}/`

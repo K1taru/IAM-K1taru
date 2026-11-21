@@ -1,3 +1,4 @@
+import { SkillList } from '@/components/skill-list'
 import Image from 'next/image'
 import { PageMotion } from '@/components/page-motion'
 import { SectionLayout } from '@/components/section-layout'
@@ -27,7 +28,7 @@ export default function AboutPage() {
 
   return (
     <PageMotion>
-      <header data-nav-section="about" className="page-intro grid items-center gap-6 sm:grid-cols-[minmax(0,1fr)_10rem] sm:gap-10 lg:grid-cols-[minmax(0,1fr)_13rem]">
+      <header className="page-intro grid items-center gap-6 sm:grid-cols-[minmax(0,1fr)_10rem] sm:gap-10 lg:grid-cols-[minmax(0,1fr)_13rem]">
         <div>
           <h1 className="page-title">About me</h1>
           <p className="page-lede">
@@ -41,13 +42,13 @@ export default function AboutPage() {
           width={480}
           height={480}
           unoptimized
-          className="h-auto w-32 max-w-full rounded-2xl border border-divider bg-surface sm:w-full"
+          className="profile-image h-auto w-32 max-w-full rounded-2xl border border-divider bg-surface sm:w-full"
         />
       </header>
 
       <SectionLayout label="On this page" sections={sections}>
-        <div className="divide-y divide-divider pb-[var(--section-space)]">
-          <section data-nav-section="about" id="experience" className="grid gap-6 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10 md:py-14" aria-labelledby="experience-title" data-reveal="">
+        <div className="grid gap-5 pb-[var(--section-space)]">
+          <section id="experience" className="panel-frame panel-pad grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10" aria-labelledby="experience-title" data-reveal="">
             <div>
               <span id="certifications" aria-hidden="true" className="block" />
               <h2 id="experience-title" className="section-title">Experience</h2>
@@ -60,7 +61,7 @@ export default function AboutPage() {
               <h3 className="mt-8 text-xl font-semibold">Project milestones</h3>
               <ol className="mt-4 divide-y divide-divider border-y border-divider">
                 <li className="grid gap-2 py-4 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-4">
-                  <time dateTime="2026" className="font-semibold text-ink">2026</time>
+                  <time dateTime="2026" className="panel-label">2026</time>
                   <p className="leading-relaxed text-muted">
                     Led frontend work on {projectLink('mdsystem', 'MDSystem')}, researched and developed {projectLink('moskita', 'MosKita')}, and built {projectLink('pi-monitor', 'Pi Monitor')}. I also worked on the frontend and document retrieval for MARIO at the Grundfos Data & AI Inclusion Hackathon.
                   </p>
@@ -75,7 +76,7 @@ export default function AboutPage() {
             </div>
           </section>
 
-          <section data-nav-section="about" id="leadership" className="grid gap-6 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10 md:py-14" aria-labelledby="leadership-title" data-reveal="">
+          <section id="leadership" className="panel-frame panel-pad grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10" aria-labelledby="leadership-title" data-reveal="">
             <h2 id="leadership-title" className="section-title">Leadership</h2>
             <ul className="max-w-[65ch] space-y-4">
               <li>
@@ -93,31 +94,27 @@ export default function AboutPage() {
             </ul>
           </section>
 
-          <section data-nav-section="skills" id="tools" className="py-10 md:py-14" aria-labelledby="tools-title" data-reveal="">
-            <h2 id="tools-title" className="section-title">Skills and tools</h2>
+          <section id="tools" className="py-4" aria-labelledby="tools-title">
+            <h2 id="tools-title" className="section-title" data-reveal="0">Skills and tools</h2>
             <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-              {capabilities.map(({ label, description, skills }) => (
-                <div key={label} className="rounded-2xl border border-divider bg-surface p-5">
+              {capabilities.map(({ label, description, skills }, index) => (
+                <div key={label} className="panel-frame panel-pad" data-reveal={index}>
                   <h3 className="text-lg font-semibold">{label}</h3>
                   <p className="mt-2 leading-relaxed text-muted">{description}</p>
-                  <ul aria-label={`Tools for ${label.toLowerCase()}`} className="mt-4 flex flex-wrap gap-2">
-                    {skills.map((skill) => (
-                      <li key={skill} className="rounded-md border border-divider px-2.5 py-1 text-sm text-ink">{skill}</li>
-                    ))}
-                  </ul>
+                  <SkillList skills={skills} label={label} />
                 </div>
               ))}
             </div>
           </section>
 
-          <section data-nav-section="about" id="roadmap" className="grid gap-4 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10 md:py-14" aria-labelledby="interests-title" data-reveal="">
+          <section id="roadmap" className="panel-frame panel-pad grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10" aria-labelledby="interests-title" data-reveal="">
             <h2 id="interests-title" className="section-title">What I’m interested in</h2>
             <p className="max-w-[65ch] self-center leading-relaxed text-muted">
               I’m interested in computer vision, edge AI, embedded systems, and competitive robotics. I like working on projects that bring software and hardware together.
             </p>
           </section>
 
-          <section data-nav-section="contact" id="contact" className="grid gap-3 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10 md:py-14" aria-labelledby="contact-title" data-reveal="">
+          <section id="contact" className="panel-frame panel-pad grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-10" aria-labelledby="contact-title" data-reveal="">
             <h2 id="contact-title" className="section-title">Contact</h2>
             <div className="self-center">
               <p className="mb-2 leading-relaxed text-muted">Message me on LinkedIn or browse my code on GitHub.</p>

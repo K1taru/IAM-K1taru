@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 import { useEffect, useSyncExternalStore } from 'react'
 import { DirectionIcon } from '@/components/direction-icon'
 import type { Project } from '@/lib/projects'
+import { ProjectConstellation } from './project-constellation'
 
 const domains = [
   { id: 'applications', label: 'Applications', slugs: ['gymms', 'mdsystem', 'cookeat'] },
@@ -20,30 +20,38 @@ function getDomain(slug: string) {
   return domains.find(({ slugs }) => slugs.includes(slug)) ?? domains[domains.length - 1]
 }
 
-function subscribeToHash(callback: () => void) {
-  window.addEventListener('hashchange', callback)
-  return () => window.removeEventListener('hashchange', callback)
+const filterChange = 'project-domain-change'
+
+function subscribeToLocation(callback: () => void) {
+  const events = ['hashchange', 'popstate', filterChange]
+  for (const event of events) window.addEventListener(event, callback)
+  return () => {
+    for (const event of events) window.removeEventListener(event, callback)
+  }
 }
 
-export function CatalogRows({ projects, target }: { projects: CatalogProject[]; target?: string }) {
+function CatalogRows({ projects, target }: { projects: CatalogProject[]; target?: string }) {
   return (
     <ul className="catalog-rows">
-      {projects.map(({ slug, title, year, role, summary, repository }) => (
-        <li key={slug} id={slug} className="catalog-row" data-catalog-target={slug === target ? '' : undefined}>
+      {projects.map(({ slug, title, year, role, summary, repository }, index) => (
+        <li key={slug} id={slug} className="catalog-row panel-frame panel-pad" data-catalog-target={slug === target ? '' : undefined} data-reveal={index % 3}>
           <div className="catalog-meta">
             <time dateTime={String(year)}>{year}</time>
-            <span>{getDomain(slug).label}</span>
+            <span className="panel-label">{getDomain(slug).label}</span>
           </div>
           <div>
-            <h2 className="catalog-title font-display">
-              <Link href={`/projects/${slug}/`}>{title} <DirectionIcon /></Link>
-            </h2>
+            <h2 className="catalog-title font-display">{title}</h2>
             <p className="catalog-role">{role}</p>
           </div>
           <p className="catalog-summary">{summary}</p>
-          <a href={repository} className="text-link catalog-source">
-            Source<span className="sr-only"> for {title}</span> <DirectionIcon direction="external" />
-          </a>
+          <footer className="panel-actions catalog-actions">
+            <Link href={`/projects/${slug}/`} className="text-link">
+              Explore project<span className="sr-only"> {title}</span> <DirectionIcon />
+            </Link>
+            <a href={repository} className="text-link catalog-source">
+              Source<span className="sr-only"> for {title}</span> <DirectionIcon direction="external" />
+            </a>
+          </footer>
         </li>
       ))}
     </ul>
@@ -51,8 +59,10 @@ export function CatalogRows({ projects, target }: { projects: CatalogProject[]; 
 }
 
 export function ProjectMap({ projects }: { projects: CatalogProject[] }) {
-  const requested = useSearchParams().get('domain')
-  const hash = useSyncExternalStore(subscribeToHash, () => window.location.hash, () => '')
+  const location = useSyncExternalStore(subscribeToLocation, () => window.location.search + window.location.hash, () => '')
+  const [search, fragment] = location.split('#')
+  const requested = new URLSearchParams(search).get('domain')
+  const hash = fragment ? `#${fragment}` : ''
   const target = projects.find(({ slug }) => hash === `#${slug}`)?.slug
   const available = domains.filter(({ id }) => projects.some(({ slug }) => getDomain(slug).id === id))
   const selected = !target && available.some(({ id }) => id === requested) ? requested : null
@@ -61,7 +71,7 @@ export function ProjectMap({ projects }: { projects: CatalogProject[] }) {
   useEffect(() => {
     if (!target) return
     const row = document.getElementById(target)
-    // Mounting the filterable list can replace the server-rendered fragment target.
+    // A domain filter may have hidden the row while the location was changing.
     if (row && !row.matches(':target')) row.scrollIntoView()
   }, [target])
 
@@ -71,8 +81,7 @@ export function ProjectMap({ projects }: { projects: CatalogProject[] }) {
     else url.searchParams.delete('domain')
     if (target) url.hash = ''
     window.history.replaceState(null, '', url)
-    // History updates do not emit hashchange when clearing a direct project link.
-    if (target) window.dispatchEvent(new Event('hashchange'))
+    window.dispatchEvent(new Event(filterChange))
   }
 
   return (
@@ -86,6 +95,7 @@ export function ProjectMap({ projects }: { projects: CatalogProject[] }) {
         </div>
         <p className="catalog-count" role="status" aria-atomic="true">{visible.length} {visible.length === 1 ? 'project' : 'projects'}</p>
       </div>
+      <ProjectConstellation projects={projects} visible={visible} target={target} getDomain={getDomain} />
       <CatalogRows projects={visible} target={target} />
     </>
   )

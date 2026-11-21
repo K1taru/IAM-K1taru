@@ -2,86 +2,65 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useSyncExternalStore } from 'react'
 
 const links = [
-  { id: 'home', href: '/', label: 'Home' },
-  { id: 'about', href: '/about/', label: 'About' },
-  { id: 'skills', href: '/about/#tools', label: 'Skills' },
-  { id: 'projects', href: '/projects/', label: 'Projects' },
-  { id: 'certifications', href: '/certifications/', label: 'Certifications' },
-  { id: 'contact', href: '/about/#contact', label: 'Contact' },
+  { href: '/', label: 'Home' },
+  { href: '/about/', label: 'About' },
+  { href: '/about/#tools', label: 'Skills' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/certifications/', label: 'Certifications' },
 ]
 
-export function SiteNav() {
-  const path = usePathname().replace(/\/?$/, '/')
-  return <Navigation key={path} path={path} />
+function subscribeToHash(onChange: () => void) {
+  window.addEventListener('hashchange', onChange)
+  window.addEventListener('popstate', onChange)
+  return () => {
+    window.removeEventListener('hashchange', onChange)
+    window.removeEventListener('popstate', onChange)
+  }
 }
 
-function Navigation({ path }: { path: string }) {
+export function SiteNav() {
   const header = useRef<HTMLElement>(null)
-  const onHome = path === '/'
-  const [current, setCurrent] = useState(onHome ? 'home' : path.split('/')[1])
+  const path = usePathname().replace(/\/?$/, '/')
+  const hash = useSyncExternalStore(subscribeToHash, () => window.location.hash, () => '')
+  const onAbout = path === '/about/'
+  const onSkills = onAbout && hash === '#tools'
 
   useEffect(() => {
     const bar = header.current
     if (!bar) return
-    const sections = Array.from(document.querySelectorAll<HTMLElement>('main [data-nav-section]'))
-    let height = bar.offsetHeight
-    let frame = 0
-
-    function readSection() {
-      frame = 0
-      if (!sections.length) return
-      const line = height + Math.min(112, (window.innerHeight - height) * 0.25)
-      let section = sections[0]
-      for (const candidate of sections) {
-        if (candidate.getBoundingClientRect().top > line) break
-        section = candidate
-      }
-      if (window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
-        section = sections[sections.length - 1]
-      }
-      setCurrent(section.dataset.navSection!)
+    const measure = () => {
+      document.documentElement.style.setProperty('--header-height', `calc(${bar.offsetHeight}px + var(--header-offset))`)
     }
-
-    function schedule() {
-      if (!frame) frame = requestAnimationFrame(readSection)
-    }
-
-    function measure() {
-      height = bar!.offsetHeight
-      document.documentElement.style.setProperty('--header-height', height + 'px')
-      schedule()
-    }
-
     measure()
     const resize = new ResizeObserver(measure)
     resize.observe(bar)
-    if (sections.length) {
-      resize.observe(document.querySelector('main')!)
-      window.addEventListener('scroll', schedule, { passive: true })
-    }
-    window.addEventListener('resize', measure)
     return () => {
       resize.disconnect()
-      cancelAnimationFrame(frame)
-      window.removeEventListener('resize', measure)
-      window.removeEventListener('scroll', schedule)
+      document.documentElement.style.removeProperty('--header-height')
     }
   }, [])
 
   return (
     <header className="site-header" ref={header}>
-      <nav className="site-shell site-header-inner" aria-label="Main navigation">
+      <nav className="site-header-inner" aria-label="Main navigation">
         <Link href="/" className="site-brand site-wordmark">K1taru Portfolio</Link>
         <ul className="site-nav-links">
-          {links.map(({ id, href, label }) => {
-            const active = id === current ? (href === path ? 'page' : 'location') : undefined
-            const local = onHome ? '#' + id : path === '/about/' && href.startsWith(path) ? href.slice(path.length) || '#main-content' : null
+          {links.map(({ href, label }) => {
+            const exact = href === '/'
+            const about = href === '/about/'
+            const skills = href === '/about/#tools'
+            const active = skills ? onSkills : about ? onAbout && !onSkills : exact ? path === '/' : path.startsWith(href)
+            const current = active ? (skills ? 'location' : 'page') : undefined
             return (
               <li key={href}>
-                <Link href={local ?? href} aria-current={active}>{label}</Link>
+                {onAbout && (about || skills) ? (
+                  <a href={skills ? '#tools' : '#main-content'} aria-current={current}>{label}</a>
+                ) : (
+                  <Link href={href} aria-current={current}>{label}</Link>
+                )}
               </li>
             )
           })}
