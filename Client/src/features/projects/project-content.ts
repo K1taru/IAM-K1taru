@@ -18,7 +18,6 @@ const projectSchema = z.object({
   year: z.number().int().min(2000).max(2100),
   repository: httpsUrl,
   demo: httpsUrl.optional(),
-  demoStatus: z.boolean().default(false),
   draft: z.boolean().default(false),
   domain: z.enum(projectDomainIds).default('other'),
   map: z.object({
@@ -44,8 +43,6 @@ const projectSchema = z.object({
     src: mediaPath(), poster: mediaPath(), captionTrack: mediaPath(),
     title: text, width: size, height: size,
   }).optional(),
-}).refine((project) => !project.demoStatus || Boolean(project.demo), {
-  path: ['demoStatus'], message: 'Live status requires a public demo URL.',
 })
 
 const noteSchema = z.object({ title: text, draft: z.boolean().default(false) })

@@ -26,8 +26,8 @@ and generates the static pages and discovery files. Add old URLs to
 
 ## Deployment
 
-The Raspberry Pi serves the primary site. Vercel serves an independent copy
-of the static pages and their media. A separate Node.js service on the Pi
-can provide optional demo status. See the [deployment guide](deployment.md).
+The Raspberry Pi serves the primary site through a small Node.js static server.
+Vercel serves an independent copy of the static pages and their media. See the
+[deployment guide](deployment.md).
 
 Use `ARCHIVE/` to recover approved content, media, and old URLs.

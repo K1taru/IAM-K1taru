@@ -5,7 +5,6 @@ import { SectionLayout } from '@/components/section-layout'
 import type { Project } from '../project-content'
 import { projectNotePath, projectsPath } from '../project-paths'
 import { ArchitectureFlow } from './architecture-flow'
-import { DemoStatus } from './demo-status'
 import { ProjectMarkdown } from './project-markdown'
 import { ProjectGallery } from './project-gallery'
 import './reading.css'
@@ -28,7 +27,6 @@ function Points({ items }: { items: string[] }) {
 }
 
 export function CaseStudy({ project }: { project: Project }) {
-  const statusBase = process.env.NEXT_PUBLIC_DEMO_STATUS_BASE_URL
   const hasEvidence = project.metrics.length > 0 || project.evidence.length > 0
   const hasResults = project.outcomes.length > 0 || hasEvidence
   const hasArchitecture = project.architecture.length > 0 || project.security.length > 0
@@ -116,7 +114,6 @@ export function CaseStudy({ project }: { project: Project }) {
           <a href={project.repository} className="button button-primary">View source <DirectionIcon direction="external" /></a>
           {project.demo && <a href={project.demo} className="button">Open demo <DirectionIcon direction="external" /></a>}
         </div>
-        {project.demoStatus && statusBase && <DemoStatus key={project.slug} slug={project.slug} baseUrl={statusBase} />}
       </header>
 
       <dl className="project-details panel-frame">

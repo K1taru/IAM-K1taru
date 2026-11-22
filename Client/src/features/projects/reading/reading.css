@@ -53,9 +53,11 @@
 .reader-section > :is(p, ul),
 .case-prose { max-width: var(--prose-width); }
 .project-gallery { overflow: hidden; border: 1px solid var(--panel-edge); border-radius: var(--radius-card); background: var(--palette-surface); user-select: none; }
-.project-gallery-stage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #071317; cursor: grab; touch-action: pan-y; }
-.project-gallery-stage[data-dragging] { cursor: grabbing; }
-.project-gallery-slide { position: relative; width: 100%; height: 100%; }
+.project-gallery-stage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #071317; }
+.project-gallery-track { display: flex; width: 100%; height: 100%; overflow-x: auto; overflow-y: hidden; cursor: grab; scroll-snap-type: x mandatory; scrollbar-width: none; touch-action: pan-y; }
+.project-gallery-track::-webkit-scrollbar { display: none; }
+.project-gallery-track[data-dragging] { cursor: grabbing; scroll-behavior: auto; }
+.project-gallery-slide { position: relative; flex: 0 0 100%; width: 100%; height: 100%; scroll-snap-align: start; scroll-snap-stop: always; }
 .project-gallery-slide img { object-fit: contain; pointer-events: none; }
 .project-gallery-control { position: absolute; z-index: 1; top: 50%; display: grid; width: 2.75rem; height: 2.75rem; place-items: center; border: 1px solid color-mix(in srgb, var(--palette-control) 65%, transparent); border-radius: 999px; color: var(--palette-ink); background: #071317a6; opacity: 0.45; transform: translateY(-50%); }
 .project-gallery-control:hover { border-color: var(--palette-accent); color: var(--palette-accent); }
@@ -73,8 +75,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .project-gallery-slide { transition: transform 220ms var(--ease-out); }
-  .project-gallery-stage[data-dragging] .project-gallery-slide { transition: none; }
+  .project-gallery-track { scroll-behavior: smooth; }
   .project-gallery-control, .project-gallery-thumbnails button { transition: opacity 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
 }
 

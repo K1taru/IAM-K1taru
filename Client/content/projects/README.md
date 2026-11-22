@@ -54,9 +54,7 @@ Gallery images need `src`, `alt`, `width`, and `height`. For a video, provide
 assets below `public/media/projects/` and write their URLs from `/media/projects/`.
 The build rejects published entries that reference missing media files.
 
-Projects with a verified public demo can set `demo` to its HTTPS URL. Add
-`demoStatus: true` after configuring the matching slug in the demo-status
-service. The demo link works independently of live status.
+Projects with a verified public demo can set `demo` to its HTTPS URL.
 
 ## Retire or move a published project
 
@@ -64,8 +62,7 @@ service. The demo link works independently of live status.
 2. Add `noteSlugs` for any old technical-note URLs you want to keep. To link
    visitors to a replacement, add its published folder slug in `replacementSlug`.
 3. Draft or remove the old project folder, or move it to the new slug if it
-   is the replacement. Update About milestones and any demo-status configuration
-   that should refer to the replacement.
+   is the replacement. Update About milestones that refer to it.
 
 For example, `{ slug: 'old-project', title: 'Old Project', noteSlugs: ['setup'], replacementSlug: 'my-project' }`
 preserves both `/projects/old-project/` and `/projects/old-project/docs/setup/` as

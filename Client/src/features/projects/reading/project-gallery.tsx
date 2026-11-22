@@ -13,57 +13,63 @@ type GalleryImage = {
 
 export function ProjectGallery({ images, title }: { images: GalleryImage[]; title: string }) {
   const [activeIndex, setActiveIndex] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
-  const pointerStart = useRef<number | null>(null)
-  const activeImage = images[activeIndex]
+  const stage = useRef<HTMLDivElement>(null)
+  const pointerStart = useRef<{ x: number; scrollLeft: number } | null>(null)
   const isCarousel = images.length > 1
 
-  function move(offset: number) {
-    setActiveIndex((index) => (index + offset + images.length) % images.length)
+  function showImage(index: number) {
+    const nextIndex = (index + images.length) % images.length
+    setActiveIndex(nextIndex)
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+    stage.current?.scrollTo({ left: stage.current.clientWidth * nextIndex, behavior })
   }
 
-  function handlePointerUp(event: PointerEvent<HTMLDivElement>) {
+  function finishDrag(event: PointerEvent<HTMLDivElement>) {
     if (pointerStart.current === null) return
-    const distance = event.clientX - pointerStart.current
     pointerStart.current = null
-    setDragOffset(0)
     setIsDragging(false)
-    if (isCarousel && Math.abs(distance) >= 48) move(distance < 0 ? 1 : -1)
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId)
   }
 
   return (
     <figure className="project-gallery" aria-roledescription={isCarousel ? 'carousel' : undefined} aria-label={`${title} screenshots`}>
-      <div className="project-gallery-stage" tabIndex={isCarousel ? 0 : undefined} data-dragging={isDragging || undefined}
+      <div className="project-gallery-stage">
+        <div ref={stage} className="project-gallery-track" tabIndex={isCarousel ? 0 : undefined} data-dragging={isDragging || undefined}
         onKeyDown={(event) => {
           if (!isCarousel) return
-          if (event.key === 'ArrowLeft') { event.preventDefault(); move(-1) }
-          if (event.key === 'ArrowRight') { event.preventDefault(); move(1) }
+          if (event.key === 'ArrowLeft') { event.preventDefault(); showImage(activeIndex - 1) }
+          if (event.key === 'ArrowRight') { event.preventDefault(); showImage(activeIndex + 1) }
         }}
         onPointerDown={(event) => {
           if (!isCarousel) return
           if ((event.target as Element).closest('button')) return
-          pointerStart.current = event.clientX
+          if (event.button !== 0) return
+          pointerStart.current = { x: event.clientX, scrollLeft: event.currentTarget.scrollLeft }
           setIsDragging(true)
           event.currentTarget.setPointerCapture(event.pointerId)
         }}
         onPointerMove={(event) => {
-          if (pointerStart.current !== null) setDragOffset(event.clientX - pointerStart.current)
+          if (pointerStart.current === null) return
+          event.currentTarget.scrollLeft = pointerStart.current.scrollLeft - (event.clientX - pointerStart.current.x)
         }}
-        onPointerUp={handlePointerUp}
-        onPointerCancel={() => {
-          pointerStart.current = null
-          setDragOffset(0)
-          setIsDragging(false)
+        onPointerUp={finishDrag}
+        onPointerCancel={finishDrag}
+        onScroll={(event) => {
+          const width = event.currentTarget.clientWidth
+          if (width) setActiveIndex(Math.round(event.currentTarget.scrollLeft / width))
         }}>
-        <div className="project-gallery-slide" style={{ transform: `translateX(${dragOffset}px)` }}>
-          <Image src={activeImage.src} alt={activeImage.alt} fill unoptimized draggable={false} sizes="(min-width: 64rem) 92rem, 100vw" />
+        {images.map((image) => (
+          <div className="project-gallery-slide" key={image.src}>
+            <Image src={image.src} alt={image.alt} fill unoptimized draggable={false} sizes="(min-width: 64rem) 92rem, 100vw" />
+          </div>
+        ))}
         </div>
         {isCarousel && <>
-          <button className="project-gallery-control project-gallery-control-previous" type="button" aria-label="Show previous screenshot" onClick={() => move(-1)}>
+          <button className="project-gallery-control project-gallery-control-previous" type="button" aria-label="Show previous screenshot" onClick={() => showImage(activeIndex - 1)}>
             <DirectionIcon direction="left" />
           </button>
-          <button className="project-gallery-control project-gallery-control-next" type="button" aria-label="Show next screenshot" onClick={() => move(1)}>
+          <button className="project-gallery-control project-gallery-control-next" type="button" aria-label="Show next screenshot" onClick={() => showImage(activeIndex + 1)}>
             <DirectionIcon />
           </button>
         </>}
@@ -72,7 +78,7 @@ export function ProjectGallery({ images, title }: { images: GalleryImage[]; titl
         <div className="project-gallery-thumbnails" aria-label="Choose a screenshot">
           {images.map((image, index) => (
             <button key={image.src} type="button" aria-label={`Show screenshot ${index + 1}: ${image.alt}`}
-              aria-pressed={index === activeIndex} onClick={() => setActiveIndex(index)}>
+              aria-pressed={index === activeIndex} onClick={() => showImage(index)}>
               <Image src={image.src} alt="" fill unoptimized draggable={false} sizes="128px" />
             </button>
           ))}
