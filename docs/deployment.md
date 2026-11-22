@@ -32,6 +32,54 @@ sudo systemctl enable iam-k1taru.service
 sudo systemctl restart iam-k1taru.service
 ```
 
+### Automatic deployment from GitHub Actions
+
+The workflow in `.github/workflows/ci.yml` runs lint, typecheck, build, and
+tests on pull requests and pushes. A successful push to `main` then deploys
+that exact commit to the Pi. Pull requests never deploy. A failed check blocks
+deployment.
+
+Set up the Pi once:
+
+1. Keep a clean checkout on the `main` branch at
+   `/home/k1taru/srv/IAM-K1taru`. The `k1taru` user must own it and be able to
+   fetch `origin` without an interactive prompt.
+2. Install Node.js 26 for `k1taru` (either on `PATH` or via nvm). Keep the
+   repository-root `.env` with `PORT`, `SITE_URL`, and `SITE_INDEXABLE=true`.
+   The systemd service must load that `.env`, run `scripts/serve.mjs`, and serve
+   the `Client/out` path. The deployment creates releases beside the checkout
+   at `/home/k1taru/srv/iam-k1taru-releases` and makes `Client/out` a symlink
+   to the active release.
+3. Give `k1taru` passwordless permission to restart only the portfolio service.
+   Use `sudo visudo -f /etc/sudoers.d/iam-k1taru-deploy` and add:
+
+   ```text
+   k1taru ALL=(root) NOPASSWD: /usr/bin/systemctl restart iam-k1taru.service
+   ```
+
+4. Create a dedicated SSH key for deployment. Add its public key to
+   `k1taru`'s `~/.ssh/authorized_keys` on the Pi. In GitHub repository
+   **Settings → Secrets and variables → Actions**, set these secrets:
+
+   | Secret | Value |
+   | --- | --- |
+   | `PI_HOST` | SSH hostname or IP reachable from a GitHub-hosted runner |
+   | `PI_USER` | `k1taru` |
+   | `PI_SSH_PRIVATE_KEY` | Complete private deployment key |
+   | `PI_SSH_KNOWN_HOSTS` | Verified SSH host-key line for `PI_HOST` |
+
+   Add `PI_SSH_PORT` as an Actions **variable** if the SSH port is not 22.
+   For a nonstandard port, the known-hosts entry must use `[host]:port`.
+   Verify the host-key fingerprint on the Pi before storing it. The website's
+   HTTP Cloudflare Tunnel alone does not provide SSH access from GitHub.
+
+The deploy script builds in a temporary Git worktree, checks that `main` still
+points to the tested commit, updates the Pi checkout with a fast-forward merge,
+and switches the `Client/out` symlink to the built release. It restarts the
+service and checks the local homepage. On a failed health check, it restores
+the previous release. A dirty tracked checkout stops deployment so local work
+is not overwritten.
+
 ## Vercel
 
 Set the Vercel Root Directory to `Client`. Use Node.js 26 and the default
