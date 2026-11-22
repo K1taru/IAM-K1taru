@@ -35,7 +35,7 @@ export function CertificateCard({ file, slug, title, issuer, date, compact = fal
     <article className={`panel-frame certificate-card${compact ? ' certificate-card-compact' : ''}`}>
       {file ? (
         <a href={file} className="certificate-thumbnail" onClick={open} aria-haspopup="dialog" aria-label={`Enlarge certificate for ${title}`}>
-          <Image src={file} alt="" fill unoptimized loading="lazy" />
+          <Image src={file.replace(/\.webp$/, '-thumb.webp')} alt="" fill unoptimized loading="lazy" />
         </a>
       ) : (
         <div className="certificate-emblem" aria-hidden="true">

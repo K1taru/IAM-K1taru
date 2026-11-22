@@ -28,8 +28,8 @@ metrics:
     label: "documented detection classes"
     qualifier: "Repository-defined V1 scope"
 gallery:
-  - {"src":"/media/projects/moskita/moskita.png","alt":"MosKita browser dashboard for running mosquito breeding-site detection","width":816,"height":416}
-preview: {"src":"/media/projects/moskita/moskita.png","alt":"MosKita browser dashboard for running mosquito breeding-site detection","caption":"MosKita inference dashboard"}
+  - {"src":"/media/projects/moskita/moskita.webp","alt":"MosKita browser dashboard for running mosquito breeding-site detection","width":816,"height":416}
+preview: {"src":"/media/projects/moskita/moskita.webp","alt":"MosKita browser dashboard for running mosquito breeding-site detection","caption":"MosKita inference dashboard"}
 architecture: ["Curated and external datasets", "YOLO training pipeline", "ONNX model export", "Browser and Raspberry Pi inference"]
 security:
   - "Inference accepts sample or visitor-selected media in the browser without adding a public portfolio upload endpoint."

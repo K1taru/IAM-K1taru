@@ -18,7 +18,7 @@ export function siteUrl(path: string) {
 
 export function pageMetadata(path: string, title?: string, description = siteDescription): Metadata {
   const url = siteUrl(path)
-  const image = siteUrl('/og-card.png')
+  const image = siteUrl('/og-card.webp')
   const alt = `${person.name} | Full-stack and machine-learning systems`
   const socialTitle = title ? `${title} | ${person.name}` : person.name
 
@@ -32,7 +32,7 @@ export function pageMetadata(path: string, title?: string, description = siteDes
       url,
       title: socialTitle,
       description,
-      images: image ? [{ url: image, width: 1200, height: 630, alt }] : undefined,
+      images: image ? [{ url: image, width: 1200, height: 630, alt, type: 'image/webp' }] : undefined,
     },
     twitter: {
       card: image ? 'summary_large_image' : 'summary',

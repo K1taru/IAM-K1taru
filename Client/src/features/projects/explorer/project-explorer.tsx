@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { startTransition, useState, ViewTransition } from 'react'
 import { DirectionIcon } from '@/components/direction-icon'
 import type { Project } from '../project-content'
+import { projectImageLoader } from '../project-image-loader'
 import { projectPath } from '../project-paths'
 import { CoreViewer } from './core-viewer'
 import './project-explorer.css'
@@ -54,7 +55,7 @@ export function ProjectExplorer({ projects }: { projects: Preview[] }) {
         {!selected.model && selected.preview ? (
           <figure className="project-visual panel-frame monitor-grid" key={selected.preview.src}>
             <div className="preview-media">
-              <Image src={selected.preview.src} alt={selected.preview.alt} fill unoptimized />
+              <Image src={selected.preview.src} alt={selected.preview.alt} fill loader={projectImageLoader(selected.preview.width)} sizes="(min-width: 64rem) 32vw, 100vw" />
             </div>
             <figcaption>{selected.preview.caption}</figcaption>
           </figure>

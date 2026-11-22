@@ -23,8 +23,8 @@ evidence:
     value: "Membership renewals, QR and online payments, member check-ins, and reporting"
 metrics: []
 gallery:
-  - {"src":"/media/projects/gymms/gymms.png","alt":"GyMMS welcome and login page for the gym membership management dashboard","width":1920,"height":1080}
-preview: {"src":"/media/projects/gymms/gymms.png","alt":"GyMMS welcome and login page for the gym membership management dashboard","caption":"GyMMS login"}
+  - {"src":"/media/projects/gymms/gymms.webp","alt":"GyMMS welcome and login page for the gym membership management dashboard","width":1920,"height":1080}
+preview: {"src":"/media/projects/gymms/gymms.webp","alt":"GyMMS welcome and login page for the gym membership management dashboard","caption":"GyMMS login"}
 architecture: ["Django application", "PostgreSQL database", "Docker Compose services", "Cloudflare Tunnel ingress"]
 security:
   - "Role-based owner and staff access is documented in the project."

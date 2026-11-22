@@ -23,13 +23,13 @@ evidence:
     value: "Real-time web dashboard"
 metrics: []
 gallery:
-  - {"src":"/media/projects/raspy-monitor/login.png","alt":"Raspy Monitor login screen with secure access, real-time monitoring, and remote control features","width":1920,"height":1080}
-  - {"src":"/media/projects/raspy-monitor/overview.png","alt":"Raspy Monitor overview showing Raspberry Pi uptime, CPU, memory, disk, and network metrics","width":1920,"height":1080}
-  - {"src":"/media/projects/raspy-monitor/charts.png","alt":"Raspy Monitor performance chart showing CPU usage over a 24-hour period","width":1920,"height":1080}
-  - {"src":"/media/projects/raspy-monitor/processes.png","alt":"Raspy Monitor process view listing active services and their resource usage","width":1920,"height":1080}
-  - {"src":"/media/projects/raspy-monitor/cpu-governor.png","alt":"Raspy Monitor CPU control view with selectable performance governors","width":1920,"height":1080}
-  - {"src":"/media/projects/raspy-monitor/fan-control.png","alt":"Raspy Monitor fan control view with speed modes and a temperature curve","width":1920,"height":1080}
-preview: {"src":"/media/projects/raspy-monitor/login.png","alt":"Raspy Monitor login screen with secure access, real-time monitoring, and remote control features","caption":"Raspy Monitor login"}
+  - {"src":"/media/projects/raspy-monitor/login.webp","alt":"Raspy Monitor login screen with secure access, real-time monitoring, and remote control features","width":1920,"height":1080}
+  - {"src":"/media/projects/raspy-monitor/overview.webp","alt":"Raspy Monitor overview showing Raspberry Pi uptime, CPU, memory, disk, and network metrics","width":1920,"height":1080}
+  - {"src":"/media/projects/raspy-monitor/charts.webp","alt":"Raspy Monitor performance chart showing CPU usage over a 24-hour period","width":1920,"height":1080}
+  - {"src":"/media/projects/raspy-monitor/processes.webp","alt":"Raspy Monitor process view listing active services and their resource usage","width":1920,"height":1080}
+  - {"src":"/media/projects/raspy-monitor/cpu-governor.webp","alt":"Raspy Monitor CPU control view with selectable performance governors","width":1920,"height":1080}
+  - {"src":"/media/projects/raspy-monitor/fan-control.webp","alt":"Raspy Monitor fan control view with speed modes and a temperature curve","width":1920,"height":1080}
+preview: {"src":"/media/projects/raspy-monitor/login.webp","alt":"Raspy Monitor login screen with secure access, real-time monitoring, and remote control features","caption":"Raspy Monitor login"}
 architecture: ["Linux system metrics", "Monitoring service", "Authenticated dashboard", "Cloudflare-proxied access"]
 security:
   - "Dashboard access requires a login. Internal metrics and controls stay behind that boundary."

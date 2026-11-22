@@ -32,9 +32,9 @@ const projectSchema = z.object({
   security: z.array(text).default([]),
   evidence: z.array(z.object({ label: text, value: text })).default([]),
   metrics: z.array(z.object({ label: text, value: text, qualifier: text.optional() })).default([]),
-  gallery: z.array(z.object({ src: mediaPath(), alt: text, width: size, height: size })).default([]),
+  gallery: z.array(z.object({ src: mediaPath().regex(/\.webp$/, 'Project screenshots must use WebP files.'), alt: text, width: size, height: size })).default([]),
   preview: z.object({
-    src: mediaPath().regex(/\.png$/, 'Homepage project previews must use PNG files.'),
+    src: mediaPath().regex(/\.webp$/, 'Homepage project previews must use WebP files.'),
     alt: text,
     caption: text,
   }).optional(),
@@ -115,7 +115,11 @@ export function getProjects(clientRoot = process.cwd()) {
           throw new Error(`Project "${slug}" references a missing media file: ${file}`)
         }
       }
-      return [{ ...project, slug, notes: getNotes(directory) }]
+      const preview = project.preview && {
+        ...project.preview,
+        width: project.gallery.find(({ src }) => src === project.preview?.src)?.width,
+      }
+      return [{ ...project, preview, slug, notes: getNotes(directory) }]
     })
 
   return projects.sort((first, second) =>

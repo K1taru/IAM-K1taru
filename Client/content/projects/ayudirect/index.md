@@ -22,9 +22,9 @@ evidence:
     value: "Team-built web prototype"
 metrics: []
 gallery:
-  - {"src":"/media/projects/ayudirect/beneficiary-dashboard.png","alt":"AyuDirect beneficiary dashboard showing an identity profile, assistance program, and current application status","width":453,"height":954}
-  - {"src":"/media/projects/ayudirect/portal-comparison.png","alt":"AyuDirect beneficiary and reviewer portals showing aid applications and a review queue","width":1028,"height":957}
-preview: {"src":"/media/projects/ayudirect/portal-comparison.png","alt":"AyuDirect beneficiary and reviewer portals showing aid applications and a review queue","caption":"Beneficiary and reviewer portals"}
+  - {"src":"/media/projects/ayudirect/beneficiary-dashboard.webp","alt":"AyuDirect beneficiary dashboard showing an identity profile, assistance program, and current application status","width":453,"height":954}
+  - {"src":"/media/projects/ayudirect/portal-comparison.webp","alt":"AyuDirect beneficiary and reviewer portals showing aid applications and a review queue","width":1028,"height":957}
+preview: {"src":"/media/projects/ayudirect/portal-comparison.webp","alt":"AyuDirect beneficiary and reviewer portals showing aid applications and a review queue","caption":"Beneficiary and reviewer portals"}
 architecture: ["Applicant and program workflows", "Eligibility and validation logic", "Aid records", "Auditable portal experience"]
 security:
   - "The prototype keeps eligibility checks and aid records within the program workflow."

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { type PointerEvent, useRef, useState } from 'react'
 import { DirectionIcon } from '@/components/direction-icon'
+import { projectImageLoader } from '../project-image-loader'
 
 type GalleryImage = {
   src: string
@@ -61,7 +62,7 @@ export function ProjectGallery({ images, title }: { images: GalleryImage[]; titl
         }}>
         {images.map((image) => (
           <div className="project-gallery-slide" key={image.src}>
-            <Image src={image.src} alt={image.alt} fill unoptimized draggable={false} sizes="(min-width: 64rem) 92rem, 100vw" />
+            <Image src={image.src} alt={image.alt} fill loader={projectImageLoader(image.width)} draggable={false} sizes="(min-width: 64rem) 92rem, 100vw" />
           </div>
         ))}
         </div>
@@ -79,7 +80,7 @@ export function ProjectGallery({ images, title }: { images: GalleryImage[]; titl
           {images.map((image, index) => (
             <button key={image.src} type="button" aria-label={`Show screenshot ${index + 1}: ${image.alt}`}
               aria-pressed={index === activeIndex} onClick={() => showImage(index)}>
-              <Image src={image.src} alt="" fill unoptimized draggable={false} sizes="128px" />
+              <Image src={image.src} alt="" fill loader={projectImageLoader(image.width)} draggable={false} sizes="128px" />
             </button>
           ))}
         </div>
