@@ -2,8 +2,8 @@
 
 From `Client/`, use Node.js 26 and run `npm ci`, `npm run lint`,
 `npm run typecheck`, and `npm run build`. Both hosts serve the contents of `Client/out/`.
-Set `SITE_URL` to the primary HTTPS origin at build time. Use `SITE_INDEXABLE=true`
-on the primary deployment and `false` on mirrors and previews.
+Set `SITE_URL` to `https://portfolio.k1taru.space` at build time. Use
+`SITE_INDEXABLE=true` on the primary deployment and `false` on mirrors and previews.
 
 ## Raspberry Pi
 

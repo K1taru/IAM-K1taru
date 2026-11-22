@@ -28,3 +28,6 @@ jobs:
       - run: node --test
         working-directory: .
       - run: npm run build
+        env:
+          SITE_URL: https://portfolio.k1taru.space
+          SITE_INDEXABLE: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
