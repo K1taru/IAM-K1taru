@@ -3,7 +3,7 @@ title: "GyMMS"
 domain: applications
 map:
   position: [678, 145]
-  connections: [pi-monitor]
+  connections: [raspy-monitor]
 summary: "A Django app I built for a gym client to manage renewals, payments, and member check-ins."
 problem: "A small gym needs to know who can check in, which payments have cleared, and which memberships are due for renewal. It’s easy to miss something when those records are kept apart."
 role: "Full-stack developer"
@@ -22,7 +22,9 @@ evidence:
   - label: "Operational scope"
     value: "Membership renewals, QR and online payments, member check-ins, and reporting"
 metrics: []
-gallery: []
+gallery:
+  - {"src":"/media/projects/gymms/gymms.png","alt":"GyMMS welcome and login page for the gym membership management dashboard","width":1920,"height":1080}
+preview: {"src":"/media/projects/gymms/gymms.png","alt":"GyMMS welcome and login page for the gym membership management dashboard","caption":"GyMMS login"}
 architecture: ["Django application", "PostgreSQL database", "Docker Compose services", "Cloudflare Tunnel ingress"]
 security:
   - "Role-based owner and staff access is documented in the project."

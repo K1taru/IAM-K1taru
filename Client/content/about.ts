@@ -8,6 +8,7 @@ export const about = {
   homeOverview: [
     'I study computer engineering at T.I.P. Manila, where I specialize in data science. I’m especially interested in what a small device can do with a camera and a trained model.',
     'Outside the lab, I served as our department’s student council treasurer. At the Grundfos Data & AI Inclusion Hackathon, I worked on the interface and document search for our team’s assistant, MARIO.',
+    'More recently, I led frontend work on MDSystem, researched and developed MosKita, and built Raspy Monitor. These projects let me work across product interfaces, applied machine learning, and hardware.',
   ],
   interests: 'I’m interested in computer vision, edge AI, embedded systems, and competitive robotics. I like working on projects that bring software and hardware together.',
 }
@@ -21,7 +22,7 @@ export const milestones: Milestone[] = [
       ', researched and developed ',
       { slug: 'moskita', label: 'MosKita' },
       ', and built ',
-      { slug: 'pi-monitor', label: 'Pi Monitor' },
+      { slug: 'raspy-monitor', label: 'Raspy Monitor' },
       '. I also worked on the frontend and document retrieval for MARIO at the Grundfos Data & AI Inclusion Hackathon.',
     ],
   },

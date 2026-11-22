@@ -74,22 +74,39 @@ export function HomePage() {
       </section>
 
       <div className="overview-sections">
-        <section id="about" className="home-section overview-split" aria-labelledby="home-about-title" data-reveal="0">
-          <h2 className="section-title" id="home-about-title"><Link href="/about/">About</Link></h2>
-          <div className="overview-copy panel-frame panel-pad">
-            {about.homeOverview.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+        <section id="about" className="home-section home-about" aria-labelledby="home-about-title" data-reveal="0">
+          <div className="home-about-heading">
+            <p className="panel-label">The person behind the projects</p>
+            <h2 className="section-title" id="home-about-title"><Link href="/about/">About</Link></h2>
+            <p>{about.intro}</p>
             <Link className="text-link" href="/about/">More about me <DirectionIcon /></Link>
+          </div>
+          <div className="home-about-story panel-frame">
+            <p className="panel-label">Profile / 01</p>
+            {about.homeOverview.map((paragraph, index) => <p key={paragraph} className={index === 0 ? 'home-about-lead' : undefined}>{paragraph}</p>)}
+            <div className="home-about-details" aria-label="At a glance">
+              <div><span>Based in</span><strong>{person.location}</strong></div>
+              <div><span>Studying</span><strong>Computer engineering · Data science</strong></div>
+              <div><span>Interests</span><strong>Computer vision · Edge AI · Robotics</strong></div>
+            </div>
           </div>
         </section>
 
         <section id="skills" className="home-section" aria-labelledby="home-skills-title">
-          <h2 className="section-title" id="home-skills-title" data-reveal="0"><Link href="/about/#tools">Skills</Link></h2>
+          <header className="home-skills-heading" data-reveal="0">
+            <div>
+              <p className="panel-label">What I work with</p>
+              <h2 className="section-title" id="home-skills-title"><Link href="/about/#tools">Skills</Link></h2>
+            </div>
+            <p>From application interfaces to machine learning and hardware deployment.</p>
+          </header>
           <ul className="skill-previews">
             {capabilities.map(({ label, description, skills }, index) => (
-              <li key={label} className="panel-frame panel-pad" data-reveal={index + 1}>
+              <li key={label} className="skill-preview-card panel-frame panel-pad" data-reveal={index + 1}>
+                <span className="panel-label" aria-hidden="true">0{index + 1} / 0{capabilities.length}</span>
                 <h3>{label}</h3>
                 <p>{description}</p>
-                <SkillList skills={skills.slice(0, 3)} label={label} />
+                <SkillList skills={skills} label={label} />
               </li>
             ))}
           </ul>

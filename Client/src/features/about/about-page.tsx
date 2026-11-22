@@ -48,11 +48,11 @@ export function AboutPage() {
               <h2 id="experience-title" className="section-title">Experience</h2>
             </div>
             <div className="max-w-[var(--prose-width)]">
-              <h3 className="text-xl font-semibold">Education</h3>
+              <h3 className="text-2xl font-semibold">Education</h3>
               <p className="mt-2 leading-relaxed text-muted">
                 {person.education}
               </p>
-              <h3 className="mt-8 text-xl font-semibold">Project milestones</h3>
+              <h3 className="mt-8 text-2xl font-semibold">Project milestones</h3>
               <ol className="mt-4 divide-y divide-divider border-y border-divider">
                 {milestones.map(({ year, summary }, index) => (
                   <li key={year} className="grid gap-2 py-4 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-4">
@@ -91,7 +91,7 @@ export function AboutPage() {
             <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
               {capabilities.map(({ label, description, skills }, index) => (
                 <div key={label} className="panel-frame panel-pad" data-reveal={index}>
-                  <h3 className="text-lg font-semibold">{label}</h3>
+                  <h3 className="text-xl font-semibold">{label}</h3>
                   <p className="mt-2 leading-relaxed text-muted">{description}</p>
                   <SkillList skills={skills} label={label} />
                 </div>

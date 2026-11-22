@@ -21,8 +21,13 @@ evidence:
   - label: "Deployment target"
     value: "Raspberry Pi 4"
 metrics: []
-gallery: []
-preview: {"src":"/media/projects/cookeat/preview.webp","alt":"Design sketch of CookEat’s main navigation and profile options","caption":"Navigation wireframe · project documentation"}
+gallery:
+  - {"src":"/media/projects/cookeat/login.png","alt":"CookEat login screen with email and password fields","width":1152,"height":707}
+  - {"src":"/media/projects/cookeat/registration.png","alt":"CookEat account registration screen","width":954,"height":649}
+  - {"src":"/media/projects/cookeat/help-center.png","alt":"CookEat help and support page with account and posting guides","width":1907,"height":917}
+  - {"src":"/media/projects/cookeat/feed-loading.png","alt":"CookEat recipe feed while posts are loading","width":1920,"height":893}
+  - {"src":"/media/projects/cookeat/recipe-post.png","alt":"CookEat recipe post with a Filipino pares dish, ingredients, and cooking instructions","width":871,"height":883}
+preview: {"src":"/media/projects/cookeat/login.png","alt":"CookEat login screen with email and password fields","caption":"CookEat login"}
 architecture: ["React client", "Express REST API", "PostgreSQL data", "Raspberry Pi deployment"]
 security:
   - "Administrative operations are documented as server-side tasks rather than a public web-admin surface."

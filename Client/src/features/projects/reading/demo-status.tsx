@@ -41,7 +41,7 @@ export function DemoStatus({ slug, baseUrl }: { slug: string; baseUrl: string })
   }, [slug, baseUrl])
 
   return (
-    <p role="status" className="mt-2 text-sm text-muted">
+    <p role="status" className="mt-2 text-base text-muted">
       {result === 'unavailable' ? 'Live status unavailable' : result ? (
         <>
           {result.status === 'reachable' ? 'Demo reachable' : 'Demo not reachable'} · checked{' '}

@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import type { ReactNode } from 'react'
 import { DirectionIcon } from '@/components/direction-icon'
@@ -8,6 +7,7 @@ import { projectNotePath, projectsPath } from '../project-paths'
 import { ArchitectureFlow } from './architecture-flow'
 import { DemoStatus } from './demo-status'
 import { ProjectMarkdown } from './project-markdown'
+import { ProjectGallery } from './project-gallery'
 import './reading.css'
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
@@ -37,6 +37,7 @@ export function CaseStudy({ project }: { project: Project }) {
     { id: 'contributions', label: 'My contributions', visible: project.contributions.length > 0 },
     { id: 'outcomes', label: 'Results', visible: hasResults },
     { id: 'architecture', label: 'How it works', visible: hasArchitecture },
+    { id: 'gallery', label: 'Project gallery', visible: project.gallery.length > 0 },
     { id: 'lessons', label: 'What I learned', visible: project.lessons.length > 0 },
     { id: 'technical-notes', label: 'Technical notes', visible: project.notes.length > 0 },
   ].filter(({ visible }) => visible)
@@ -80,11 +81,9 @@ export function CaseStudy({ project }: { project: Project }) {
         </Section>
       )}
       {project.gallery.length > 0 && (
-        <div className="grid gap-5" data-reveal="">
-          {project.gallery.map(({ src, alt, width, height }) => (
-            <Image key={src} src={src} alt={alt} width={width} height={height} unoptimized className="h-auto w-full rounded-2xl border border-divider" />
-          ))}
-        </div>
+        <Section title="Project gallery" id="gallery">
+          <ProjectGallery images={project.gallery} title={project.title} />
+        </Section>
       )}
       {project.video && (
         <video controls preload="none" src={project.video.src} poster={project.video.poster} width={project.video.width} height={project.video.height} aria-label={project.video.title} className="h-auto w-full rounded-2xl" data-reveal="">

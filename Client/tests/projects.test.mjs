@@ -66,7 +66,7 @@ test('published media must exist and be a file', (context) => {
 
 test('published entries use folder and file slugs, accept short content, and sort by year and title', (context) => {
   const { root, projects } = projectFixture(context)
-  writeMarkdown(path.join(projects, 'pi-monitor/index.md'), { ...minimal, title: 'Pi Monitor' })
+  writeMarkdown(path.join(projects, 'raspy-monitor/index.md'), { ...minimal, title: 'Raspy Monitor' })
   writeMarkdown(path.join(projects, 'short-entry/index.md'), { ...minimal, title: 'A new title' })
   writeMarkdown(path.join(projects, 'newest/index.md'), { ...minimal, year: 2027 })
   writeMarkdown(path.join(projects, 'short-entry/docs/setup.md'), { title: 'Get started' }, 'Instructions.')
@@ -74,7 +74,7 @@ test('published entries use folder and file slugs, accept short content, and sor
   writeMarkdown(path.join(projects, 'draft/index.md'), { draft: true })
 
   const list = getProjects(root)
-  assert.deepEqual(list.map(({ slug }) => slug), ['newest', 'short-entry', 'pi-monitor'])
+  assert.deepEqual(list.map(({ slug }) => slug), ['newest', 'short-entry', 'raspy-monitor'])
   const entry = list[1]
   assert.equal(entry.title, 'A new title')
   assert.equal(entry.team, undefined)

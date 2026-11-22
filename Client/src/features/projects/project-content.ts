@@ -34,7 +34,11 @@ const projectSchema = z.object({
   evidence: z.array(z.object({ label: text, value: text })).default([]),
   metrics: z.array(z.object({ label: text, value: text, qualifier: text.optional() })).default([]),
   gallery: z.array(z.object({ src: mediaPath(), alt: text, width: size, height: size })).default([]),
-  preview: z.object({ src: mediaPath(), alt: text, caption: text }).optional(),
+  preview: z.object({
+    src: mediaPath().regex(/\.png$/, 'Homepage project previews must use PNG files.'),
+    alt: text,
+    caption: text,
+  }).optional(),
   model: mediaPath().regex(/\.glb$/).optional(),
   video: z.object({
     src: mediaPath(), poster: mediaPath(), captionTrack: mediaPath(),

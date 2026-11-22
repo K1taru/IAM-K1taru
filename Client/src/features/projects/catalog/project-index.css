@@ -16,7 +16,7 @@
   background: var(--palette-accent);
   color: var(--palette-on-accent);
 }
-.catalog-count { color: var(--palette-muted); font-size: 0.9375rem; }
+.catalog-count { color: var(--palette-muted); font-size: 1.0625rem; }
 
 
 .catalog-rows {
@@ -43,11 +43,11 @@
   gap: 0.35rem 0.75rem;
   align-items: baseline;
   color: var(--palette-muted);
-  font: 500 0.75rem/1.5 var(--meta-font);
+  font: 500 0.875rem/1.5 var(--meta-font);
 }
 
-.catalog-title { font-size: clamp(1.65rem, 2.6vw, 2.25rem); line-height: 1.12; font-weight: 650; }
-.catalog-role { margin-block-start: 0.4rem; color: var(--palette-muted); font-size: 0.9375rem; }
+.catalog-title { font-size: clamp(1.9rem, 3vw, 2.65rem); line-height: 1.12; font-weight: 650; }
+.catalog-role { margin-block-start: 0.4rem; color: var(--palette-muted); font-size: 1.0625rem; }
 .catalog-summary { max-width: 50ch; color: var(--palette-muted); line-height: 1.55; }
 .catalog-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 0.75rem; }
 .catalog-source { color: var(--palette-muted); }

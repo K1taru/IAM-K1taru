@@ -3,7 +3,7 @@ title: "MosKita"
 domain: machine-learning
 map:
   position: [205, 125]
-  connections: [traffic-sign-classifier, pi-monitor]
+  connections: [traffic-sign-classifier, raspy-monitor]
 summary: "A computer vision project that flags containers where dengue mosquitoes could breed, using photos and live camera feeds."
 problem: "Checking containers one by one takes time. I wanted to see whether a low-cost camera could help people decide where to look first."
 role: "Researcher, full-stack developer, and ML developer"
@@ -27,8 +27,9 @@ metrics:
   - value: "8"
     label: "documented detection classes"
     qualifier: "Repository-defined V1 scope"
-gallery: []
-preview: {"src":"/media/projects/moskita/preview.webp","alt":"Validation images with prediction boxes around buckets and drums","caption":"Model predictions · validation set"}
+gallery:
+  - {"src":"/media/projects/moskita/moskita.png","alt":"MosKita browser dashboard for running mosquito breeding-site detection","width":816,"height":416}
+preview: {"src":"/media/projects/moskita/moskita.png","alt":"MosKita browser dashboard for running mosquito breeding-site detection","caption":"MosKita inference dashboard"}
 architecture: ["Curated and external datasets", "YOLO training pipeline", "ONNX model export", "Browser and Raspberry Pi inference"]
 security:
   - "Inference accepts sample or visitor-selected media in the browser without adding a public portfolio upload endpoint."

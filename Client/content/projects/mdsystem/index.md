@@ -21,8 +21,9 @@ evidence:
   - label: "Connected subsystem"
     value: "Safety-oriented MDS-Chatbot service"
 metrics: []
-gallery: []
-preview: {"src":"/media/projects/mdsystem/preview.webp","alt":"MDSystem role editor with permission toggles for patient search","caption":"Role permissions · application screenshot"}
+gallery:
+  - {"src":"/media/projects/mdsystem/mdsystem.png","alt":"MDSystem healthcare platform landing page with a link to the login portal","width":1897,"height":905}
+preview: {"src":"/media/projects/mdsystem/mdsystem.png","alt":"MDSystem healthcare platform landing page with a link to the login portal","caption":"MDSystem landing page"}
 architecture: ["React and Expo clients", "GraphQL and Node.js services", "PostgreSQL and Redis", "Real-time communication and exports"]
 security:
   - "Repository-documented RBAC, OAuth, two-factor authentication, consent flows, and rate limiting."

@@ -22,7 +22,7 @@ repository: "https://github.com/your-name/my-project"
 ```
 
 Add a Markdown body or optional fields when you have more to share. See
-[Pi Monitor](pi-monitor/index.md) for a fuller example. Projects sort by
+[Raspy Monitor](raspy-monitor/index.md) for a fuller example. Projects sort by
 year from newest to oldest, then alphabetically by title. Edit `title` to
 rename a project on the site while keeping its URL.
 
@@ -40,7 +40,7 @@ it to other projects, add either or both fields below.
 ```yaml
 map:
   position: [480, 250]
-  connections: [pi-monitor, mdsystem]
+  connections: [raspy-monitor, mdsystem]
 ```
 
 `position` uses coordinates on the map, with `x` from 0 to 880 and `y`

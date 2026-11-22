@@ -25,7 +25,6 @@ metrics:
     label: "reported validation accuracy range"
     qualifier: "Repository-reported; varies by architecture and run"
 gallery: []
-preview: {"src":"/media/projects/traffic-sign-classifier/preview.webp","alt":"Repository flowchart of the traffic sign classification pipeline","caption":"Training workflow · repository diagram"}
 architecture: ["GTSRB images", "ROI and augmentation pipeline", "Transfer-learned classifier", "Evaluation and inference"]
 security:
   - "The public portfolio links to the repository and does not expose a server-side image-upload or inference endpoint."
