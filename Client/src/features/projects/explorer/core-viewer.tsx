@@ -108,7 +108,7 @@ export function CoreViewer({ model }: { model?: string }) {
             Loading 3D preview
           </div>
         )}
-        <canvas ref={canvas} tabIndex={ready ? 0 : -1} aria-label="3D viewer" aria-describedby={ready ? 'core-instructions' : undefined}
+        <canvas ref={canvas} tabIndex={ready ? 0 : -1} aria-label="3D viewer" aria-describedby={showModel && ready ? 'core-instructions' : undefined}
           onKeyDown={(event) => {
             const direction = Object.hasOwn(directions, event.key) ? directions[event.key] : undefined
             if (!direction || !ready) return
@@ -117,8 +117,8 @@ export function CoreViewer({ model }: { model?: string }) {
           }} />
       </div>
       <div className="core-caption">
-        <h3>{model && status !== 'core' ? 'Project model' : 'Circuit core'}</h3>
-        {ready && <p id="core-instructions">Drag or use the arrow keys to rotate.</p>}
+        {showModel && <h3>Project model</h3>}
+        {showModel && ready && <p id="core-instructions">Drag or use the arrow keys to rotate.</p>}
         {status === 'failed' && <p>Static view</p>}
         {status === 'idle' && <button type="button" className="core-activate text-link" onClick={() => {
           setStatus('loading')
