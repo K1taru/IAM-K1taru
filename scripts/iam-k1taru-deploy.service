@@ -1,0 +1,10 @@
+[Unit]
+Description=Check CI and deploy the verified portfolio commit
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=k1taru
+TimeoutStartSec=45min
+ExecStart=/usr/bin/bash /home/k1taru/srv/IAM-K1taru/scripts/poll-deploy-pi.sh

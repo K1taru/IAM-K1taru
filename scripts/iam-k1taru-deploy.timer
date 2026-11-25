@@ -1,0 +1,10 @@
+[Unit]
+Description=Poll for verified portfolio releases
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=5min
+Unit=iam-k1taru-deploy.service
+
+[Install]
+WantedBy=timers.target

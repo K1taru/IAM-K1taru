@@ -32,12 +32,16 @@ sudo systemctl enable iam-k1taru.service
 sudo systemctl restart iam-k1taru.service
 ```
 
-### Automatic deployment from GitHub Actions
+### Automatic deployment from the Pi
 
 The workflow in `.github/workflows/ci.yml` runs lint, typecheck, build, and
-tests on pull requests and pushes. A successful push to `main` then deploys
-that exact commit to the Pi. Pull requests never deploy. A failed check blocks
-deployment.
+tests on pull requests and pushes. Every five minutes, the Pi checks the latest
+`main` push run through the GitHub API. It deploys only when that run succeeded
+and its commit is still the current `main`. Failed or pending checks block
+deployment. The Pi makes outbound connections only; no inbound SSH route or
+GitHub Actions deployment secrets are needed. A green CI run means verification
+passed, not that the Pi has deployed it; inspect the Pi timer log for deployment
+status.
 
 Set up the Pi once:
 
@@ -57,21 +61,26 @@ Set up the Pi once:
    k1taru ALL=(root) NOPASSWD: /usr/bin/systemctl restart iam-k1taru.service
    ```
 
-4. Create a dedicated SSH key for deployment. Add its public key to
-   `k1taru`'s `~/.ssh/authorized_keys` on the Pi. In GitHub repository
-   **Settings → Secrets and variables → Actions**, set these secrets:
+4. Create a fine-grained GitHub personal access token restricted to this
+   repository with **Actions: Read-only** permission. On the Pi, store only the
+   token value in `/home/k1taru/srv/.iam-k1taru-github-token`, owned by
+   `k1taru` with mode `600`. Keep it out of the repository and `.env` so the
+   web server does not inherit it. Renew it before expiration. The Pi checkout
+   must separately be able to fetch `origin main` without prompting.
+5. On the Pi, install the timer and service from this checkout:
 
-   | Secret | Value |
-   | --- | --- |
-   | `PI_HOST` | SSH hostname or IP reachable from a GitHub-hosted runner |
-   | `PI_USER` | `k1taru` |
-   | `PI_SSH_PRIVATE_KEY` | Complete private deployment key |
-   | `PI_SSH_KNOWN_HOSTS` | Verified SSH host-key line for `PI_HOST` |
+   ```sh
+   sudo install -m 644 scripts/iam-k1taru-deploy.service /etc/systemd/system/
+   sudo install -m 644 scripts/iam-k1taru-deploy.timer /etc/systemd/system/
+   sudo systemctl daemon-reload
+   sudo systemctl enable --now iam-k1taru-deploy.timer
+   sudo systemctl start iam-k1taru-deploy.service
+   journalctl -u iam-k1taru-deploy.service -n 50 --no-pager
+   ```
 
-   Add `PI_SSH_PORT` as an Actions **variable** if the SSH port is not 22.
-   For a nonstandard port, the known-hosts entry must use `[host]:port`.
-   Verify the host-key fingerprint on the Pi before storing it. The website's
-   HTTP Cloudflare Tunnel alone does not provide SSH access from GitHub.
+   Run these commands from `/home/k1taru/srv/IAM-K1taru` after updating the
+   checkout to the commit containing this timer. `systemctl start` performs an
+   immediate first check; subsequent checks happen about every five minutes.
 
 The deploy script builds in a temporary Git worktree, checks that `main` still
 points to the tested commit, updates the Pi checkout with a fast-forward merge,
