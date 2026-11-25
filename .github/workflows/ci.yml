@@ -16,8 +16,8 @@ jobs:
       run:
         working-directory: Client
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version-file: Client/.nvmrc
           cache: npm
@@ -41,7 +41,7 @@ jobs:
       group: raspberry-pi-production
       cancel-in-progress: false
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
       - name: Configure SSH
@@ -49,8 +49,14 @@ jobs:
           PI_SSH_PRIVATE_KEY: ${{ secrets.PI_SSH_PRIVATE_KEY }}
           PI_SSH_KNOWN_HOSTS: ${{ secrets.PI_SSH_KNOWN_HOSTS }}
         run: |
-          test -n "$PI_SSH_PRIVATE_KEY"
-          test -n "$PI_SSH_KNOWN_HOSTS"
+          if [[ -z "$PI_SSH_PRIVATE_KEY" ]]; then
+            echo '::error::Set PI_SSH_PRIVATE_KEY in repository Actions secrets before deploying.'
+            exit 1
+          fi
+          if [[ -z "$PI_SSH_KNOWN_HOSTS" ]]; then
+            echo '::error::Set PI_SSH_KNOWN_HOSTS in repository Actions secrets before deploying.'
+            exit 1
+          fi
           install -m 700 -d "$HOME/.ssh"
           printf '%s\n' "$PI_SSH_PRIVATE_KEY" > "$HOME/.ssh/portfolio-deploy"
           printf '%s\n' "$PI_SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
