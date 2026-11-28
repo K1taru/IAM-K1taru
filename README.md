@@ -66,3 +66,11 @@ The build writes the static site to `Client/out/`. From the repository root, `no
 - [Deployment guide](docs/deployment.md) covers the Raspberry Pi static server, Vercel, and build-time settings. Start from the repository's `.env.example` when preparing a deployment.
 
 `ARCHIVE/` contains the previous Astro portfolio and is a reference for legacy content and URLs.
+
+## License
+
+The source code in this repository is licensed under the [MIT License](LICENSE).
+
+Portfolio content and media—including personal information, project write-ups, photographs, certificates, and screenshots—are excluded from the MIT License and remain © 2026 John Michael Garcia. All rights reserved.
+
+Third-party trademarks, dependencies, and other materials remain subject to their respective licenses and owners' rights.
